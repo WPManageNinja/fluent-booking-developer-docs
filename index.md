@@ -4,22 +4,22 @@ layout: home
 
 hero:
   name: "Fluent Booking Developer Docs"
-  text: "Fluent Booking Developer Docs"
-  tagline: My great project tagline
+  text: "Complete Developer Guide"
+  tagline: Extend and customize Fluent Booking with our comprehensive API and Hooks.
   actions:
     - theme: brand
-      text: Markdown Examples
-      link: /markdown-examples
+      text: Getting Started
+      link: /getting-started
     - theme: alt
-      text: API Examples
-      link: /api-examples
+      text: REST API
+      link: /rest-api/
 
 features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: REST API
+    details: Complete REST API documentation including authentication, endpoints, and error handling.
+    link: /rest-api/
+  - title: Actions & Filters (Coming Soon)
+    details: Comprehensive documentation of action hooks and filter hooks for extending functionality.
+  - title: Database Schema (Coming Soon)
+    details: Complete database schema documentation with table structures and relationships.
 ---
-

@@ -36,4 +36,5 @@ dist-ssr
 # VitePress
 .vitepress/dist
 .vitepress/cache
+.gemini
 
