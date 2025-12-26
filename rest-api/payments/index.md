@@ -1,6 +1,6 @@
-# Payments (Pro)
+# Payments <Badge type="tip" text="Pro" />
 
-Payment gateway configuration and management for Fluent Booking Pro. Accept payments for bookings using various payment providers.
+Payment gateway configuration and management for Fluent Booking.
 
 ## Get Payment Methods
 

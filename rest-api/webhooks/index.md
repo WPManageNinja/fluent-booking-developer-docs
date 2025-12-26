@@ -1,6 +1,6 @@
-# Webhooks & SMS (Pro)
+# Webhooks & SMS <Badge type="tip" text="Pro" />
 
-Webhook and SMS notification features for Fluent Booking Pro. These features allow you to send custom notifications and integrate with external systems.
+Webhook and SMS notification features for Fluent Booking.
 
 ## Webhooks
 
@@ -192,7 +192,7 @@ Example webhook payload sent to your URL:
 }
 ```
 
-## SMS Notifications (Pro)
+## SMS Notifications <Badge type="tip" text="Pro" />
 
 ### Get SMS Settings
 

@@ -387,4 +387,4 @@ Returns array of attendees in the group booking.
 
 - [Bookings](/rest-api/bookings/)
 - [Calendar Events](/rest-api/calendars/events)
-- [Transactions (Pro)](/rest-api/schedules/transactions)
+- [Transactions](/rest-api/schedules/transactions)

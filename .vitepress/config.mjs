@@ -15,91 +15,56 @@ export default defineConfig({
     sidebar: [
       {
         text: 'Getting Started',
+        collapsed: false,
         items: [
-          { text: 'Introduction', link: '/getting-started' }
-        ]
-      },
-      {
-        text: 'REST API',
-        items: [
-          { text: 'Overview', link: '/rest-api/' },
+          { text: 'Introduction', link: '/getting-started' },
+          { text: 'REST API Overview', link: '/rest-api/' },
           { text: 'Authentication', link: '/rest-api/authentication' },
           { text: 'Error Handling', link: '/rest-api/error-handling' },
           { text: 'Resources', link: '/rest-api/resources' }
         ]
       },
       {
-        text: 'Calendars',
+        text: 'Calendars & Events',
+        collapsed: false,
         items: [
-          { text: 'Overview', link: '/rest-api/calendars/' },
+          { text: 'Calendars', link: '/rest-api/calendars/' },
           { text: 'Events', link: '/rest-api/calendars/events' },
           { text: 'Event Availability', link: '/rest-api/calendars/event-availability' },
           { text: 'Event Booking Fields', link: '/rest-api/calendars/event-booking-fields' },
-          { text: 'Event Email Notifications', link: '/rest-api/calendars/event-notifications' },
+          { text: 'Event Notifications', link: '/rest-api/calendars/event-notifications' },
           { text: 'Event Integrations', link: '/rest-api/calendars/event-integrations' },
           { text: 'Event Settings', link: '/rest-api/calendars/event-settings' },
-          { text: 'Sharing Settings', link: '/rest-api/calendars/sharing-settings' }
+          { text: 'Direct Event Access', link: '/rest-api/events/' },
+          { text: 'Sharing & Landing Pages', link: '/rest-api/calendars/sharing-settings' }
         ]
       },
       {
-        text: 'Bookings',
+        text: 'Bookings & Scheduling',
+        collapsed: false,
         items: [
-          { text: 'Overview', link: '/rest-api/bookings/' }
+          { text: 'Bookings', link: '/rest-api/bookings/' },
+          { text: 'Schedules', link: '/rest-api/schedules/' },
+          { text: 'Availability Schedules', link: '/rest-api/availability/' },
+          { text: 'Transactions', link: '/rest-api/schedules/transactions' }
         ]
       },
       {
-        text: 'Schedules',
+        text: 'Administration',
+        collapsed: false,
         items: [
-          { text: 'Overview', link: '/rest-api/schedules/' },
-          { text: 'Transactions (Pro)', link: '/rest-api/schedules/transactions' }
+          { text: 'Settings', link: '/rest-api/settings/' },
+          { text: 'Admin & Hosts', link: '/rest-api/admin/' },
+          { text: 'Reports & Analytics', link: '/rest-api/reports/' }
         ]
       },
       {
-        text: 'Availability',
+        text: 'Integrations & Extensions',
+        collapsed: false,
         items: [
-          { text: 'Overview', link: '/rest-api/availability/' }
-        ]
-      },
-      {
-        text: 'Settings',
-        items: [
-          { text: 'Overview', link: '/rest-api/settings/' }
-        ]
-      },
-      {
-        text: 'Admin',
-        items: [
-          { text: 'Overview', link: '/rest-api/admin/' }
-        ]
-      },
-      {
-        text: 'Reports',
-        items: [
-          { text: 'Overview', link: '/rest-api/reports/' }
-        ]
-      },
-      {
-        text: 'Events API',
-        items: [
-          { text: 'Overview', link: '/rest-api/events/' }
-        ]
-      },
-      {
-        text: 'Integrations',
-        items: [
-          { text: 'Overview', link: '/rest-api/integrations/' }
-        ]
-      },
-      {
-        text: 'Webhooks & SMS (Pro)',
-        items: [
-          { text: 'Overview', link: '/rest-api/webhooks/' }
-        ]
-      },
-      {
-        text: 'Payments (Pro)',
-        items: [
-          { text: 'Overview', link: '/rest-api/payments/' }
+          { text: 'Integrations', link: '/rest-api/integrations/' },
+          { text: 'Webhooks & SMS', link: '/rest-api/webhooks/' },
+          { text: 'Payments', link: '/rest-api/payments/' }
         ]
       }
     ],

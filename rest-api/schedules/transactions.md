@@ -1,6 +1,6 @@
-# Transactions (Pro)
+# Transactions <Badge type="tip" text="Pro" />
 
-Manage payment transactions for bookings. This feature is only available in Fluent Booking Pro.
+Manage payment transactions for bookings.
 
 ## Update Transaction
 
