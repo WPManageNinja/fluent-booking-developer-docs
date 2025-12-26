@@ -12,7 +12,7 @@ List endpoints support pagination to help manage large datasets. You can control
 ### Example Request
 
 ```http
-GET /wp-json/fluent-community/v2/users?page=2&per_page=20
+GET /wp-json/fluent-booking/v2/calendars?page=2&per_page=20
 ```
 
 ## User Profile (xprofile)
