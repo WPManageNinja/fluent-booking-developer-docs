@@ -66,6 +66,40 @@ export default defineConfig({
           { text: 'Webhooks & SMS', link: '/rest-api/webhooks/' },
           { text: 'Payments', link: '/rest-api/payments/' }
         ]
+      },
+      {
+        text: 'Hooks',
+        collapsed: false,
+        items: [
+          { text: 'Overview', link: '/hooks/' },
+          {
+            text: 'Actions',
+            collapsed: true,
+            items: [
+              { text: 'Overview', link: '/hooks/actions/' },
+              { text: 'Bookings & Scheduling', link: '/hooks/actions/bookings-and-scheduling' },
+              { text: 'Calendars & Events', link: '/hooks/actions/calendars-and-events' },
+              { text: 'Availability', link: '/hooks/actions/availability' },
+              { text: 'Integrations', link: '/hooks/actions/integrations' },
+              { text: 'Landing Pages & Display', link: '/hooks/actions/landing-pages-and-display' },
+              { text: 'Admin & Settings', link: '/hooks/actions/admin-and-settings' },
+              { text: 'Payments & Orders', link: '/hooks/actions/payments-and-orders' }
+            ]
+          },
+          {
+            text: 'Filters',
+            collapsed: true,
+            items: [
+              { text: 'Overview', link: '/hooks/filters/' },
+              { text: 'Booking Configuration', link: '/hooks/filters/booking-configuration' },
+              { text: 'Calendar & Event Settings', link: '/hooks/filters/calendar-and-event-settings' },
+              { text: 'Availability & Slots', link: '/hooks/filters/availability-and-slots' },
+              { text: 'Display & Templates', link: '/hooks/filters/display-and-templates' },
+              { text: 'Admin & Configuration', link: '/hooks/filters/admin-and-configuration' },
+              { text: 'Payments & Advanced', link: '/hooks/filters/payments-and-advanced' }
+            ]
+          }
+        ]
       }
     ],
 
