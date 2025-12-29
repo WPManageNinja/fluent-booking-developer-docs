@@ -1,30 +1,63 @@
-# Developer Hooks
+# Developer Hooks Overview
 
-Fluent Booking provides a rich set of action and filter hooks that allow you to extend the functionality of the plugin. Hooks allow you to execute custom code at specific points in the execution flow or modify data before it is saved or displayed.
+Fluent Booking is built on an extensible architecture, offering hundreds of WordPress **Actions** and **Filters** that allow you to customize almost every aspect of the plugin without modifying the core files.
 
-## Hook Types
+## Action Hooks
 
-### [Action Hooks](/hooks/actions/)
-Action hooks allow you to execute custom code at specific points. They are perfect for triggering side effects, sending notifications, or logging events.
+Actions allow you to "hook" into specific events during the Fluent Booking lifecycle and execute your own custom code. They are perfect for triggering side effects like:
+- Syncing booking data with an external CRM.
+- Triggering custom notifications or SMS.
+- Logging activity to a third-party analytics service.
 
-### [Filter Hooks](/hooks/filters/)
-Filter hooks allow you to modify data, settings, and behavior. They are used to customize functionality and modify output.
-
-## How to use Hooks
-
-To use a hook, you can use the WordPress standard `add_action()` or `add_filter()` functions.
-
-### Example Action
+### Example Action Hook
 ```php
-add_action('fluent_booking/booking_scheduled', function($booking, $calendar_event) {
-    // Execute custom logic when a booking is scheduled
+add_action('fluent_booking/after_booking_scheduled', function($booking, $calendar_event) {
+    // Execute custom logic after a booking is successfully saved
 }, 10, 2);
 ```
 
-### Example Filter
+[Browse Action Hooks Reference](/hooks/actions/)
+
+---
+
+## Filter Hooks
+
+Filters allow you to intercept and modify data before it is saved to the database or displayed on the frontend. They are ideal for:
+- Adding custom fields to the booking form.
+- Modifying availability rules on the fly.
+- Changing the content of emails or confirmation messages.
+
+### Example Filter Hook
 ```php
-add_filter('fluent_booking/booking_fields', function($fields, $calendar_event) {
-    // Modify booking fields
-    return $fields;
-}, 10, 2);
+add_filter('fluent_booking/available_slots_for_view', function($slots, $event, $calendar, $tz, $duration) {
+    // Dynamically remove specific slots based on your own logic
+    return $slots;
+}, 10, 5);
 ```
+
+[Browse Filter Hooks Reference](/hooks/filters/)
+
+## Why Extend with Hooks?
+
+### 🔋 Battery Included
+Fluent Booking provides hooks for almost everything — from UI rendering in the admin to payment processing in the background.
+
+### 🛡️ Future-Proof
+By using hooks instead of modifying plugin files, your customizations remain intact even after you update Fluent Booking to the latest version.
+
+### 🧩 Plugin Interoperability
+Hooks allow other plugins to interact seamlessly with Fluent Booking, enabling a rich ecosystem of integrations (like FluentCRM, Fluent Boards, etc.).
+
+## Hook Naming Standards
+Most Fluent Booking hooks follow a consistent naming pattern:
+- **Namespace**: All hooks are prefixed with `fluent_booking/`.
+- **Timing**: Prefixes like `before_` or `after_` indicate exactly when the hook fires relative to the event.
+- **Dynamic Hooks**: Some hooks include dynamic segments like `{key}` (e.g., `fluent_booking/integration_notify_{key}`).
+
+---
+
+## Getting Started
+To start using hooks, you can add your custom functions to your theme's `functions.php` file or create a custom "glue" plugin.
+
+1. Explore [Action Hooks](/hooks/actions/) for event-driven logic.
+2. Explore [Filter Hooks](/hooks/filters/) for data-driven customizations.

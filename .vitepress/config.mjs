@@ -28,7 +28,6 @@ export default defineConfig({
               text: 'Getting Started',
               link: '/rest-api/',
               items: [
-                { text: 'Introduction', link: '/getting-started' },
                 { text: 'Authentication', link: '/rest-api/authentication' },
                 { text: 'Error Handling', link: '/rest-api/error-handling' },
                 { text: 'Resources', link: '/rest-api/resources' }
@@ -38,7 +37,6 @@ export default defineConfig({
               text: 'Calendars & Events',
               link: '/rest-api/calendars/',
               items: [
-                { text: 'Calendars', link: '/rest-api/calendars/' },
                 { text: 'Events', link: '/rest-api/calendars/events' },
                 { text: 'Event Availability', link: '/rest-api/calendars/event-availability' },
                 { text: 'Event Booking Fields', link: '/rest-api/calendars/event-booking-fields' },
@@ -53,7 +51,6 @@ export default defineConfig({
               text: 'Bookings & Scheduling',
               link: '/rest-api/bookings/',
               items: [
-                { text: 'Bookings', link: '/rest-api/bookings/' },
                 { text: 'Schedules', link: '/rest-api/schedules/' },
                 { text: 'Availability Schedules', link: '/rest-api/availability/' },
                 { text: 'Transactions', link: '/rest-api/schedules/transactions' }
@@ -63,7 +60,6 @@ export default defineConfig({
               text: 'Administration',
               link: '/rest-api/settings/',
               items: [
-                { text: 'Settings', link: '/rest-api/settings/' },
                 { text: 'Admin & Hosts', link: '/rest-api/admin/' },
                 { text: 'Reports & Analytics', link: '/rest-api/reports/' }
               ]
@@ -72,11 +68,20 @@ export default defineConfig({
               text: 'Integrations & Extensions',
               link: '/rest-api/integrations/',
               items: [
-                { text: 'Integrations', link: '/rest-api/integrations/' },
                 { text: 'Webhooks & SMS', link: '/rest-api/webhooks/' },
                 { text: 'Payments', link: '/rest-api/payments/' }
               ]
             }
+          ]
+        }
+      ],
+      '/getting-started': [
+        {
+          text: 'Getting Started',
+          items: [
+            { text: 'Overview', link: '/getting-started' },
+            { text: 'REST API Overview', link: '/rest-api/' },
+            { text: 'Developer Hooks', link: '/hooks/' }
           ]
         }
       ],
@@ -88,6 +93,7 @@ export default defineConfig({
               text: 'Action Hooks',
               link: '/hooks/actions/',
               items: [
+                { text: 'Overview', link: '/hooks/actions/' },
                 { text: 'Bookings & Scheduling', link: '/hooks/actions/bookings-and-scheduling' },
                 { text: 'Calendars & Events', link: '/hooks/actions/calendars-and-events' },
                 { text: 'Availability', link: '/hooks/actions/availability' },
@@ -101,6 +107,7 @@ export default defineConfig({
               text: 'Filter Hooks',
               link: '/hooks/filters/',
               items: [
+                { text: 'Overview', link: '/hooks/filters/' },
                 { text: 'Booking Configuration', link: '/hooks/filters/booking-configuration' },
                 { text: 'Calendar & Event Settings', link: '/hooks/filters/calendar-and-event-settings' },
                 { text: 'Availability & Slots', link: '/hooks/filters/availability-and-slots' },
