@@ -1,21 +1,21 @@
 :root {
-  --vp-c-brand-1: #646cff;
-  --vp-c-brand-2: #747bff;
-  --vp-c-brand-3: #535bf2;
-  --vp-c-brand-soft: rgba(100, 108, 255, 0.16);
+  --vp-c-brand-1: #2653C7; /* Fluent Booking Royal Blue */
+  --vp-c-brand-2: #455689; /* Muted Indigo */
+  --vp-c-brand-3: #1a41a8;
+  --vp-c-brand-soft: rgba(38, 83, 199, 0.16);
 
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #2653C7 30%, #455689);
 
   --vp-c-bg: #ffffff;
   --vp-c-bg-alt: #f6f6f7;
 }
 
 .dark {
-  --vp-c-brand-1: #5C73F2; /* Fluent brand color approximation */
-  --vp-c-brand-2: #8092F6;
-  --vp-c-brand-3: #3A4CB3;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #bd34fe 30%, #41d1ff);
+  --vp-c-brand-1: #4a74e5; /* Lighter version for dark mode visibility */
+  --vp-c-brand-2: #8092f6;
+  --vp-c-brand-3: #2653C7;
+  --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #4a74e5 30%, #455689);
   --vp-c-bg: #1e1e20;
   --vp-c-bg-alt: #161618;
 }
@@ -38,4 +38,19 @@ h4:has(.VPBadge) {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+/* Sidebar Styling for Hooks */
+.VPSidebarItem.level-1:not(:first-child) {
+  margin-top: 24px !important;
+}
+
+/* Hide caret icon for clickable group headers */
+.VPSidebarItem.level-1 .caret {
+  display: none !important;
+}
+
+/* Ensure active state color for group headers if they have a link */
+.VPSidebarItem.level-1.has-link.active > .item > .text {
+  color: var(--vp-c-brand-1);
 }
