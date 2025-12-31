@@ -9,14 +9,23 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started' },
-      { text: 'REST API', link: '/rest-api/' },
+      {
+        text: 'Database',
+        items: [
+          { text: 'Database Schema', link: '/database/schema' },
+          { text: 'Database Models', link: '/database/models' },
+          { text: 'Model Relationships', link: '/database/relationships' },
+          { text: 'Query Builder', link: '/database/query-builder' }
+        ]
+      },
       {
         text: 'Developer Hooks',
         items: [
           { text: 'Action Hooks', link: '/hooks/actions/' },
           { text: 'Filter Hooks', link: '/hooks/filters/' }
         ]
-      }
+      },
+      { text: 'Rest API', link: '/rest-api/' }
     ],
 
     sidebar: {
