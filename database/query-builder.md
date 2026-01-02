@@ -127,6 +127,43 @@ $bookings = Query::table('fcal_bookings')
     ->whereBetween('start_time', ['2024-01-01', '2024-01-31'])
     ->get();
 ```
+### Parameter Grouping
+Sometimes you may need to create more advanced where clauses such as "where exists" or nested parameter groupings. The Fluent Booking query builder can handle these as well. To get started, let's look at an example of grouping constraints within parenthesis:
+
+```php
+Query::table('fcal_bookings')
+    ->where('status', '=', 'cancelled')
+    ->where(function ($query) {
+        $query->where('total_paid', '>', 100)
+              ->orWhere('payment_method', '=', 'stripe');
+    })
+    ->get();
+```
+
+As you can see, passing a `Closure` into the `where` method instructs the query builder to begin a constraint group. The `Closure` will receive a query builder instance which you can use to set the constraints that should be contained within the parenthesis group. The example above will produce the following SQL:
+
+```sql
+select * from fcal_bookings where status = 'cancelled' and (total_paid > 100 or payment_method = 'stripe')
+```
+
+### Where Exists Clauses
+The `whereExists` method allows you to write where exists SQL clauses. The `whereExists` method accepts a `Closure` argument, which will receive a query builder instance allowing you to define the query that should be placed inside the "exists" clause:
+
+```php
+Query::table('fcal_calendars')
+    ->whereExists(function ($query) {
+        $query->select(Query::raw(1))
+              ->from('fcal_bookings')
+              ->whereRaw('fcal_bookings.calendar_id = fcal_calendars.id');
+    })
+    ->get();
+```
+
+The query above will produce the following SQL:
+
+```sql
+select * from fcal_calendars where exists ( select 1 from fcal_bookings where fcal_bookings.calendar_id = fcal_calendars.id )
+```
 
 ## Ordering, Grouping & Limit
 
@@ -347,4 +384,51 @@ To get the raw SQL string without stopping execution:
 
 ```php
 $sql = Query::table('fcal_bookings')->where('id', 1)->toSql();
+```
+## Fluent Booking Specific Query Examples
+
+### Activity Logging Queries
+
+```php
+// Get all activities for a specific booking
+$bookingActivities = Query::table('fcal_booking_activity')
+    ->where('booking_id', 123)
+    ->orderBy('created_at', 'desc')
+    ->get();
+
+// Get failed email logs in the last 24 hours
+$failedEmails = Query::table('fcal_booking_activity')
+    ->where('type', 'email_log')
+    ->where('status', 'failed')
+    ->where('created_at', '>=', gmdate('Y-m-d H:i:s', strtotime('-1 day')))
+    ->get();
+```
+
+### Host Performance Queries
+
+```php
+// Get total bookings per calendar
+$calendarStats = Query::table('fcal_calendars')
+    ->leftJoin('fcal_bookings', 'fcal_calendars.id', '=', 'fcal_bookings.calendar_id')
+    ->select([
+        'fcal_calendars.id',
+        'fcal_calendars.title',
+        Query::raw('COUNT(fcal_bookings.id) as total_bookings'),
+        Query::raw('SUM(fcal_bookings.total_paid) as revenue')
+    ])
+    ->where('fcal_bookings.status', 'completed')
+    ->groupBy('fcal_calendars.id')
+    ->get();
+```
+
+### Meta Queries
+
+```php
+// Get all bookings with a specific custom field value
+$metaBookings = Query::table('fcal_bookings')
+    ->join('fcal_booking_meta', 'fcal_bookings.id', '=', 'fcal_booking_meta.booking_id')
+    ->where('fcal_booking_meta.key', 'company_name')
+    ->where('fcal_booking_meta.value', 'AuthLab')
+    ->select('fcal_bookings.*')
+    ->get();
 ```

@@ -29,6 +29,32 @@ export default defineConfig({
     ],
 
     sidebar: {
+    '/database/': [
+        {
+          text: 'Database',
+          items: [
+            { text: 'Database Schema', link: '/database/schema' },
+            { text: 'Database Models', link: '/database/models' },
+            { text: 'Model Relationships', link: '/database/relationships' },
+            { text: 'Query Builder', link: '/database/query-builder' }
+          ]
+        },
+        {
+          text: 'Core Models',
+          items: [
+            { text: 'Availability', link: '/database/models/availability' },
+            { text: 'Booking', link: '/database/models/booking' },
+            { text: 'BookingActivity', link: '/database/models/booking-activity' },
+            { text: 'BookingHost', link: '/database/models/booking-host' },
+            { text: 'BookingMeta', link: '/database/models/booking-meta' },
+            { text: 'Calendar', link: '/database/models/calendar' },
+            { text: 'CalendarSlot', link: '/database/models/calendar-slot' },
+            { text: 'Meta', link: '/database/models/meta' },
+            { text: 'Staff', link: '/database/models/staff' },
+            { text: 'User', link: '/database/models/user' }
+          ]
+        }
+      ],
       '/rest-api/': [
         {
           text: 'REST API Documentation',
