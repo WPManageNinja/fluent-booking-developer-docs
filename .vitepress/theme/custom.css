@@ -40,7 +40,7 @@ h4:has(.VPBadge) {
   gap: 10px;
 }
 
-/* Sidebar Styling for Hooks */
+/* Sidebar Styling for Hooks, REST API, and Database */
 .VPSidebarItem.level-1:not(:first-child) {
   margin-top: 24px !important;
 }
