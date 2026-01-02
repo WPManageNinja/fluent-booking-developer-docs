@@ -1,0 +1,70 @@
+# 📅 Calendar Model
+
+The `Calendar` model is the top-level container for scheduling settings, availability, and events. It often represents a single host, a team, or a specific resource.
+
+## Attributes
+
+| Attribute | Type | Description |
+|-----------|------|-------------|
+| `id` | bigint | Primary key |
+| `user_id` | bigint | Owner's WordPress user ID |
+| `title` | varchar | Calendar name |
+| `slug` | varchar | Unique URL slug for the calendar landing page |
+| `settings` | longtext | JSON configuration for landing page and defaults |
+| `status` | varchar | active/inactive |
+| `type` | varchar | `simple` (individual), `team`, or `event` |
+| `author_timezone` | varchar | Default timezone for the calendar host |
+
+### `isHostCalendar()` / `isTeamCalendar()` / `isEventCalendar()`
+Check the primary role/type of the calendar.
+
+### `getLandingPageUrl($isForce = false)`
+Returns the public URL for the calendar's landing page.
+
+### `getMeta($key, $default = null)` / `updateMeta($key, $value)`
+Manage calendar-specific metadata stored in `fcal_meta`.
+
+### `getAuthorProfile($public = true)`
+Returns an array of author details (name, avatar, etc.).
+
+### `updateEventOrder($eventId)`
+Updates the display order of events within this calendar.
+
+### `static getAllHosts()`
+Static helper to retrieve a list of all individual hosts.
+
+## Relations
+
+### `slots` / `events`
+Has many [CalendarSlot](calendar-slot) event types.
+
+### `bookings`
+Has many [Booking](booking) records across all slots.
+
+### `user`
+Belongs to a [User](user) (the owner).
+
+### `availabilities`
+Has many [Availability](availability) records.
+
+### `metas`
+Has many [Meta](meta) records associated with this calendar.
+
+## Usage Examples
+
+### Fetching a host's landing page
+```php
+use FluentBooking\App\Models\Calendar;
+
+$calendar = Calendar::where('user_id', $userId)->where('type', 'simple')->first();
+if ($calendar) {
+    echo $calendar->getLandingPageUrl();
+}
+```
+
+### Checking calendar type
+```php
+if ($calendar->isTeamCalendar()) {
+    // Show team management options
+}
+```
