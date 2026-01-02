@@ -1,81 +1,94 @@
 # Query Builder
 
-Fluent Booking includes a powerful, fluent query builder that helps you interact with the database using an expressive and safe syntax. This builder abstracts away the complexity of writing raw SQL queries while protecting your application from SQL injection attacks.
+The Fluent Booking Query Builder provides a convenient, fluent interface for creating and running database queries. It can be used to perform most database operations in your application and works on all supported database systems.
 
-To use the query builder, you can import the `Query` class:
+## Introduction
 
+Fluent Booking provides two main ways to interact with your data: **Database Models** (ActiveRecord) and the **Query Builder** (Direct Database Access).
+
+### Model vs. Query Builder
+
+| Feature | Database Models | Query Builder |
+|---------|-----------------|---------------|
+| **Syntax** | `Booking::where(...)` | `fluentBookingDb()->table('fcal_bookings')` |
+| **Return Type** | Model Object / Collection | StdClass Object / Array |
+| **Logic** | Supports Relations & Scopes | Raw Performance & Joins |
+| **Best For** | Business Logic, CRUD | Complex Reporting, Performance |
+
+### Example Comparison
+
+#### Using Models (Recommended)
 ```php
-use FluentBooking\Framework\Database\Query;
+use FluentBooking\App\Models\Booking;
+
+$bookings = Booking::with('calendar')
+    ->applyComputedStatus('upcoming')
+    ->get();
 ```
+
+#### Using Query Builder (Direct)
+```php
+$bookings = fluentBookingDb()->table('fcal_bookings')
+    ->join('fcal_calendars', 'fcal_bookings.calendar_id', '=', 'fcal_calendars.id')
+    ->where('fcal_bookings.status', 'scheduled')
+    ->get();
+```
+
+---
 
 ## Retrieving Results
 
 ### Retrieving All Rows from a Table
-You can access the query builder using the `table` method. The `get` method returns an array of results where each result is an object.
+The `get` method returns an array of results where each result is a standard PHP object (StdClass).
 
 ```php
-$bookings = Query::table('fcal_bookings')->get();
-
-foreach ($bookings as $booking) {
-    echo $booking->first_name;
-}
+$bookings = fluentBookingDb()->table('fcal_bookings')->get();
 ```
 
-### Retrieving a Single Row
-If you just need to retrieve a single row from the database table, you may use the `first` method. This method returns a single standard object:
-
+### Retrieving a Single Row / Column
 ```php
-$booking = Query::table('fcal_bookings')->where('first_name', 'John')->first();
+// Get a single row
+$booking = fluentBookingDb()->table('fcal_bookings')->where('id', 1)->first();
 
-echo $booking->email;
+// Get a single value from a row
+$email = fluentBookingDb()->table('fcal_bookings')->where('id', 1)->value('email');
+
+// Get a single row by ID
+$booking = fluentBookingDb()->table('fcal_bookings')->find(5);
 ```
 
-### Retrieving a Single Column
-If you would like to retrieve an array containing the values of a single column, you may use the `pluck` method:
-
+### Retrieving a List of Column Values
 ```php
-$emails = Query::table('fcal_bookings')->pluck('email');
+$emails = fluentBookingDb()->table('fcal_bookings')->pluck('email');
 
-foreach ($emails as $email) {
-    echo $email;
-}
-```
-
-You may also specify a custom key column for the returned array:
-
-```php
-$emails = Query::table('fcal_bookings')->pluck('email', 'id');
-```
-
-### Retrieving by ID
-If you need to retrieve a single row by its `id` column, you may use the `find` method:
-
-```php
-$booking = Query::table('fcal_bookings')->find(5);
-```
-
-### Retrieving a Single Value
-If you only need a single value from the first row of a query, you may use the `value` method:
-
-```php
-$email = Query::table('fcal_bookings')->where('id', 1)->value('email');
+// With custom keys (e.g., ID as key)
+$emails = fluentBookingDb()->table('fcal_bookings')->pluck('email', 'id');
 ```
 
 ### Aggregates
-The query builder also provides a variety of aggregate methods such as `count`, `max`, `min`, `avg`, and `sum`.
+The query builder provides variety of aggregate methods:
 
 ```php
-$count = Query::table('fcal_bookings')->count();
+$count = fluentBookingDb()->table('fcal_bookings')->count();
+$maxPrice = fluentBookingDb()->table('fcal_orders')->max('total_paid');
+$avgDuration = fluentBookingDb()->table('fcal_calendar_events')->avg('duration');
+```
 
-$maxDuration = Query::table('fcal_calendar_slots')->max('duration');
+### Determining If Records Exist
+Instead of counting records, you can use `exists` or `doesntExist`:
+
+```php
+if (fluentBookingDb()->table('fcal_bookings')->where('status', 'pending')->exists()) {
+    // There are pending bookings
+}
 ```
 
 ## Selects
 
-You may not always want to select all columns from a database table. Using the `select` method, you can specify a custom select clause for the query:
+Specify which columns you want to retrieve:
 
 ```php
-$bookings = Query::table('fcal_bookings')
+$bookings = fluentBookingDb()->table('fcal_bookings')
     ->select(['first_name', 'email', 'status'])
     ->get();
 ```
@@ -83,352 +96,90 @@ $bookings = Query::table('fcal_bookings')
 ## Where Clauses
 
 ### Simple Where Clauses
-You may use the `where` method on a query builder instance to add `WHERE` clauses to the query. The most basic call to `where` requires 3 arguments: the name of the column, the operator, and the value.
-
 ```php
-$bookings = Query::table('fcal_bookings')
+$bookings = fluentBookingDb()->table('fcal_bookings')
     ->where('status', '=', 'scheduled')
     ->get();
-```
 
-If you want to verify that a column is equal to a given value, you may pass the value as the second argument:
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->where('calendar_id', 10)
-    ->get();
+// Short syntax for equality
+$bookings = fluentBookingDb()->table('fcal_bookings')->where('calendar_id', 10)->get();
 ```
 
 ### Additional Where Clauses
+- `whereIn('column', [1, 2, 3])`
+- `whereNull('column')` / `whereNotNull('column')`
+- `whereBetween('column', [$start, $end])`
+- `whereDate('column', '2024-01-01')`
 
-**whereIn**
-The `whereIn` method verifies that a given column's value is contained within the given array:
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->whereIn('status', ['cancelled', 'completed'])
-    ->get();
-```
-
-**whereNull / whereNotNull**
-The `whereNull` method verifies that the value of the given column is `NULL`:
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->whereNull('payment_method')
-    ->get();
-```
-
-**whereBetween**
-The `whereBetween` method verifies that a column's value is between two values:
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->whereBetween('start_time', ['2024-01-01', '2024-01-31'])
-    ->get();
-```
 ### Parameter Grouping
-Sometimes you may need to create more advanced where clauses such as "where exists" or nested parameter groupings. The Fluent Booking query builder can handle these as well. To get started, let's look at an example of grouping constraints within parenthesis:
+Group constraints within parenthesis for complex logic:
 
 ```php
-Query::table('fcal_bookings')
+fluentBookingDb()->table('fcal_bookings')
     ->where('status', '=', 'cancelled')
     ->where(function ($query) {
-        $query->where('total_paid', '>', 100)
-              ->orWhere('payment_method', '=', 'stripe');
+        $query->where('email', 'LIKE', '%@gmail.com')
+              ->orWhere('phone', '!=', '');
     })
-    ->get();
-```
-
-As you can see, passing a `Closure` into the `where` method instructs the query builder to begin a constraint group. The `Closure` will receive a query builder instance which you can use to set the constraints that should be contained within the parenthesis group. The example above will produce the following SQL:
-
-```sql
-select * from fcal_bookings where status = 'cancelled' and (total_paid > 100 or payment_method = 'stripe')
-```
-
-### Where Exists Clauses
-The `whereExists` method allows you to write where exists SQL clauses. The `whereExists` method accepts a `Closure` argument, which will receive a query builder instance allowing you to define the query that should be placed inside the "exists" clause:
-
-```php
-Query::table('fcal_calendars')
-    ->whereExists(function ($query) {
-        $query->select(Query::raw(1))
-              ->from('fcal_bookings')
-              ->whereRaw('fcal_bookings.calendar_id = fcal_calendars.id');
-    })
-    ->get();
-```
-
-The query above will produce the following SQL:
-
-```sql
-select * from fcal_calendars where exists ( select 1 from fcal_bookings where fcal_bookings.calendar_id = fcal_calendars.id )
-```
-
-## Ordering, Grouping & Limit
-
-### Ordering
-The `orderBy` method allows you to sort the result of the query by a given column. The first argument is the column, and the second is the direction (`asc` or `desc`):
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->orderBy('created_at', 'desc')
-    ->get();
-```
-
-### Limit & Offset
-You may use the `skip` and `take` methods to limit the number of results returned from the query or to skip a given number of results in the query:
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->skip(10)
-    ->take(5)
     ->get();
 ```
 
 ## Joins
-The query builder may also be used to write join statements. To perform a basic "inner join", you may use the `join` method on a query builder instance:
 
 ```php
-$bookings = Query::table('fcal_bookings')
+$bookings = fluentBookingDb()->table('fcal_bookings')
     ->join('fcal_calendars', 'fcal_bookings.calendar_id', '=', 'fcal_calendars.id')
     ->select(['fcal_bookings.*', 'fcal_calendars.title as calendar_name'])
     ->get();
 ```
 
-## Pagination
-The query builder provides a simple way to paginate database results.
+## Inserts & Updates
 
-### `paginate`
-The `paginate` method automatically takes care of setting the proper limit and offset based on the current page.
-
+### Inserts
 ```php
-$bookings = Query::table('fcal_bookings')->paginate(15);
-
-foreach ($bookings as $booking) {
-    echo $booking->title;
-}
-
-// Render pagination links
-echo $bookings->links();
-```
-
-### `simplePaginate`
-If you only need "Next" and "Previous" links, you may use the `simplePaginate` method:
-
-```php
-$bookings = Query::table('fcal_bookings')->simplePaginate(15);
-```
-
-## Raw Expressions
-Sometimes you may need to use a raw expression in a query. You can create a raw expression using the `raw` method.
-
-> [!WARNING]
-> Raw statements will be injected into the query as strings, so you must be extremely careful to not create SQL injection vulnerabilities.
-
-```php
-$users = Query::table('fcal_bookings')
-    ->select(Query::raw('count(*) as booking_count, status'))
-    ->where('status', '<>', 1)
-    ->groupBy('status')
-    ->get();
-```
-
-### Raw Methods
-- `selectRaw`
-- `whereRaw / orWhereRaw`
-- `havingRaw / orHavingRaw`
-- `orderByRaw`
-- `groupByRaw`
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->whereRaw('price > IF(state = "TX", ?, 100)', [200])
-    ->get();
-```
-
-## Advanced Where Clauses
-
-### JSON Where Clauses
-Fluent Booking includes support for querying JSON column types.
-
-```php
-$bookings = Query::table('fcal_bookings')
-    ->where('options->language', 'en')
-    ->get();
-
-$bookings = Query::table('fcal_bookings')
-    ->whereJsonContains('options->languages', 'en')
-    ->get();
-    
-$bookings = Query::table('fcal_bookings')
-    ->whereJsonLength('options->languages', '>', 1)
-    ->get();
-```
-
-### Dynamic Where Clauses
-You may use dynamic Where clauses to clean up your code. 
-
-```php
-// whereId(1) becomes where('id', '=', 1)
-$booking = Query::table('fcal_bookings')->whereId(1)->first();
-
-// whereStatus('completed') becomes where('status', '=', 'completed')
-$bookings = Query::table('fcal_bookings')->whereStatus('completed')->get();
-```
-
-## Chunking Results
-If you need to work with thousands of database records, consider using the `chunk` method. This method retrieves a small chunk of results at a time and feeds each chunk into a `Closure` for processing.
-
-```php
-Query::table('fcal_bookings')->orderBy('id')->chunk(100, function ($bookings) {
-    foreach ($bookings as $booking) {
-        // Process booking...
-    }
-});
-```
-
-The query builder also provides an `insert` method for inserting records into the database table. The `insert` method accepts an array of column names and values:
-
-```php
-Query::table('fcal_calendars')->insert([
-    'user_id' => 1,
-    'title'   => 'My New Calendar',
-    'slug'    => 'my-new-calendar',
-    'status'  => 'active',
-    'created_at' => date('Y-m-d H:i:s'),
-    'updated_at' => date('Y-m-d H:i:s')
+$id = fluentBookingDb()->table('fcal_bookings')->insertGetId([
+    'calendar_id' => 1,
+    'email' => 'john@example.com',
+    'status' => 'scheduled'
 ]);
 ```
 
-### Auto-Incrementing IDs
-If the table has an auto-incrementing id, use the `insertGetId` method to insert a record and then retrieve the ID:
-
+### Updates
 ```php
-$id = Query::table('fcal_calendars')->insertGetId([
-    'title' => 'Consultation Calendar',
-    'user_id' => 2
-]);
-```
-
-## Updates
-In addition to inserting records into the database, the query builder can also update existing records using the `update` method:
-
-```php
-Query::table('fcal_bookings')
+fluentBookingDb()->table('fcal_bookings')
     ->where('id', 1)
     ->update(['status' => 'completed']);
 ```
 
-### Increment & Decrement
-The query builder also provides convenient methods for complex update statements:
-
+### Deletes
 ```php
-Query::table('fcal_bookings')->increment('total_paid');
-Query::table('fcal_bookings')->increment('total_paid', 50);
-Query::table('fcal_bookings')->decrement('total_paid');
+fluentBookingDb()->table('fcal_bookings')->where('status', 'cancelled')->delete();
 ```
 
-### Update or Insert
-Sometimes you may want to update an existing record or create it if no matching record exists:
-
-```php
-Query::table('fcal_bookings')
-    ->updateOrInsert(
-        ['email' => 'john@example.com', 'calendar_id' => 1],
-        ['status' => 'active']
-    );
-```
-
-## Deletes
-The query builder may also be used to remove records from the database via the `delete` method:
-
-```php
-Query::table('fcal_bookings')->where('id', 123)->delete();
-```
-
-## Conditional Clauses
-Sometimes you may want to apply clauses to a query only when something else is true. The `when` method helps you write cleaner code:
-
-```php
-$role = $_GET['role'] ?? null;
-
-$users = Query::table('fcal_bookings')
-    ->when($role, function ($query, $role) {
-        return $query->where('role_id', $role);
-    })
-    ->get();
-```
-
-## Unions
-The query builder also provides a quick way to "union" two queries together:
-
-```php
-$first = Query::table('fcal_bookings')
-            ->where('status', 'cancelled');
-
-$bookings = Query::table('fcal_bookings')
-            ->where('status', 'completed')
-            ->union($first)
-            ->get();
-```
-
-## Debugging
-You can use the `dd` or `dump` methods while building a query to dump the query bindings and SQL.
-
-```php
-Query::table('fcal_bookings')->where('status', 'completed')->dd();
-```
-
-To get the raw SQL string without stopping execution:
-
-```php
-$sql = Query::table('fcal_bookings')->where('id', 1)->toSql();
-```
 ## Fluent Booking Specific Query Examples
 
-### Activity Logging Queries
-
+### Host Performance and Revenue
 ```php
-// Get all activities for a specific booking
-$bookingActivities = Query::table('fcal_booking_activity')
-    ->where('booking_id', 123)
-    ->orderBy('created_at', 'desc')
-    ->get();
-
-// Get failed email logs in the last 24 hours
-$failedEmails = Query::table('fcal_booking_activity')
-    ->where('type', 'email_log')
-    ->where('status', 'failed')
-    ->where('created_at', '>=', gmdate('Y-m-d H:i:s', strtotime('-1 day')))
-    ->get();
-```
-
-### Host Performance Queries
-
-```php
-// Get total bookings per calendar
-$calendarStats = Query::table('fcal_calendars')
-    ->leftJoin('fcal_bookings', 'fcal_calendars.id', '=', 'fcal_bookings.calendar_id')
+$calendarStats = fluentBookingDb()->table('fcal_calendars')
+    ->leftJoin('fcal_orders', 'fcal_calendars.id', '=', 'fcal_orders.parent_id')
     ->select([
         'fcal_calendars.id',
         'fcal_calendars.title',
-        Query::raw('COUNT(fcal_bookings.id) as total_bookings'),
-        Query::raw('SUM(fcal_bookings.total_paid) as revenue')
+        fluentBookingDb()->raw('COUNT(fcal_orders.id) as total_paid_bookings'),
+        fluentBookingDb()->raw('SUM(fcal_orders.total_paid) as total_revenue')
     ])
-    ->where('fcal_bookings.status', 'completed')
+    ->where('fcal_orders.status', 'paid')
     ->groupBy('fcal_calendars.id')
     ->get();
 ```
 
-### Meta Queries
-
+### Meta and Activity Queries
 ```php
-// Get all bookings with a specific custom field value
-$metaBookings = Query::table('fcal_bookings')
-    ->join('fcal_booking_meta', 'fcal_bookings.id', '=', 'fcal_booking_meta.booking_id')
-    ->where('fcal_booking_meta.key', 'company_name')
-    ->where('fcal_booking_meta.value', 'AuthLab')
-    ->select('fcal_bookings.*')
+// Get count of failed email logs per booking
+$failedLogs = fluentBookingDb()->table('fcal_booking_activity')
+    ->where('type', 'email_log')
+    ->where('status', 'failed')
+    ->select(['booking_id', fluentBookingDb()->raw('count(*) as failure_count')])
+    ->groupBy('booking_id')
     ->get();
 ```
