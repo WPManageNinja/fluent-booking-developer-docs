@@ -44,25 +44,46 @@ All tables are prefixed with `fcal_` (or your custom WordPress prefix).
 ### `fcal_calendars`
 The master table for calendars.
 - `id`: Primary key
-- `user_id`: Owner's WP User ID
 - `hash`: Unique public identifier
+- `user_id`: Owner's WP User ID
+- `account_id`: Associated integration account ID
+- `parent_id`: Parent calendar ID (teams)
 - `title`: Calendar name
 - `slug`: Public URL slug
-- `type`: `simple` (individual), `team`, or `event`
-- `author_timezone`: Host's default timezone
+- `media_id`: Featured image ID
+- `description`: Calendar description
 - `settings`: (JSON) Color, notification defaults, etc.
 - `status`: `active` or `inactive`
+- `type`: `simple` (individual), `team`, or `event`
+- `event_type`: Primary event category
+- `account_type`: `free` / `pro`
+- `visibility`: `public` / `hidden`
+- `author_timezone`: Host's default timezone
+- `max_book_per_slot`: Default guests limit per slot
 
 ### `fcal_calendar_events`
 Represents bookable event types (Slots).
 - `id`: Primary key
+- `hash`: Unique public identifier
+- `user_id`: Creator's WP User ID
 - `calendar_id`: Parent calendar
+- `duration`: Minutes
 - `title`: Event name
 - `slug`: Event public slug
-- `duration`: Minutes
-- `event_type`: `single`, `group`, `round_robin`, `collective`, etc.
-- `location_type`: e.g., `google_meet`, `zoom_meeting`, `in_person`
+- `media_id`: Featured image ID
+- `description`: Event description
 - `settings`: (JSON) Buffer time, date ranges, etc.
+- `availability_type`: `existing_schedule` / `custom`
+- `availability_id`: Linked availability ID
+- `status`: `active` or `inactive`
+- `type`: `free` / `paid`
+- `color_schema`: Display color
+- `location_type`: Primary location type
+- `location_heading`: Custom label for location
+- `location_settings`: (JSON) Multi-location config
+- `event_type`: `single`, `group`, `round_robin`, `collective`, etc.
+- `is_display_spots`: Show/hide remaining spots
+- `max_book_per_slot`: Max guests limit
 
 ### `fcal_bookings`
 Stores all appointment records.
@@ -70,11 +91,23 @@ Stores all appointment records.
 - `hash`: Public meeting identifier
 - `calendar_id`: Related calendar
 - `event_id`: Related event type
+- `group_id`: Group ID for multi-seat bookings
+- `parent_id`: Parent ID for repeating bookings
+- `host_user_id`: Assigned primary host
 - `person_user_id`: Attendee WP User ID (if logged in)
+- `person_contact_id`: CRM contact ID
+- `person_time_zone`: Attendee's timezone
 - `start_time`: UTC start
 - `end_time`: UTC end
-- `status`: `scheduled`, `cancelled`, `completed`, `pending`
-- `payment_status`: `pending`, `paid`, `refunded`, `failed`
+- `slot_minutes`: Booking duration
+- `first_name`, `last_name`, `email`, `phone`: Attendee info
+- `message`, `internal_note`: Notes/Message
+- `location_details`: (JSON) Final location info
+- `status`: `scheduled`, `cancelled`, `completed`, `pending`, `rescheduled`, `rejected`
+- `payment_status`: `pending`, `paid`, `partially-paid`, `partially-refunded`
+- `payment_method`: e.g., `stripe`, `paypal`
+- `source`: `web` / `admin` / `api`
+- `utm_source`, `utm_medium`, `utm_campaign`: Tracking params
 
 ### `fcal_orders` <Badge type="tip" text="Pro" />
 Financial records for paid bookings.
@@ -102,10 +135,29 @@ Polymorphic storage for various objects.
 - `value`: (Serialized) Meta value
 
 ### `fcal_booking_meta`
-Key-value storage for specific booking data (e.g., custom fields).
+Polymorphic key-value storage for specific booking data (e.g., custom fields).
+- `booking_id`: Foreign key
+- `meta_key`, `value`: Metadata pairs
 
 ### `fcal_booking_activity`
-Audit log for bookings.
+Detailed audit log for all booking actions.
+- `booking_id`: Related booking
+- `parent_id`: Parent activity ID (nested)
+- `created_by`: WP User ID of actor
+- `status`: Status of action (`open`, `resolved`)
+- `type`: `activity`, `notification`, etc.
+- `title`, `description`: Log details
 
 ### `fcal_booking_hosts`
-Pivot table for multi-host bookings.
+Pivot table linking multiple hosts to a single booking.
+- `booking_id`: Related booking
+- `user_id`: Assigned host's WP User ID
+- `status`: `confirmed`, `pending`
+
+### `fcal_order_items` <Badge type="tip" text="Pro" />
+Detailed line items for financial orders.
+- `order_id`: Parent [Order](order)
+- `booking_id`: Associated booking
+- `item_name`: Display title
+- `type`: `booking_slot`, `discount`, `tax`
+- `quantity`, `item_price`, `item_total`: Financial data

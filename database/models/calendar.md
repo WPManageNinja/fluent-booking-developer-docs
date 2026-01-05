@@ -7,19 +7,30 @@ The `Calendar` model is the top-level container for scheduling settings, availab
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `id` | bigint | Primary key |
+| `hash` | varchar | Unique identification hash |
 | `user_id` | bigint | Owner's WordPress user ID |
+| `account_id` | bigint | Associated integration account ID (Optional) |
+| `parent_id` | bigint | Parent calendar ID (for teams/resources) |
 | `title` | varchar | Calendar name |
 | `slug` | varchar | Unique URL slug for the calendar landing page |
+| `media_id` | bigint | Featured image media ID |
+| `description` | text | Calendar description |
 | `settings` | longtext | JSON configuration for landing page and defaults |
-| `status` | varchar | active/inactive |
+| `status` | varchar | `active` / `inactive` |
 | `type` | varchar | `simple` (individual), `team`, or `event` |
+| `event_type` | varchar | Primary event category |
 | `author_timezone` | varchar | Default timezone for the calendar host |
+| `visibility` | varchar | `public` / `hidden` |
+| `max_book_per_slot` | int | Default limit of guests per time slot |
 
 ### `isHostCalendar()` / `isTeamCalendar()` / `isEventCalendar()`
 Check the primary role/type of the calendar.
 
 ### `getLandingPageUrl($isForce = false)`
 Returns the public URL for the calendar's landing page.
+
+### `getAuthorPhoto()`
+Returns the URL for the host's profile photo.
 
 ### `getMeta($key, $default = null)` / `updateMeta($key, $value)`
 Manage calendar-specific metadata stored in `fcal_meta`.

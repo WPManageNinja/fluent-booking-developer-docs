@@ -134,3 +134,27 @@ add_filter('fluent_booking/booking_meeting_title', function($title, $booking, $c
     return 'Project Sync: ' . $booking->first_name;
 }, 10, 3);
 ```
+---
+
+## fluent_booking/meeting_bookmarks
+
+Allows you to add or modify bookmarks associated with a booking (e.g., links to external documents or records).
+
+**Parameters:**
+- `$bookmarks` (array) - Array of bookmarks.
+- `$booking` (object) - The booking object.
+
+**Return:** (array) Modified bookmarks.
+
+---
+
+## fluent_booking/location_details_html
+
+Filters the HTML output of the location details for display in emails and customer confirmation pages.
+
+**Parameters:**
+- `$html` (string) - The location details HTML.
+- `$booking` (object) - The booking object.
+- `$calendar_event` (object) - The associated calendar event object.
+
+**Return:** (string) Modified HTML.

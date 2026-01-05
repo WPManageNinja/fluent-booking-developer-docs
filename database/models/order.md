@@ -7,16 +7,25 @@ The `Order` model manages financial records for bookings. It tracks payment stat
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `id` | bigint | Primary key |
-| `parent_id` | bigint | Reference to the [Booking](booking) ID |
-| `order_number` | varchar | Unique display identifier for the order |
-| `status` | varchar | `pending`, `processing`, `completed`, `refunded` |
-| `currency` | varchar | ISO currency code (e.g., USD, EUR) |
-| `subtotal` | decimal | Amount before taxes and discounts |
+| `order_number` | varchar | Unique order number |
+| `parent_id` | bigint | Associated booking ID |
+| `customer_id` | bigint | WordPress User ID of the customer |
+| `type` | varchar | Order type (e.g., `booking`, `service`) |
+| `total_amount` | decimal | Total price including taxes |
+| `currency` | varchar | e.g., `USD`, `EUR` |
+| `status` | varchar | `pending`, `paid`, `refunded`, `failed` |
+| `payment_method_type` | varchar | e.g., `stripe`, `paypal` |
+| `payment_mode` | varchar | `test` / `live` |
+| `payment_method_title` | varchar | Human-readable payment method name |
 | `discount_total` | decimal | Total discount applied |
-| `tax_total` | decimal | Total tax amount |
-| `total_amount` | decimal | Final total price |
+| `tax_total` | decimal | Total tax applied |
+| `ip_address` | varchar | Customer's IP address |
+| `note` | text | Order notes |
+| `completed_at` | timestamp | Payment completion time |
+| `refunded_at` | timestamp | Refund processing time |
+| `created_at` | timestamp | Record creation time |
+| `subtotal` | decimal | Amount before taxes and discounts |
 | `total_paid` | decimal | Amount collected so far |
-| `payment_method` | varchar | e.g., `stripe`, `paypal` |
 | `uuid` | varchar | Public unique identifier |
 
 ## Relations

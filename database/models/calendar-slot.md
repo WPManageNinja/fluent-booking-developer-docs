@@ -7,14 +7,25 @@ The `CalendarSlot` model (also referred to as an "Event Type") defines the rules
 | Attribute | Type | Description |
 |-----------|------|-------------|
 | `id` | bigint | Primary key |
+| `hash` | varchar | Unique identification hash |
+| `user_id` | bigint | Creator's WordPress user ID |
 | `calendar_id` | bigint | Parent calendar ID |
+| `duration` | int | Event duration in minutes |
 | `title` | varchar | Event name (e.g., "30 Min Consultation") |
 | `slug` | varchar | Event URL slug |
-| `duration` | int | Event duration in minutes |
-| `settings` | longtext | JSON for notifications, integrations, etc. |
-| `status` | varchar | active/inactive |
+| `media_id` | bigint | Featured image media ID |
+| `description` | longtext | Event description |
+| `settings` | longtext | JSON for notifications, ranges, and conditions |
+| `availability_type` | varchar | `existing_schedule` / `custom` |
+| `availability_id` | bigint | Linked schedule ID |
+| `status` | varchar | `active` / `inactive` |
+| `type` | varchar | Payment type (`free` / `paid`) |
 | `event_type` | varchar | `single`, `group`, `round_robin`, `collective`, `single_event`, `group_event` |
 | `location_type` | varchar | e.g., `google_meet`, `zoom_meeting`, `in_person` |
+| `location_heading` | text | Custom heading for location field |
+| `location_settings` | longtext | JSON configuration for multiple locations |
+| `is_display_spots` | boolean | Whether to show remaining spots for group bookings |
+| `max_book_per_slot` | int | Max guests allowed per time slot |
 
 ## Methods
 
@@ -42,8 +53,23 @@ Returns the custom form fields defined for this event type.
 ### `getNotifications()`
 Retrieve the configured email notification settings.
 
-### `getAvailableDurations()`
-Returns an array of supported durations if multi-duration is enabled.
+### `getDuration($requestedDuration = null)`
+Returns the actual duration. Supports multi-duration lookups.
+
+### `getDescription()`
+Returns a formatted description or default text if empty.
+
+### `getSlotInterval()`
+Returns the interval between bookable slots (defaults to duration).
+
+### `getMaxBookableDateTime($startDate)`
+Calculates the maximum date a guest can book based on range settings.
+
+### `getHostIds()`
+Returns an array of WordPress User IDs assigned to this slot.
+
+### `getLocationFields()`
+Returns available location options for editing.
 
 ### `getAuthorProfiles($public = true)`
 Returns an array of profiles for all hosts (team members) assigned to this event.
