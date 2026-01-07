@@ -39,11 +39,9 @@ Responses are generally returned as JSON objects. Collections of items are usual
     { "id": 1, "title": "Discovery Call" },
     { "id": 2, "title": "Monthly Sync" }
   ],
-  "meta": {
-    "total": 24,
-    "per_page": 10,
-    "current_page": 1
-  }
+  "total": 24,
+  "per_page": 10,
+  "current_page": 1
 }
 ```
 

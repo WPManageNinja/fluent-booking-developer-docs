@@ -15,35 +15,57 @@ List endpoints support pagination to help manage large datasets. You can control
 GET /wp-json/fluent-booking/v2/calendars?page=2&per_page=20
 ```
 
-## User Profile (xprofile)
+## Get Calendars
 
-Many endpoints return user information. When available, the user profile is typically included in the `xprofile` field.
+The Calendars resource allows you to retrieve details about all scheduling calendars, including their status, type, public URL, associated author information, and their available slots. Each calendar object includes metadata and an array of slots (event types) associated with that calendar.
 
 ### Structure
 
 ```json
 {
-    "user_id": 1,
-    "total_points": 6425,
-    "is_verified": 1,
-    "status": "active",
-    "display_name": "User Name",
-    "username": "username",
-    "avatar": "https://example.com/avatar.jpg",
-    "created_at": "2024-03-05 16:37:02",
-    "short_description": "User description",
-    "meta": {
-        "website": "https://example.com",
-        "cover_photo": "https://example.com/cover.jpg",
-        "social_links": {
-            "twitter": "@handle",
-            "youtube": "@handle",
-            "linkedin": "handle",
-            "fb": "handle",
-            "instagram": "handle"
+  "calendars": {
+    "data": [
+      {
+        "id": 1,
+        "title": "Team Calendar",
+        "slug": "team-calendar",
+        "status": "active",
+        "type": "team",
+        "public_url": "https://example.com/calendar/team-calendar",
+        "author_profile": {
+          "ID": 10,
+          "name": "Jane Doe"
         },
-        "badge_slug": ["badge1", "badge2"]
-    },
-    "badge": null
+        "slots": [
+          {
+            "id": 101,
+            "title": "30-Min Intro",
+            "status": "active",
+            "type": "free"
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "title": "Personal Calendar",
+        "slug": "personal-calendar",
+        "status": "active",
+        "type": "simple",
+        "public_url": "https://example.com/calendar/personal-calendar",
+        "author_profile": {
+          "ID": 11,
+          "name": "John Smith"
+        },
+        "slots": [
+          {
+            "id": 102,
+            "title": "Quick Call",
+            "status": "active",
+            "type": "paid"
+          }
+        ]
+      }
+    ]
+  }
 }
 ```
