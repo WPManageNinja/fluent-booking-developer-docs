@@ -58,7 +58,6 @@ export default defineConfig({
                 { text: 'BookingActivity', link: '/database/models/booking-activity' },
                 { text: 'BookingHost', link: '/database/models/booking-host' },
                 { text: 'BookingMeta', link: '/database/models/booking-meta' },
-                { text: 'Staff', link: '/database/models/staff' },
                 { text: 'Meta', link: '/database/models/meta' }
               ]
             },

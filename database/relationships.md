@@ -4,7 +4,7 @@ Fluent Booking database tables are interconnected via primary and foreign key re
 
 ## Relationship Types
 
-- **One-to-One**: A User has one Staff profile.
+- **One-to-One**: A User has one profile.
 - **One-to-Many**: A Calendar has many Events.
 - **Many-to-Many**: A Booking has many Hosts (via `fcal_booking_hosts`).
 

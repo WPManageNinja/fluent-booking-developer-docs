@@ -28,11 +28,13 @@ The `Booking` model represents a scheduled appointment or booking in Fluent Book
 | `status` | varchar | `scheduled`, `pending`, `cancelled`, `rejected`, `rescheduled`, `completed` |
 | `payment_status` | varchar | `pending`, `paid`, `partially-paid`, `partially-refunded` |
 | `payment_method` | varchar | e.g., `stripe`, `paypal` |
-| `source` | varchar | Source of the booking (e.g., `web`, `admin`) |
+| `source` | varchar | Source of the booking (e.g., `web`, `admin`, `integration`) |
 | `ip_address` | varchar | IP address of the guest |
 | `utm_source` | varchar | Tracking parameter |
 | `utm_medium` | varchar | Tracking parameter |
 | `utm_campaign` | varchar | Tracking parameter |
+| `utm_term` | varchar | Tracking parameter |
+| `utm_content` | varchar | Tracking parameter |
 | `created_at` | timestamp | Record creation time in UTC |
 
 ## Methods

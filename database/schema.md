@@ -52,45 +52,45 @@ The master table for calendars.
 - `slug`: Public URL slug
 - `media_id`: Featured image ID
 - `description`: Calendar description
-- `settings`: (JSON) Color, notification defaults, etc.
-- `status`: `active` or `inactive`
+- `settings`: Additional Configurations
+- `status`: `active`, `inactive` or `expired`
 - `type`: `simple` (individual), `team`, or `event`
 - `event_type`: Primary event category
 - `account_type`: `free` / `pro`
-- `visibility`: `public` / `hidden`
+- `visibility`: `public` / `admin`
 - `author_timezone`: Host's default timezone
-- `max_book_per_slot`: Default guests limit per slot
+- `max_book_per_slot`: Default guests limit per calendar
 
 ### `fcal_calendar_events`
 Represents bookable event types (Slots).
 - `id`: Primary key
 - `hash`: Unique public identifier
 - `user_id`: Creator's WP User ID
-- `calendar_id`: Parent calendar
-- `duration`: Minutes
+- `calendar_id`: Parent calendar ID
+- `duration`: Length of event in Minutes
 - `title`: Event name
 - `slug`: Event public slug
 - `media_id`: Featured image ID
 - `description`: Event description
-- `settings`: (JSON) Buffer time, date ranges, etc.
+- `settings`: (Serialized) Additional configurations stored. Examples include buffer times, available date ranges, date_overrides, booking limits etc.
 - `availability_type`: `existing_schedule` / `custom`
-- `availability_id`: Linked availability ID
-- `status`: `active` or `inactive`
+- `availability_id`: ID for existing schedule availability
+- `status`: `active` / `inactive` / `draft` / `expired`
 - `type`: `free` / `paid`
 - `color_schema`: Display color
 - `location_type`: Primary location type
 - `location_heading`: Custom label for location
-- `location_settings`: (JSON) Multi-location config
-- `event_type`: `single`, `group`, `round_robin`, `collective`, etc.
-- `is_display_spots`: Show/hide remaining spots
-- `max_book_per_slot`: Max guests limit
+- `location_settings`: (Serialized) Multi-location config
+- `event_type`: `single`, `group`, `single_event`, `group_event`, `round_robin`, `collective`, etc.
+- `is_display_spots`: Show/hide remaining spots of group event
+- `max_book_per_slot`: Max guests limit of group event
 
 ### `fcal_bookings`
 Stores all appointment records.
 - `id`: Primary key
 - `hash`: Public meeting identifier
-- `calendar_id`: Related calendar
-- `event_id`: Related event type
+- `calendar_id`: Related calendar ID
+- `event_id`: Related event ID
 - `group_id`: Group ID for multi-seat bookings
 - `parent_id`: Parent ID for repeating bookings
 - `host_user_id`: Assigned primary host
@@ -101,63 +101,115 @@ Stores all appointment records.
 - `end_time`: UTC end
 - `slot_minutes`: Booking duration
 - `first_name`, `last_name`, `email`, `phone`: Attendee info
-- `message`, `internal_note`: Notes/Message
-- `location_details`: (JSON) Final location info
+- `message`: Meeting Notes for User
+- `internal_note`: Internal Notes for Admin
+- `location_details`: (Serialized) Selected Booking Location Info
 - `status`: `scheduled`, `cancelled`, `completed`, `pending`, `rescheduled`, `rejected`
 - `payment_status`: `pending`, `paid`, `partially-paid`, `partially-refunded`
-- `payment_method`: e.g., `stripe`, `paypal`
-- `source`: `web` / `admin` / `api`
-- `utm_source`, `utm_medium`, `utm_campaign`: Tracking params
+- `payment_method`: `stripe`, `paypal`, `offline` etc
+- `source`: `web` / `admin` / `integration`
+- `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`: Tracking params
 
-### `fcal_orders` <Badge type="tip" text="Pro" />
-Financial records for paid bookings.
+### `fcal_booking_meta`
+Polymorphic key-value storage for specific booking data (e.g., custom fields).
 - `id`: Primary key
-- `parent_id`: Related [Booking](booking) ID
-- `order_number`: Display ID
-- `total_amount`: `DECIMAL(18,9)`
-- `total_paid`: `DECIMAL(18,9)`
-- `currency`: ISO code
-- `status`: `pending`, `paid`, `refunded`
+- `booking_id`: Foreign key
+- `meta_key`: Meta key
+- `value`: (Serialized) Meta value
 
-### `fcal_transactions` <Badge type="tip" text="Pro" />
-Gateway-specific transaction logs.
+### `fcal_booking_activity`
+Detailed audit log for all booking actions.
 - `id`: Primary key
-- `object_id`: Related [Order](order) ID
-- `vendor_charge_id`: Gateway reference ID
-- `total`: `DECIMAL(18,9)`
-- `status`: Payment status
+- `booking_id`: Related booking
+- `parent_id`: Parent activity ID (nested)
+- `created_by`: WP User ID of actor
+- `status`: Status of action (`success`, `closed`)
+- `type`: `info`, `success`, `error`, etc.
+- `title`, `description`: Log details
+
+### `fcal_booking_hosts`
+Pivot table linking multiple hosts to a single booking.
+- `id`: Primary key
+- `booking_id`: Related booking
+- `user_id`: Assigned host's WP User ID
+- `status`: `confirmed`, `pending`
 
 ### `fcal_meta`
 Polymorphic storage for various objects.
+- `id`: Primary key
 - `object_type`: `Calendar`, `calendar_event`, `availability`, etc.
 - `object_id`: Related ID
 - `key`: Meta key
 - `value`: (Serialized) Meta value
 
-### `fcal_booking_meta`
-Polymorphic key-value storage for specific booking data (e.g., custom fields).
-- `booking_id`: Foreign key
-- `meta_key`, `value`: Metadata pairs
+### `fcal_orders` <Badge type="tip" text="Pro" />
+Financial orders table for paid bookings.
 
-### `fcal_booking_activity`
-Detailed audit log for all booking actions.
-- `booking_id`: Related booking
-- `parent_id`: Parent activity ID (nested)
-- `created_by`: WP User ID of actor
-- `status`: Status of action (`open`, `resolved`)
-- `type`: `activity`, `notification`, etc.
-- `title`, `description`: Log details
+- `id`: BIGINT UNSIGNED, Primary key, Auto-increment
+- `status`: VARCHAR(20), Order status (default `'draft'`)
+- `parent_id`: BIGINT UNSIGNED, Related [Booking](booking) ID (not null)
+- `order_number`: VARCHAR(255), Order display/reference ID
+- `type`: VARCHAR(20), Order type (default `'sale'`)
+- `customer_id`: BIGINT UNSIGNED, Related customer ID
+- `payment_method`: VARCHAR(100), Payment gateway/method (e.g., `stripe`)
+- `payment_mode`: VARCHAR(100), Payment mode (e.g., `credit_card`)
+- `payment_method_type`: VARCHAR(100), Further method details
+- `payment_method_title`: VARCHAR(100), Human-readable payment method label
+- `currency`: VARCHAR(10), ISO currency code
+- `subtotal`: DECIMAL(18,9), Order subtotal before discounts/tax
+- `discount_tax`: DECIMAL(18,9), Discount tax amount
+- `discount_total`: DECIMAL(18,9), Discount pre-tax
+- `shipping_tax`: DECIMAL(18,9), Shipping tax
+- `shipping_total`: DECIMAL(18,9), Shipping cost
+- `tax_total`: DECIMAL(18,9), Total tax amount
+- `total_amount`: DECIMAL(18,9), Final order total (after all fees/discounts)
+- `total_paid`: DECIMAL(18,9), Amount paid towards this order
+- `rate`: DECIMAL(18,9), Conversion rate if multi-currency (default 1)
+- `note`: TEXT, Public order note
+- `ip_address`: TEXT, Payer IP address
+- `completed_at`: DATETIME, When marked completed (nullable)
+- `refunded_at`: DATETIME, When refunded (nullable)
+- `uuid`: VARCHAR(100), Unique identifier (for external integrations)
+- `created_at`: TIMESTAMP, Created at
+- `updated_at`: TIMESTAMP, Last updated at
 
-### `fcal_booking_hosts`
-Pivot table linking multiple hosts to a single booking.
-- `booking_id`: Related booking
-- `user_id`: Assigned host's WP User ID
-- `status`: `confirmed`, `pending`
+**Indexes**:
+- `type` (order type)
+- `order_number` (191 length), for quick lookup
+- `customer_id` (customer reference)
 
 ### `fcal_order_items` <Badge type="tip" text="Pro" />
 Detailed line items for financial orders.
+- `id`: Primary key
 - `order_id`: Parent [Order](order)
 - `booking_id`: Associated booking
 - `item_name`: Display title
-- `type`: `booking_slot`, `discount`, `tax`
+- `type`: `single`, `discount`, `tax`
 - `quantity`, `item_price`, `item_total`: Financial data
+
+### `fcal_transactions` <Badge type="tip" text="Pro" />
+Gateway-specific transaction logs.
+
+- `id`: BIGINT(20) UNSIGNED, Primary key, Auto-increment
+- `object_id`: BIGINT UNSIGNED, Related [Order](order) ID (not null, default `0`)
+- `object_type`: VARCHAR(100), Object type (not null, default `''`)
+- `transaction_type`: VARCHAR(255), Transaction type (default `'one_time'`)
+- `subscription_id`: INT(11), Related subscription ID (nullable)
+- `card_last_4`: INT(4), Card last 4 digits (nullable)
+- `card_brand`: VARCHAR(255), Card brand (nullable)
+- `vendor_charge_id`: VARCHAR(192), Gateway reference ID (not null, default `''`)
+- `payment_method`: VARCHAR(100), Payment gateway/method (not null, default `''`)
+- `payment_method_type`: VARCHAR(100), Further payment method details (not null, default `''`)
+- `status`: VARCHAR(20), Payment status (not null, default `''`)
+- `total`: DECIMAL(18,9), Total transaction amount (not null, default `0.000000000`)
+- `rate`: DECIMAL(10,5), Currency conversion rate (not null, default `1.00000`)
+- `uuid`: VARCHAR(100), Unique identifier (not null, default `''`)
+- `meta`: JSON, Additional metadata (nullable)
+- `created_at`: TIMESTAMP, Created at (nullable)
+- `updated_at`: TIMESTAMP, Last updated at (nullable)
+
+**Indexes**:
+- `vendor_charge_id` (first 64 chars), for gateway lookups
+- `payment_method`
+- `status`
+- `object_id`

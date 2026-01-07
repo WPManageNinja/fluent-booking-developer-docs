@@ -16,12 +16,12 @@ The `Calendar` model is the top-level container for scheduling settings, availab
 | `media_id` | bigint | Featured image media ID |
 | `description` | text | Calendar description |
 | `settings` | longtext | JSON configuration for landing page and defaults |
-| `status` | varchar | `active` / `inactive` |
+| `status` | varchar | `active`, `inactive` or `expired` |
 | `type` | varchar | `simple` (individual), `team`, or `event` |
 | `event_type` | varchar | Primary event category |
 | `author_timezone` | varchar | Default timezone for the calendar host |
-| `visibility` | varchar | `public` / `hidden` |
-| `max_book_per_slot` | int | Default limit of guests per time slot |
+| `visibility` | varchar | `public` / `admin` |
+| `max_book_per_slot` | int | Default limit of guests per time calendar |
 
 ### `isHostCalendar()` / `isTeamCalendar()` / `isEventCalendar()`
 Check the primary role/type of the calendar.

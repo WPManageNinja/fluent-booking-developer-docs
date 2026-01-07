@@ -58,7 +58,7 @@ You may also use the `count`, `sum`, `max`, and other aggregate methods:
 ```php
 $count = Booking::where('status', 'scheduled')->count();
 
-$totalPaid = Booking::where('payment_status', 'paid')->sum('total_paid');
+$totalPaid = Booking::where('payment_status', 'paid')->count();
 ```
 
 ## Inserting & Updating Models
@@ -150,7 +150,6 @@ Internal models for availability, logs, and multi-host logic.
 - [BookingActivity Model](/database/models/booking-activity) - Audit logs for all booking actions
 - [BookingHost Model](/database/models/booking-host) - Pivot for managing multiple hosts
 - [BookingMeta Model](/database/models/booking-meta) - Specific metadata for bookings
-- [Staff Model](/database/models/staff) - Host profile management
 - [Meta Model](/database/models/meta) - Generic polymorphic metadata system
 
 ### Pro Plugin Models <Badge type="tip" text="Pro" />
@@ -164,7 +163,7 @@ Advanced models available in the Pro version.
 ### Activity Logging
 ```php
 $booking = Booking::find(1);
-$booking->bookingActivity()->create([
+$booking->booking_activities()->create([
     'status' => 'note',
     'description' => 'Customer called to confirm'
 ]);

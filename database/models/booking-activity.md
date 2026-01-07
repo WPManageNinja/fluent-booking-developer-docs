@@ -9,10 +9,10 @@ The `BookingActivity` model logs every significant event related to a booking, s
 | `id` | bigint | Primary key |
 | `booking_id` | bigint | Reference to the associated booking |
 | `created_by` | bigint | WordPress User ID of the person who created the log |
-| `type` | varchar | `activity`, `note`, `email_log`, `payment_log` |
+| `type` | varchar | `info`, `success`, `error` |
+| `status` | varchar | `open`, `failed`, `success`, `closed` |
 | `title` | varchar | Human-readable title of the activity |
 | `description` | longtext | Detailed log description |
-| `status` | varchar | `open`, `failed`, `success` |
 
 ## Relations
 
