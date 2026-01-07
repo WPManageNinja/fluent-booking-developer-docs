@@ -274,7 +274,7 @@ Returns the updated calendar object and a status message.
 ```
 
 **Note:**  
-Only the description is guaranteed to be updated via this endpoint. Additional calendar fields (such as `title` and `timezone`) may be updated under special endpoints (see [Sharing Settings](#) for extra profile fields).
+Only the description is guaranteed to be updated via this endpoint. Additional calendar fields (such as `title` and `timezone`) may be updated under special endpoints (see [Sharing Settings](sharing-settings.html) for extra profile fields).
 
 
 ## Delete Calendar
