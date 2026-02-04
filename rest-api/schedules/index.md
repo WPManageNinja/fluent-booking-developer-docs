@@ -17,13 +17,12 @@ GET /schedules
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `page` | integer | No | Page number (default: 1) |
-| `per_page` | integer | No | Items per page (default: 15) |
-| `status` | string | No | Filter by status: `scheduled`, `pending`, `cancelled`, `completed` |
-| `event_id` | integer | No | Filter by event ID |
-| `calendar_id` | integer | No | Filter by calendar ID |
 | `search` | string | No | Search by attendee name or email |
-| `date_from` | string | No | Filter from date (YYYY-MM-DD) |
-| `date_to` | string | No | Filter to date (YYYY-MM-DD) |
+| `filters[event]` | integer | No | Filter by event ID |
+| `filters[author]` | integer\|string | No | Filter by calendar ID, `me` for current user, or `all` |
+| `filters[event_type]` | string | No | Filter by event type (e.g., `single`, `group`) |
+| `filters[period]` | string | No | Time period: `upcoming`, `past`, `today`, `cancelled` (default: `upcoming`) |
+| `filters[range]` | array | No | Custom date range filter |
 
 ### Response
 
@@ -107,13 +106,19 @@ GET /schedules/{id}
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `with[]` | array | No | Include additional data. Pass `all_data` to include activities, meta info, and payment data |
+
 ### Response
 
 Returns complete booking details with attendee information and event settings.
 
 ```json
 {
-    "booking": {
+    "schedule": {
         "id": 1,
         "event_id": 2,
         "calendar_id": 1,
@@ -129,35 +134,7 @@ Returns complete booking details with attendee information and event settings.
         "timezone": "America/New_York",
         "location_details": {
             "type": "phone_guest",
-            "value": "+1234567890",
-            "display": "Call attendee at +1234567890"
-        },
-        "additional_fields": {
-            "company": "Acme Corp",
-            "role": "Product Manager"
-        },
-        "guests": [
-            {
-                "email": "jane.smith@example.com",
-                "name": "Jane Smith"
-            }
-        ],
-        "event": {
-            "id": 2,
-            "title": "30 Minute Consultation",
-            "description": "Quick consultation call",
-            "duration": 30
-        },
-        "calendar": {
-            "id": 1,
-            "title": "Jane Smith",
-            "user_id": 1
-        },
-        "host": {
-            "id": 1,
-            "name": "Jane Smith",
-            "email": "jane@example.com",
-            "timezone": "UTC"
+            "value": "+1234567890"
         }
     }
 }
@@ -165,7 +142,7 @@ Returns complete booking details with attendee information and event settings.
 
 ## Update Schedule
 
-Update a scheduled booking.
+Update a field on a scheduled booking. Updates are applied one field at a time using the `column` and `value` parameters.
 
 ### Endpoint
 
@@ -183,31 +160,76 @@ PUT /schedules/{id}
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `status` | string | No | Update status: `scheduled`, `cancelled`, `completed` |
-| `first_name` | string | No | Update attendee first name |
-| `last_name` | string | No | Update attendee last name |
-| `email` | string | No | Update attendee email |
-| `phone` | string | No | Update phone number |
-| `message` | string | No | Update message/notes |
-| `start_time` | string | No | Reschedule to new time |
-| `location_details` | object | No | Update location details |
+| `column` | string | Yes | Field to update. Valid values: `status`, `payment_status`, `internal_note`, `email`, `phone`, `first_name`, `last_name` |
+| `value` | string | Yes | New value for the field |
+| `cancel_reason` | string | Conditional | Required when setting `column=status` and `value=cancelled` |
+| `reject_reason` | string | Conditional | Required when setting `column=status` and `value=rejected` |
+| `refund_payment` | string | No | Set to `yes` to refund payment when cancelling/rejecting |
+| `update_all` | boolean | No | Update all attendees in a multi-guest booking |
 
-### Example Request
+### Valid Status Values
+
+| Value | Description |
+| :--- | :--- |
+| `scheduled` | Confirm/approve the booking |
+| `completed` | Mark as completed |
+| `cancelled` | Cancel the booking (requires `cancel_reason`) |
+| `rejected` | Reject the booking (requires `reject_reason`) |
+| `no_show` | Mark attendee as no-show |
+
+### Valid Payment Status Values
+
+| Value | Description |
+| :--- | :--- |
+| `pending` | Payment is pending |
+| `paid` | Payment completed |
+
+### Example Requests
+
+**Cancel a booking:**
 
 ```json
 {
-    "status": "completed",
-    "message": "Meeting was very productive"
+    "column": "status",
+    "value": "cancelled",
+    "cancel_reason": "Schedule conflict"
+}
+```
+
+**Update internal note:**
+
+```json
+{
+    "column": "internal_note",
+    "value": "Discussed project requirements"
+}
+```
+
+**Mark payment as paid:**
+
+```json
+{
+    "column": "payment_status",
+    "value": "paid"
 }
 ```
 
 ### Response
 
-Returns the updated booking object.
+The response message varies depending on the column and value:
+
+- For `status` set to `cancelled` or `rejected`: `"The booking has been cancelled"` / `"The booking has been rejected"`
+- For other column updates: `"{Column} has been updated"` (e.g., `"Status has been updated"`, `"Email has been updated"`)
+
+```json
+{
+    "message": "Status has been updated"
+}
+```
 
 ## Delete Schedule
 
-Delete (cancel) a scheduled booking.
+Permanently delete a booking record.
 
 ### Endpoint
 
@@ -221,39 +243,16 @@ DELETE /schedules/{id}
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
-### Request Body
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `cancellation_reason` | string | No | Reason for cancellation |
-
 ### Response
 
 ```json
 {
-    "message": "Booking cancelled successfully"
+    "message": "Booking Deleted Successfully!"
 }
 ```
 
-## Get Schedule Slot
-
-Retrieve availability slot information for a booking.
-
-### Endpoint
-
-```http
-GET /schedules/{id}/slot
-```
-
-### URL Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | integer | Yes | The schedule/booking ID |
-
-### Response
-
-Returns slot availability and timing information.
+> [!WARNING]
+> This permanently deletes the booking. For multi-guest bookings, all attendees in the group are also deleted. To cancel a booking while preserving the record, use the Update Schedule endpoint with `column=status` and `value=cancelled` instead.
 
 ## Get Booking Activities
 
@@ -312,13 +311,43 @@ GET /schedules/{id}/meta-info
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `with` | string | No | Pass `all_data` to include activities, payment order, and transaction data |
+
 ### Response
 
-Returns booking metadata including custom fields and internal data.
+Returns booking metadata including activities, sidebar content, and payment information.
+
+```json
+{
+    "activities": [
+        {
+            "id": 1,
+            "booking_id": 1,
+            "type": "booking_created",
+            "description": "Booking created by John Doe",
+            "created_at": "2025-01-10T08:30:00+00:00"
+        }
+    ],
+    "sidebar_contents": [],
+    "payment_order": null,
+    "main_body_contents": []
+}
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `activities` | array | Activity log entries for the booking |
+| `sidebar_contents` | array | Additional sidebar content (e.g., CRM profile if FluentCRM is active) |
+| `payment_order` | object\|null | Payment order with items and transaction data (if applicable) |
+| `main_body_contents` | array | Additional metadata content from integrations |
 
 ## Send Confirmation Email
 
-Manually send confirmation email for a booking.
+Manually resend a confirmation email for a booking.
 
 ### Endpoint
 
@@ -332,11 +361,17 @@ POST /schedules/{id}/send-confirmation-email
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `email_to` | string | No | Recipient: `guest` (default) or `host` |
+
 ### Response
 
 ```json
 {
-    "message": "Confirmation email sent successfully"
+    "message": "Notification sent successfully"
 }
 ```
 
@@ -356,30 +391,36 @@ GET /schedules/group-bookings/{group_id}/attendees
 | :--- | :--- | :--- | :--- |
 | `group_id` | integer | Yes | The group booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `search` | string | No | Search attendees by name or email |
+
 ### Response
 
-Returns array of attendees in the group booking.
+Returns a paginated list of attendees in the group booking.
 
 ```json
 {
-    "attendees": [
-        {
-            "id": 1,
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john.doe@example.com",
-            "status": "confirmed"
-        },
-        {
-            "id": 2,
-            "first_name": "Jane",
-            "last_name": "Smith",
-            "email": "jane.smith@example.com",
-            "status": "confirmed"
-        }
-    ],
-    "total_attendees": 2,
-    "max_attendees": 10
+    "attendees": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 5,
+                "event_id": 2,
+                "group_id": 1,
+                "first_name": "John",
+                "last_name": "Doe",
+                "email": "john.doe@example.com",
+                "status": "scheduled"
+            }
+        ],
+        "total": 1,
+        "per_page": 15,
+        "current_page": 1,
+        "last_page": 1
+    }
 }
 ```
 

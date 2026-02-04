@@ -12,6 +12,12 @@ Retrieve all availability schedules.
 GET /availability
 ```
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `filters[author]` | integer\|string | No | Filter by user ID, `me` for current user, or `all` for all users |
+
 ### Response
 
 Returns a list of availability schedules with their settings and usage count.
@@ -158,7 +164,7 @@ Returns complete schedule details.
 
 ## Create Availability Schedule
 
-Create a new availability schedule.
+Create a new availability schedule. The schedule is initialized with a default weekly schedule schema. Weekly schedules and date overrides are configured after creation using the Update endpoint.
 
 ### Endpoint
 
@@ -170,106 +176,45 @@ POST /availability
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | string | Yes | Schedule title |
-| `timezone` | string | Yes | Timezone (e.g., "America/New_York", "UTC") |
-| `weekly_schedules` | object | Yes | Weekly availability configuration |
-| `date_overrides` | array | No | Specific date overrides |
-| `default` | boolean | No | Mark as default schedule |
+| `title` | string | Yes | Schedule title (must be unique per host) |
+| `timezone` | string | No | Timezone (e.g., "America/New_York"). Falls back to the host's calendar timezone, then `"UTC"` |
 
 ### Example Request
 
 ```json
 {
     "title": "Business Hours",
-    "timezone": "America/New_York",
-    "default": true,
-    "weekly_schedules": {
-        "mon": {
-            "enabled": true,
-            "slots": [
-                {
-                    "start": "09:00",
-                    "end": "12:00"
-                },
-                {
-                    "start": "13:00",
-                    "end": "17:00"
-                }
-            ]
-        },
-        "tue": {
-            "enabled": true,
-            "slots": [
-                {
-                    "start": "09:00",
-                    "end": "17:00"
-                }
-            ]
-        },
-        "wed": {
-            "enabled": true,
-            "slots": [
-                {
-                    "start": "09:00",
-                    "end": "17:00"
-                }
-            ]
-        },
-        "thu": {
-            "enabled": true,
-            "slots": [
-                {
-                    "start": "09:00",
-                    "end": "17:00"
-                }
-            ]
-        },
-        "fri": {
-            "enabled": true,
-            "slots": [
-                {
-                    "start": "09:00",
-                    "end": "17:00"
-                }
-            ]
-        },
-        "sat": {
-            "enabled": false,
-            "slots": []
-        },
-        "sun": {
-            "enabled": false,
-            "slots": []
-        }
-    },
-    "date_overrides": [
-        {
-            "date": "2025-12-25",
-            "enabled": false,
-            "reason": "Christmas Day - Closed"
-        },
-        {
-            "date": "2025-07-04",
-            "enabled": true,
-            "slots": [
-                {
-                    "start": "09:00",
-                    "end": "13:00"
-                }
-            ],
-            "reason": "Independence Day - Half Day"
-        }
-    ]
+    "timezone": "America/New_York"
 }
 ```
 
 ### Response
 
-Returns the created schedule object.
+```json
+{
+    "schedule": {
+        "id": 3,
+        "key": "Business Hours",
+        "object_id": 1,
+        "value": {
+            "default": false,
+            "timezone": "America/New_York",
+            "weekly_schedules": {
+                "...": "Default weekly schedule"
+            }
+        },
+        "created_at": "2025-01-15T10:00:00+00:00"
+    },
+    "message": "Schedule has been created successfully"
+}
+```
+
+> [!NOTE]
+> The first schedule created for a host is automatically set as the default. Subsequent schedules have `default` set to `false`. If a schedule with the same title already exists for the host, a 422 error is returned.
 
 ## Update Availability Schedule
 
-Update an existing availability schedule.
+Update the weekly schedules, date overrides, and timezone for an existing availability schedule.
 
 ### Endpoint
 
@@ -285,11 +230,103 @@ POST /availability/{schedule_id}
 
 ### Request Body
 
-Same parameters as Create Availability Schedule.
+All schedule data must be nested under `schedule.settings`:
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `schedule.settings.timezone` | string | No | Timezone (defaults to current schedule timezone) |
+| `schedule.settings.weekly_schedules` | object | No | Weekly availability configuration |
+| `schedule.settings.date_overrides` | array | No | Specific date overrides |
+
+### Example Request
+
+```json
+{
+    "schedule": {
+        "settings": {
+            "timezone": "America/New_York",
+            "weekly_schedules": {
+                "mon": {
+                    "enabled": true,
+                    "slots": [
+                        {
+                            "start": "09:00",
+                            "end": "12:00"
+                        },
+                        {
+                            "start": "13:00",
+                            "end": "17:00"
+                        }
+                    ]
+                },
+                "tue": {
+                    "enabled": true,
+                    "slots": [
+                        {
+                            "start": "09:00",
+                            "end": "17:00"
+                        }
+                    ]
+                },
+                "wed": {
+                    "enabled": true,
+                    "slots": [
+                        {
+                            "start": "09:00",
+                            "end": "17:00"
+                        }
+                    ]
+                },
+                "thu": {
+                    "enabled": true,
+                    "slots": [
+                        {
+                            "start": "09:00",
+                            "end": "17:00"
+                        }
+                    ]
+                },
+                "fri": {
+                    "enabled": true,
+                    "slots": [
+                        {
+                            "start": "09:00",
+                            "end": "17:00"
+                        }
+                    ]
+                },
+                "sat": {
+                    "enabled": false,
+                    "slots": []
+                },
+                "sun": {
+                    "enabled": false,
+                    "slots": []
+                }
+            },
+            "date_overrides": [
+                {
+                    "date": "2025-12-25",
+                    "enabled": false,
+                    "reason": "Christmas Day - Closed"
+                }
+            ]
+        }
+    }
+}
+```
 
 ### Response
 
-Returns the updated schedule object.
+```json
+{
+    "message": "Schedule has been updated successfully",
+    "schedule": {
+        "id": 1,
+        "...": "Updated schedule object"
+    }
+}
+```
 
 ## Update Schedule Title
 
@@ -311,7 +348,7 @@ POST /availability/{schedule_id}/update-title
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `title` | string | Yes | New schedule title |
+| `title` | string | Yes | New schedule title (must be unique per host) |
 
 ### Example Request
 
@@ -325,17 +362,14 @@ POST /availability/{schedule_id}/update-title
 
 ```json
 {
-    "message": "Schedule title updated successfully",
-    "schedule": {
-        "id": 1,
-        "title": "Updated Office Hours"
-    }
+    "message": "Schedule title has been updated successfully",
+    "title": "Updated Office Hours"
 }
 ```
 
 ## Update Default Status
 
-Mark a schedule as default or remove default status.
+Mark a schedule as the default for its host. This always sets the schedule as default and removes default status from any other schedule for the same host.
 
 ### Endpoint
 
@@ -351,29 +385,19 @@ POST /availability/{schedule_id}/update-status
 
 ### Request Body
 
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `default` | boolean | Yes | Set as default schedule |
-
-### Example Request
-
-```json
-{
-    "default": true
-}
-```
+No body parameters required. This endpoint always sets the targeted schedule as the default.
 
 ### Response
 
 ```json
 {
-    "message": "Schedule status updated successfully"
+    "message": "Status has been updated successfully"
 }
 ```
 
 ## Clone Availability Schedule
 
-Create a copy of an existing availability schedule.
+Create a copy of an existing availability schedule. The cloned schedule has "(Clone)" appended to the title and is never set as default.
 
 ### Endpoint
 
@@ -387,26 +411,19 @@ POST /availability/{schedule_id}/clone
 | :--- | :--- | :--- | :--- |
 | `schedule_id` | integer | Yes | The schedule ID to clone |
 
-### Request Body
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `title` | string | No | Title for the cloned schedule (defaults to "Copy of [original title]") |
-
 ### Response
-
-Returns the newly created (cloned) schedule object.
 
 ```json
 {
-    "message": "Schedule cloned successfully",
     "schedule": {
         "id": 3,
-        "title": "Copy of Weekly Hours",
-        "settings": {
-            ...
+        "key": "Weekly Hours (Clone)",
+        "value": {
+            "default": false,
+            "...": "Cloned schedule settings"
         }
-    }
+    },
+    "message": "Schedule has been cloned successfully"
 }
 ```
 
@@ -430,12 +447,12 @@ DELETE /availability/{schedule_id}
 
 ```json
 {
-    "message": "Schedule deleted successfully"
+    "message": "Schedule Availability has been deleted successfully"
 }
 ```
 
 > [!WARNING]
-> You cannot delete a schedule that is currently being used by calendar events. Remove the schedule from all events first.
+> You cannot delete a schedule that is currently being used by calendar events. Remove the schedule from all events first. Default schedules also cannot be deleted if the host has an active calendar.
 
 ## Get Schedule Usages
 
@@ -470,7 +487,12 @@ Returns a paginated list of events using this schedule.
                 "duration": 30,
                 "status": "active",
                 "availability_type": "existing_schedule",
-                "availability_id": "1"
+                "availability_id": "1",
+                "calendar": {
+                    "id": 1,
+                    "title": "Jane Smith",
+                    "...": "Calendar fields"
+                }
             }
         ],
         "total": 1,

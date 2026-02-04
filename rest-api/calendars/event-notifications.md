@@ -149,7 +149,11 @@ POST /calendars/{id}/events/{event_id}/email-notifications
 
 ### Response
 
-Returns the updated notifications object.
+```json
+{
+    "message": "Notifications has been saved"
+}
+```
 
 ## Clone Event Email Notifications
 
@@ -172,13 +176,13 @@ POST /calendars/{id}/events/{event_id}/email-notifications/clone
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `source_event_id` | integer | Yes | The event ID to copy notifications from |
+| `from_event_id` | integer | Yes | The event ID to copy notifications from |
 
 ### Response
 
 ```json
 {
-    "message": "Email notifications cloned successfully",
+    "message": "The Notification has been cloned successfully",
     "notifications": {
         ...
     }

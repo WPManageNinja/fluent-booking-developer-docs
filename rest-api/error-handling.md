@@ -13,7 +13,7 @@ The API uses standard HTTP status codes to indicate the success or failure of a 
         "wpfluent": {
             "env": "dev",
             "method": "GET",
-            "request_url": "https://yoursite.com/wp-json/fluent-community/v2/endpoint",
+            "request_url": "https://yoursite.com/wp-json/fluent-booking/v2/endpoint",
             "route_params": [],
             "query_params": [],
             "body_params": []
@@ -41,7 +41,7 @@ The API uses standard HTTP status codes to indicate the success or failure of a 
         "wpfluent": {
             "env": "dev",
             "method": "GET",
-            "request_url": "https://community.lab/wp-json/fluent-community/v2/feeds",
+            "request_url": "https://yoursite.com/wp-json/fluent-booking/v2/calendars",
             "route_params": [],
             "query_params": [],
             "body_params": []

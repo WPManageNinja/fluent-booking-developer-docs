@@ -148,13 +148,13 @@ POST /calendars/{id}/events/{event_id}/booking-fields
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `fields` | array | Yes | Array of field objects |
+| `booking_fields` | array | Yes | Array of field objects |
 
 ### Example Request
 
 ```json
 {
-    "fields": [
+    "booking_fields": [
         {
             "index": 1,
             "type": "text",
@@ -187,7 +187,11 @@ POST /calendars/{id}/events/{event_id}/booking-fields
 
 ### Response
 
-Returns the updated fields array.
+```json
+{
+    "message": "Fields has been updated"
+}
+```
 
 ## Related Resources
 

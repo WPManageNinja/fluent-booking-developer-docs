@@ -132,45 +132,69 @@ POST /calendars/{id}/events/{event_id}/availability
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `schedule_type` | string | Yes | Schedule type: `weekly_schedules` or `custom_schedule` |
-| `weekly_schedules` | object | No | Weekly availability (if schedule_type is `weekly_schedules`) |
-| `range_type` | string | No | Range type: `range_days` or `range_date_between` |
-| `range_days` | integer | No | Number of days in advance bookings are allowed |
-| `buffer_time_before` | string | No | Buffer time before event (in minutes) |
-| `buffer_time_after` | string | No | Buffer time after event (in minutes) |
+| `schedule_type` | string | Yes | Scheduling mode (e.g., `weekly_schedules`) |
+| `weekly_schedules` | object | Conditional | Required when `schedule_type` is `weekly_schedules`. Provide slots in the calendar host's timezone |
+| `date_overrides` | array | No | Date-specific overrides |
+| `range_type` | string | No | Availability range mode: `range_days` or `date_range` |
+| `range_days` | integer | No | Number of days bookable when using `range_days` (default `60`) |
+| `range_date_between` | array | No | Two-element array `[start_date, end_date]` for `date_range` |
+| `common_schedule` | boolean | No | When `true`, reuse a shared host schedule for team events |
+| `hosts_schedules` | object | Conditional | Map of host user IDs to availability IDs. Required for team events when `common_schedule` is `false` |
+| `availability_type` | string | No | `existing_schedule` or `custom` |
+| `availability_id` | integer | No | Availability schedule ID when using `existing_schedule` |
 
-### Example weekly_schedules Object
+> [!NOTE]
+> Buffer times (`buffer_time_before`, `buffer_time_after`, `slot_interval`) are managed separately through the [Event Limits](/rest-api/calendars/event-settings#update-event-limits) endpoint.
+
+### Example Request
 
 ```json
 {
-    "mon": {
-        "enabled": true,
-        "slots": [
-            {
-                "start": "09:00",
-                "end": "12:00"
-            },
-            {
-                "start": "14:00",
-                "end": "17:00"
-            }
-        ]
+    "schedule_type": "weekly_schedules",
+    "weekly_schedules": {
+        "mon": {
+            "enabled": true,
+            "slots": [
+                {
+                    "start": "09:00",
+                    "end": "12:00"
+                },
+                {
+                    "start": "14:00",
+                    "end": "17:00"
+                }
+            ]
+        },
+        "tue": {
+            "enabled": true,
+            "slots": [
+                {
+                    "start": "09:00",
+                    "end": "17:00"
+                }
+            ]
+        }
     },
-    "tue": {
-        "enabled": true,
-        "slots": [
-            {
-                "start": "09:00",
-                "end": "17:00"
-            }
-        ]
-    }
+    "range_type": "range_days",
+    "range_days": 60,
+    "availability_type": "custom"
 }
 ```
 
 ### Response
 
-Returns the updated availability settings.
+```json
+{
+    "message": "Data has been updated",
+    "event": {
+        "id": 15,
+        "settings": {
+            "schedule_type": "weekly_schedules",
+            "...": "Updated availability settings"
+        }
+    }
+}
+```
 
 ## Related Resources
 

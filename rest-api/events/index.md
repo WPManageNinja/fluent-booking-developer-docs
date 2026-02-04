@@ -18,6 +18,12 @@ GET /events/{event_id}
 | :--- | :--- | :--- | :--- |
 | `event_id` | integer | Yes | The event ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `event_hash` | string | No | Event hash as fallback identifier. If `event_id` does not match, the API attempts to find the event by this hash |
+
 ### Response
 
 Returns complete event details.

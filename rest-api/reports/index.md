@@ -4,7 +4,7 @@ The Reports API provides analytics and activity data for bookings and calendars.
 
 ## Get Reports
 
-Retrieve booking reports and statistics.
+Retrieve booking dashboard overview with statistics widgets, latest bookings, and upcoming meetings.
 
 ### Endpoint
 
@@ -16,53 +16,95 @@ GET /reports
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `date_from` | string | No | Start date (YYYY-MM-DD) |
-| `date_to` | string | No | End date (YYYY-MM-DD) |
-| `calendar_id` | integer | No | Filter by calendar |
-| `event_id` | integer | No | Filter by event |
+| `startTime` | string | No | Start date/time (YYYY-MM-DD HH:mm:ss). If omitted, defaults to the last 30 days |
+| `endTime` | string | No | End date/time (YYYY-MM-DD HH:mm:ss). If omitted, defaults to current time |
+
+> [!NOTE]
+> Both `startTime` and `endTime` must be provided together. If either is missing, the API returns all-time statistics with the last 30 days used for comparison stats.
 
 ### Response
 
-Returns booking statistics and metrics.
+Returns an overview array of widget objects, latest bookings, and upcoming meetings.
 
 ```json
 {
-    "reports": {
-        "total_bookings": 150,
-        "confirmed_bookings": 120,
-        "pending_bookings": 15,
-        "cancelled_bookings": 15,
-        "total_revenue": 15000.00,
-        "average_booking_value": 100.00,
-        "popular_events": [
-            {
-                "event_id": 2,
-                "title": "30 Minute Consultation",
-                "bookings_count": 85
-            }
-        ],
-        "bookings_by_status": {
-            "scheduled": 120,
-            "pending": 15,
-            "cancelled": 15
+    "overview": [
+        {
+            "title": "Total Bookings",
+            "period": "all",
+            "number": 150,
+            "content": "More than last month",
+            "icon": "<svg>...</svg>",
+            "stat": 12.5
         },
-        "bookings_by_date": [
-            {
-                "date": "2025-01-15",
-                "count": 12
-            }
-        ]
-    },
-    "date_range": {
-        "from": "2025-01-01",
-        "to": "2025-01-31"
-    }
+        {
+            "title": "Completed Bookings",
+            "period": "completed",
+            "number": 120,
+            "content": "More than last month",
+            "icon": "<svg>...</svg>",
+            "stat": 8.3
+        },
+        {
+            "title": "Cancelled Bookings",
+            "period": "cancelled",
+            "number": 15,
+            "content": "Less than last month",
+            "icon": "<svg>...</svg>",
+            "stat": -5.0
+        },
+        {
+            "title": "Total Guests",
+            "number": 95,
+            "content": "Same as last month",
+            "icon": "<svg>...</svg>",
+            "stat": 0
+        }
+    ],
+    "latest_books": [
+        {
+            "id": 1,
+            "status": "scheduled",
+            "first_name": "John",
+            "last_name": "Doe",
+            "email": "john@example.com",
+            "start_time": "2025-01-15 10:00:00",
+            "end_time": "2025-01-15 10:30:00",
+            "...": "Additional booking fields"
+        }
+    ],
+    "next_meetings": [
+        {
+            "id": 2,
+            "status": "scheduled",
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "start_time": "2025-01-16 14:00:00",
+            "end_time": "2025-01-16 14:30:00",
+            "title": "30 Minute Consultation with Jane Smith",
+            "author": {
+                "name": "Host Name"
+            },
+            "...": "Additional booking fields"
+        }
+    ]
 }
 ```
 
+### Overview Widget Fields
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `title` | string | Widget title |
+| `period` | string | Period identifier (e.g., `all`, `completed`, `cancelled`) |
+| `number` | integer | Count for the metric |
+| `content` | string | Comparison message (e.g., "More than last month") |
+| `icon` | string | SVG icon markup |
+| `stat` | number | Percentage change compared to previous period |
+
 ## Get Graph Reports
 
-Retrieve data formatted for graphical visualization.
+Retrieve booking data formatted for graphical visualization.
 
 ### Endpoint
 
@@ -72,33 +114,58 @@ GET /reports/graph-reports
 
 ### Query Parameters
 
-Same as Get Reports endpoint.
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `date_range` | array | No | Array of two date strings: `[start_date, end_date]` in YYYY-MM-DD format |
+
+### Example Request
+
+```
+GET /reports/graph-reports?date_range[0]=2025-01-01&date_range[1]=2025-01-31
+```
 
 ### Response
 
-Returns data optimized for charts and graphs.
+Returns time-series data for booked, completed, and cancelled bookings.
 
 ```json
 {
-    "graph_data": {
-        "labels": ["Week 1", "Week 2", "Week 3", "Week 4"],
-        "datasets": [
-            {
-                "label": "Bookings",
-                "data": [25, 30, 28, 35]
-            },
-            {
-                "label": "Revenue",
-                "data": [2500, 3000, 2800, 3500]
-            }
-        ]
-    }
+    "booked_stats": [
+        {
+            "label": "Jan 01",
+            "count": 5
+        },
+        {
+            "label": "Jan 08",
+            "count": 8
+        }
+    ],
+    "completed_stats": [
+        {
+            "label": "Jan 01",
+            "count": 3
+        },
+        {
+            "label": "Jan 08",
+            "count": 6
+        }
+    ],
+    "cancelled_stats": [
+        {
+            "label": "Jan 01",
+            "count": 1
+        },
+        {
+            "label": "Jan 08",
+            "count": 0
+        }
+    ]
 }
 ```
 
 ## Get Activities
 
-Retrieve activity logs and recent actions.
+Retrieve recent activity logs. Returns the latest 100 activity entries (not paginated).
 
 ### Endpoint
 
@@ -106,54 +173,33 @@ Retrieve activity logs and recent actions.
 GET /reports/activities
 ```
 
-### Query Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `page` | integer | No | Page number |
-| `per_page` | integer | No | Items per page (max 50) |
-| `type` | string | No | Activity type filter |
-
 ### Response
 
-Returns paginated activity log.
+Returns an array of activity log entries.
 
 ```json
 {
-    "activities": {
-        "current_page": 1,
-        "data": [
-            {
-                "id": 1,
-                "type": "booking_created",
-                "description": "New booking created for 30 Minute Consultation",
-                "user_name": "John Doe",
-                "created_at": "2025-01-15T10:30:00+00:00"
-            },
-            {
-                "id": 2,
-                "type": "booking_cancelled",
-                "description": "Booking cancelled by attendee",
-                "user_name": "Jane Smith",
-                "created_at": "2025-01-15T09:15:00+00:00"
-            }
-        ],
-        "total": 150,
-        "per_page": 15
-    }
+    "activities": [
+        {
+            "id": 1,
+            "booking_id": 1,
+            "type": "booking_created",
+            "description": "New booking created for 30 Minute Consultation",
+            "created_at": "2025-01-15T10:30:00+00:00"
+        },
+        {
+            "id": 2,
+            "booking_id": 1,
+            "type": "email_sent",
+            "description": "Confirmation email sent to john@example.com",
+            "created_at": "2025-01-15T10:30:15+00:00"
+        }
+    ]
 }
 ```
 
-### Activity Types
-
-| Type | Description |
-| :--- | :--- |
-| `booking_created` | New booking created |
-| `booking_updated` | Booking modified |
-| `booking_cancelled` | Booking cancelled |
-| `booking_rescheduled` | Booking rescheduled |
-| `payment_received` | Payment processed |
-| `email_sent` | Email notification sent |
+> [!NOTE]
+> Activities are limited to the most recent 100 entries. There is no pagination or filtering support for this endpoint.
 
 ## Related Resources
 

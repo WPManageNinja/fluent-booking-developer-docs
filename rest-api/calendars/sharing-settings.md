@@ -1,6 +1,6 @@
 # Calendar Sharing Settings
 
-Configure landing page and sharing settings for calendars. Sharing settings determine how calendar events are displayed on public-facing pages.
+Configure landing page and sharing settings for calendars. Sharing settings determine how calendar events are displayed on public-facing pages. This endpoint also manages the host's profile information (name, timezone, avatar, etc.).
 
 ## Get Sharing Settings
 
@@ -43,7 +43,7 @@ Returns sharing settings and the public share URL.
 
 ## Update Sharing Settings
 
-Update the sharing settings for a calendar.
+Update the calendar's host profile and landing page settings.
 
 ### Endpoint
 
@@ -61,35 +61,45 @@ POST /calendars/{id}/sharing-settings
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `enabled` | string | Yes | Enable/disable sharing: `yes` or `no` |
-| `show_type` | string | No | Display type: `all` or `selected` |
-| `enabled_slots` | array | No | Event IDs to show (when show_type is `selected`) |
+| `calendar_data` | object | No | Host profile data |
+| `calendar_data.title` | string | Conditional | Host/calendar name (required if `calendar_data` is provided) |
+| `calendar_data.timezone` | string | No | Host timezone (IANA identifier) |
+| `calendar_data.description` | string | No | Calendar description (HTML allowed, sanitized) |
+| `calendar_data.calendar_avatar` | string | No | Profile photo URL (must be valid URL) |
+| `calendar_data.featured_image` | string | No | Featured image URL (must be valid URL) |
+| `calendar_data.phone` | string | No | Host phone number |
+| `landing_page_settings` | object | No | Landing page display settings |
 
 ### Example Request
 
 ```json
 {
-    "enabled": "yes",
-    "show_type": "selected",
-    "enabled_slots": [1, 2, 5]
+    "calendar_data": {
+        "title": "Jane Smith",
+        "timezone": "America/New_York",
+        "description": "Schedule a meeting with me",
+        "calendar_avatar": "https://example.com/avatar.jpg",
+        "featured_image": "https://example.com/banner.jpg",
+        "phone": "+1234567890"
+    },
+    "landing_page_settings": {
+        "enabled": "yes",
+        "show_type": "selected",
+        "enabled_slots": [1, 2, 5]
+    }
 }
 ```
 
 ### Response
 
-Returns the updated settings and share URL.
-
 ```json
 {
-    "message": "Sharing settings updated successfully",
-    "settings": {
-        "enabled": "yes",
-        "enabled_slots": [1, 2, 5],
-        "show_type": "selected"
-    },
-    "share_url": "https://yoursite.com/?fluent-booking=calendar&host=john-doe"
+    "message": "Landing Page settings has been updated"
 }
 ```
+
+> [!NOTE]
+> When updating `calendar_data.timezone`, the system automatically adjusts all event schedules associated with this calendar to the new timezone.
 
 ## Related Resources
 

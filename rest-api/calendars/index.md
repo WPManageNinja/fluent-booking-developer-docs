@@ -18,8 +18,9 @@ GET /calendars
 | :--- | :--- | :--- | :--- |
 | `page` | integer | No | Page number for pagination (default: 1) |
 | `per_page` | integer | No | Number of items per page (default: 15) |
-| `search` | string | No | Search by calendar events title |
-| `calendarType` | string | No | Filter by calendar type (e.g., "booking") |
+| `query[search]` | string | No | Search by calendar event title |
+| `query[calendarType]` | string | No | Filter by calendar type (e.g., `simple`, `team`, or `all`) |
+| `with[]` | string | No | Pass `calendar_event_lists` to include calendar/event options grouped by hosts, teams, and events |
 
 ### Response
 
@@ -201,7 +202,6 @@ curl -X POST "https://yoursite.com/wp-json/fluent-booking/v2/calendars" \
       }
     }
   }'
-```
 ```
 
 ### Response

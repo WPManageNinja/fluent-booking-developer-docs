@@ -1,88 +1,34 @@
 # Transactions <Badge type="tip" text="Pro" />
 
-Manage payment transactions for bookings.
+Transaction data in Fluent Booking is accessible as part of the booking metadata.
 
-## Update Transaction
+> [!NOTE]
+> There are no standalone transaction endpoints in the REST API. Transaction and payment information is included when retrieving booking details through the [Schedules API](/rest-api/schedules/).
 
-Update a payment transaction associated with a booking.
+## Viewing Transaction Data
 
-### Endpoint
+Transaction information is available through the booking meta-info endpoint:
 
 ```http
-PUT /schedules/{id}/transactions/{transaction_id}
+GET /schedules/{id}/meta-info
 ```
 
-### URL Parameters
+When the `with` parameter includes `all_data`, the response will include payment order and transaction data associated with the booking.
 
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | integer | Yes | The schedule/booking ID |
-| `transaction_id` | integer | Yes | The transaction ID |
+Payment status can be updated on a booking using the schedule update endpoint with `column` set to `payment_status`:
 
-### Request Body
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `status` | string | No | Transaction status: `paid`, `pending`, `refunded`, `failed` |
-| `payment_method` | string | No | Payment method used |
-| `amount` | number | No | Transaction amount |
-| `currency` | string | No | Currency code (e.g., "USD") |
-| `transaction_ref` | string | No | External transaction reference |
-| `notes` | string | No | Internal notes about the transaction |
-
-### Example Request
+```http
+PUT /schedules/{id}
+```
 
 ```json
 {
-    "status": "paid",
-    "transaction_ref": "ch_1234567890",
-    "notes": "Payment processed successfully via Stripe"
+    "column": "payment_status",
+    "value": "paid"
 }
 ```
-
-### Response
-
-Returns the updated transaction object.
-
-```json
-{
-    "message": "Transaction updated successfully",
-    "transaction": {
-        "id": 1,
-        "booking_id": 1,
-        "status": "paid",
-        "payment_method": "stripe",
-        "amount": 100.00,
-        "currency": "USD",
-        "transaction_ref": "ch_1234567890",
-        "notes": "Payment processed successfully via Stripe",
-        "created_at": "2025-01-10T08:30:00+00:00",
-        "updated_at": "2025-01-10T09:00:00+00:00"
-    }
-}
-```
-
-## Transaction Status Values
-
-| Status | Description |
-| :--- | :--- |
-| `pending` | Payment is pending |
-| `paid` | Payment completed successfully |
-| `refunded` | Payment was refunded |
-| `failed` | Payment failed |
-| `cancelled` | Payment was cancelled |
-
-## Supported Payment Methods
-
-The following payment methods may be available depending on your configuration:
-
-- `stripe` - Stripe payments
-- `paypal` - PayPal payments
-- `woocommerce` - WooCommerce integration
-- `offline` - Offline/manual payment
-- `free` - Free booking (no payment required)
 
 ## Related Resources
 
 - [Schedules](/rest-api/schedules/)
-- [Payment Settings](/rest-api/calendars/event-settings)
+- [Payments](/rest-api/payments/)
