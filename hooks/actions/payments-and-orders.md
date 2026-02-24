@@ -139,3 +139,154 @@ add_action('fluent_booking/refund_payment_stripe', function($booking, $calendar_
 ```
 
 **Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/register_payment_methods
+
+Fires during payment system initialization, allowing third-party payment methods to be registered.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/register_payment_methods', function() {
+    // Register a custom payment method
+});
+```
+
+**Location:** `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php`
+
+---
+
+## fluent_booking/payment/ipn_endpoint_{paymentMethod}
+
+Dynamic hook that fires when an IPN (Instant Payment Notification) endpoint is hit for a specific payment method. The `{paymentMethod}` is the payment gateway identifier (e.g., `stripe`, `paypal`).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/payment/ipn_endpoint_stripe', function() {
+    // Handle Stripe IPN/webhook callback
+});
+```
+
+**Location:** `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php`
+
+---
+
+## fluent_booking/payment/pay_order_with_{paymentMethod}
+
+Dynamic hook that fires to process a payment with a specific payment method. The `{paymentMethod}` is the payment gateway identifier.
+
+**Parameters:**
+- `$booking` (object) - The booking model object.
+- `$calendarSlot` (object) - The calendar event/slot object.
+- `$order` (object) - The order object.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/payment/pay_order_with_stripe', function($booking, $calendarSlot, $order) {
+    // Process the Stripe payment
+}, 10, 3);
+```
+
+**Location:** `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php`
+
+---
+
+## fluent_booking/payment/payment_settings_update_{method}
+
+Dynamic hook that fires when payment method settings are updated. The `{method}` is the payment gateway identifier.
+
+**Parameters:**
+- `$data` (array) - The settings data being saved.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/payment/payment_settings_update_stripe', function($data) {
+    // React to Stripe settings being updated
+}, 10, 1);
+```
+
+**Location:** `fluent-booking-pro/app/Http/Controllers/PaymentMethodController.php`
+
+---
+
+## fluent_booking/payment/status_changed_{paymentMethod}
+
+Dynamic hook that fires when a payment status changes for a specific payment method. The `{paymentMethod}` is the payment gateway identifier.
+
+**Parameters:**
+- `$order` (object) - The order object.
+- `$booking` (object) - The associated booking model.
+- `$transactionData` (array) - The transaction data including the new status.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/payment/status_changed_stripe', function($order, $booking, $transactionData) {
+    // Handle Stripe-specific payment status change
+    $status = $transactionData['status'];
+}, 10, 3);
+```
+
+**Location:** `fluent-booking-pro/app/Http/Controllers/TransactionController.php`
+
+---
+
+## fluent-booking/before_render_payment_method_{slug}
+
+Dynamic hook that fires before a payment method UI is rendered on the booking form. The `{slug}` is the payment method slug (e.g., `stripe`, `paypal`, `offline`).
+
+> [!NOTE]
+> Note the hook prefix uses a hyphen (`fluent-booking`) instead of the usual slash (`fluent_booking`).
+
+**Parameters:**
+- `$method` (array) - The payment method configuration array.
+
+**Example Usage:**
+```php
+add_action('fluent-booking/before_render_payment_method_stripe', function($method) {
+    // Add custom content before the Stripe payment method renders
+}, 10, 1);
+```
+
+**Location:** `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php`, `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/Paypal.php`, `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php`
+
+---
+
+## fluent_booking/payment_receipt/after_content
+
+Fires after the payment receipt content is rendered.
+
+**Parameters:**
+- `$order` (object) - The order object.
+- `$receiptSettings` (array) - The receipt display settings.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/payment_receipt/after_content', function($order, $receiptSettings) {
+    // Add custom content to the payment receipt
+    echo '<p>Custom receipt note</p>';
+}, 10, 2);
+```
+
+**Location:** `fluent-booking-pro/app/Services/ReceiptHelper.php`
+
+---
+
+## fluent_booking/ipn_paypal_action_web_accept
+
+Fires when a PayPal IPN `web_accept` action is received and processed.
+
+**Parameters:**
+- `$encodedDataArray` (array) - The encoded PayPal IPN data.
+- `$bookingId` (int) - The booking ID.
+- `$booking` (object) - The booking model object.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/ipn_paypal_action_web_accept', function($encodedDataArray, $bookingId, $booking) {
+    // Custom logic for PayPal IPN web_accept events
+}, 10, 3);
+```
+
+**Location:** `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/API/IPN.php`
+

@@ -114,3 +114,25 @@ add_action('fluent_booking/availability_schedules', function($schedules) {
     // Custom logic for availability schedules
 }, 10, 1);
 ```
+
+---
+
+## fluent_booking/availability_schedules_query
+
+Fires when the availability schedules query is being built, allowing modification by reference.
+
+**Parameters:**
+- `&$query` (object) - The Eloquent query builder instance (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/availability_schedules_query', function(&$query) {
+    // Modify the availability schedules query (e.g., add custom filters)
+    $query->where('object_id', get_current_user_id());
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the query is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/AvailabilityController.php`

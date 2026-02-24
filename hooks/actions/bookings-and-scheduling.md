@@ -219,3 +219,275 @@ add_action('fluent_booking/log_booking_note', function($note_data) {
     $title = $note_data['title'];
 }, 10, 1);
 ```
+
+---
+
+## fluent_booking/before_booking
+
+Fires before a booking record is created in the database.
+
+**Parameters:**
+- `$bookingData` (array) - The processed booking data about to be inserted.
+- `$calendarSlot` (object) - The calendar event/slot object.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/before_booking', function($bookingData, $calendarSlot) {
+    // Validate or modify booking data before insertion
+    $email = $bookingData['email'];
+}, 10, 2);
+```
+
+**Location:** `app/Services/BookingService.php`
+
+---
+
+## fluent_booking/pre_after_booking_{status}
+
+Fires immediately after a booking status is set, before the main `after_booking_{status}` hook. This pre-hook is used for early actions such as remote calendar sync and location setup.
+
+**Parameters:**
+- `$booking` (object) - The booking model object.
+- `$calendarSlot` (object) - The associated calendar event/slot object.
+- `$bookingData` (array) - The raw booking data.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/pre_after_booking_scheduled', function($booking, $calendarSlot, $bookingData) {
+    // Early actions before main booking hooks fire (e.g., remote calendar sync)
+}, 10, 3);
+```
+
+> [!NOTE]
+> This hook is dynamically generated from the pattern `fluent_booking/pre_after_booking_{status}`. It fires before the corresponding `fluent_booking/after_booking_{status}` hook.
+
+**Location:** `app/Services/BookingService.php`, `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/after_booking_meta_update
+
+Fires after booking meta data (custom fields) has been saved.
+
+**Parameters:**
+- `$booking` (object) - The booking model object.
+- `$bookingData` (array) - The full booking data.
+- `$customFieldsData` (array) - The custom form fields data.
+- `$calendarSlot` (object) - The associated calendar event/slot object.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/after_booking_meta_update', function($booking, $bookingData, $customFieldsData, $calendarSlot) {
+    // Sync custom field data with external systems
+    $bookingId = $booking->id;
+}, 10, 4);
+```
+
+**Location:** `app/Services/BookingService.php`
+
+---
+
+## fluent_booking/before_patch_booking_schedule
+
+Fires before a booking schedule field is patched/updated.
+
+**Parameters:**
+- `$booking` (object) - The booking model object.
+- `$data` (array) - The patch data containing `column` and `value`.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/before_patch_booking_schedule', function($booking, $data) {
+    // Validate before patching a booking field
+    $column = $data['column'];
+    $value = $data['value'];
+}, 10, 2);
+```
+
+**Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/after_patch_booking_schedule
+
+Fires after a booking schedule field has been patched/updated.
+
+**Parameters:**
+- `$booking` (object) - The updated booking model object.
+- `$oldBooking` (object) - A copy of the booking before the update.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/after_patch_booking_schedule', function($booking, $oldBooking) {
+    // React to booking field changes
+    $newStatus = $booking->status;
+    $oldStatus = $oldBooking->status;
+}, 10, 2);
+```
+
+**Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/after_patch_booking_{column}
+
+Dynamic hook that fires after a specific booking column has been patched. The `{column}` is the name of the updated field (e.g., `status`, `start_time`).
+
+**Parameters:**
+- `$booking` (object) - The updated booking model object.
+- `$calendarEvent` (object) - The associated calendar event object.
+- `$oldValue` (mixed) - The previous value of the column before the update.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/after_patch_booking_status', function($booking, $calendarEvent, $oldValue) {
+    // React to a specific booking status change
+    $newStatus = $booking->status;
+    $previousStatus = $oldValue;
+}, 10, 3);
+```
+
+**Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/before_delete_booking
+
+Fires before a booking is deleted from the database.
+
+**Parameters:**
+- `$booking` (object) - The booking model object about to be deleted.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/before_delete_booking', function($booking) {
+    // Cleanup related data before deletion
+    $bookingId = $booking->id;
+}, 10, 1);
+```
+
+**Location:** `app/Http/Controllers/SchedulesController.php`, `app/Hooks/Handlers/CleanupHandlers/CalenderEventCleaner.php`
+
+---
+
+## fluent_booking/starting_scheduling_ajax
+
+Fires at the beginning of the frontend scheduling AJAX request, before validation.
+
+**Parameters:**
+- `$postedData` (array) - The raw posted data from the scheduling form.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/starting_scheduling_ajax', function($postedData) {
+    // Early validation or logging for scheduling requests
+}, 10, 1);
+```
+
+**Location:** `app/Hooks/Handlers/FrontEndHandler.php`
+
+---
+
+## fluent_booking/schedules_query
+
+Fires when the schedules list query is being built, allowing modification by reference.
+
+**Parameters:**
+- `&$query` (object) - The Eloquent query builder instance (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/schedules_query', function(&$query) {
+    // Modify the schedules query (e.g., add custom filters)
+    $query->where('status', 'scheduled');
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the query is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/booking_schedule
+
+Fires when a single booking schedule is loaded for detail view, allowing modification by reference.
+
+**Parameters:**
+- `&$booking` (object) - The booking model object (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/booking_schedule', function(&$booking) {
+    // Add custom data to the booking object
+    $booking->custom_data = 'value';
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the booking is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/format_booking_schedule
+
+Fires when a booking schedule is being formatted for display, allowing modification by reference.
+
+**Parameters:**
+- `&$booking` (object) - The booking model object (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/format_booking_schedule', function(&$booking) {
+    // Add or modify formatted booking data
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the booking is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/SchedulesController.php`
+
+---
+
+## fluent_booking/bookings_query
+
+Fires when the bookings list query is being built (used in the admin bookings list), allowing modification by reference.
+
+**Parameters:**
+- `&$bookingQuery` (object) - The Eloquent query builder instance (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/bookings_query', function(&$bookingQuery) {
+    // Modify the bookings query (e.g., filter by custom criteria)
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the query is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/BookingController.php`
+
+---
+
+## fluent_booking/before_delete_order
+
+Fires before an order is deleted during booking cleanup.
+
+**Parameters:**
+- `$order` (object) - The order object about to be deleted.
+- `$booking` (object) - The associated booking model.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/before_delete_order', function($order, $booking) {
+    // Cleanup related payment data before order deletion
+    $orderId = $order->id;
+}, 10, 2);
+```
+
+**Location:** `app/Hooks/Handlers/CleanupHandlers/BookingCleaner.php`

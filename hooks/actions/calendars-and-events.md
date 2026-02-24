@@ -208,3 +208,110 @@ add_action('fluent_booking/after_create_calendar_slot', function($slot, $calenda
 ```
 
 **Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/before_get_all_calendars
+
+Fires before the list of all calendars is retrieved.
+
+**Parameters:**
+- `$request` (object) - The current request object.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/before_get_all_calendars', function($request) {
+    // Perform checks or logging before calendar list is fetched
+}, 10, 1);
+```
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/before_update_calendar
+
+Fires before a calendar is updated, allowing modification by reference.
+
+**Parameters:**
+- `&$calendar` (object) - The calendar model object (passed by reference).
+- `$data` (array) - The update data from the request.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/before_update_calendar', function(&$calendar, $data) {
+    // Modify the calendar object before it is updated
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the calendar is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/calendar
+
+Fires when a calendar object is being processed for API response, allowing modification by reference.
+
+**Parameters:**
+- `&$calendar` (object) - The calendar model object (passed by reference).
+- `$context` (string) - The context of the operation: `'lists'` when loading calendar lists, `'update'` after a calendar update.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/calendar', function(&$calendar, $context) {
+    if ($context === 'lists') {
+        // Add custom data when listing calendars
+        $calendar->custom_field = 'value';
+    }
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the calendar is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/calendar_slot
+
+Fires when a calendar slot/event is being processed for API response, allowing modification by reference.
+
+**Parameters:**
+- `&$slot` (object) - The calendar slot/event object (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/calendar_slot', function(&$slot) {
+    // Add or modify slot data before API response
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the slot is passed by reference and can be modified directly.
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/processed_event
+
+Fires after a calendar event has been processed (locations resolved, etc.) for public display, allowing modification by reference.
+
+**Parameters:**
+- `&$calendarEvent` (object) - The processed calendar event object (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/processed_event', function(&$calendarEvent) {
+    // Modify the event before it is displayed on the frontend
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the event is passed by reference and can be modified directly.
+
+**Location:** `app/Services/CalendarEventService.php`

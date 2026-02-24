@@ -162,3 +162,62 @@ add_action('fluent_booking/main_landing_footer', function() {
     // Custom footer content for main landing
 });
 ```
+
+---
+
+## fluent_booking/landing_page_event
+
+Fires when a calendar event is being loaded for a landing page, allowing modification by reference.
+
+**Parameters:**
+- `&$activeEvent` (object) - The calendar event object for the landing page (passed by reference).
+
+**Example Usage:**
+```php
+add_action('fluent_booking/landing_page_event', function(&$activeEvent) {
+    // Modify the event object before landing page render
+});
+```
+
+> [!NOTE]
+> This hook uses `do_action_ref_array`, so the event is passed by reference and can be modified directly.
+
+**Location:** `app/Services/LandingPage/LandingPageHandler.php`
+
+---
+
+## fluent_booking/short_code_render
+
+Fires when a booking shortcode is rendered on the page.
+
+**Parameters:**
+- `$calendarEvent` (object) - The calendar event/slot object being rendered.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/short_code_render', function($calendarEvent) {
+    // Add custom content alongside the booking shortcode
+    $eventId = $calendarEvent->id;
+}, 10, 1);
+```
+
+**Location:** `app/Views/public/calendar.php`
+
+---
+
+## fluent_booking/booking_details_header
+
+Fires at the top of the booking confirmation page, before the confirmation content.
+
+**Parameters:**
+- `$booking` (object) - The booking model object.
+
+**Example Usage:**
+```php
+add_action('fluent_booking/booking_details_header', function($booking) {
+    // Add custom header content to the booking confirmation
+    $bookingId = $booking->id;
+}, 10, 1);
+```
+
+**Location:** `app/Views/public/booking_confirmation.php`
