@@ -18,8 +18,10 @@ features:
   - title: REST API
     details: Complete REST API documentation including authentication, endpoints, and error handling.
     link: /rest-api/
-  - title: Actions & Filters (Coming Soon)
+  - title: Actions & Filters
     details: Comprehensive documentation of action hooks and filter hooks for extending functionality.
-  - title: Database Schema (Coming Soon)
+    link: /hooks/
+  - title: Database Schema
     details: Complete database schema documentation with table structures and relationships.
+    link: /database/schema/
 ---
