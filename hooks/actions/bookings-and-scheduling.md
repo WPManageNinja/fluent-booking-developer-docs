@@ -8,20 +8,24 @@ Fires after a booking is successfully scheduled and saved to the database.
 
 **Parameters:**
 - `$booking` (object) - The booking model object.
-- `$calendar_event` (object) - The associated calendar event object.
+- `$calendarEvent` (object) - The associated calendar event/slot object.
+- `$bookingData` (array) - The raw booking data used to create the booking.
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/after_booking_scheduled', function($booking, $calendar_event) {
+add_action('fluent_booking/after_booking_scheduled', function($booking, $calendarEvent, $bookingData) {
     // Custom logic after a booking is scheduled
-    $booking_id = $booking->id;
-    $event_title = $calendar_event->title;
-    
+    $bookingId = $booking->id;
+    $eventTitle = $calendarEvent->title;
+
     // Example: Update external CRM or system
-}, 10, 2);
+}, 10, 3);
 ```
 
 **Location:** `app/Services/BookingService.php`
+
+> [!NOTE]
+> This hook is dynamically generated from the pattern `fluent_booking/after_booking_{status}`, where `{status}` is the booking status (e.g., `scheduled`, `pending`). The same parameters apply to all status variants.
 
 ---
 
@@ -69,7 +73,7 @@ add_action('fluent_booking/booking_schedule_cancelled', function($booking, $cale
 
 ## fluent_booking/booking_schedule_completed
 
-Fires when a booking is marked as completed.
+Fires when a booking is marked as completed (automatically by the scheduler after the meeting end time passes).
 
 **Parameters:**
 - `$booking` (object) - The booking model object.
@@ -82,7 +86,7 @@ add_action('fluent_booking/booking_schedule_completed', function($booking, $cale
 }, 10, 2);
 ```
 
-**Location:** `app/Hooks/Handlers/GlobalNotificationHandler.php`
+**Location:** `app/Hooks/Scheduler/FiveMinuteScheduler.php`
 
 ---
 
@@ -101,7 +105,7 @@ add_action('fluent_booking/booking_schedule_rejected', function($booking, $calen
 }, 10, 2);
 ```
 
-**Location:** `app/Hooks/Handlers/GlobalNotificationHandler.php`
+**Location:** `app/Models/Booking.php`
 
 ---
 
@@ -111,16 +115,16 @@ Fires when a booking is automatically cancelled by the system (e.g., due to paym
 
 **Parameters:**
 - `$booking` (object) - The booking model object.
-- `$calendar_event` (object) - The associated calendar event object.
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/booking_schedule_auto_cancelled', function($booking, $calendar_event) {
+add_action('fluent_booking/booking_schedule_auto_cancelled', function($booking) {
     // Handle auto-cancellation
-}, 10, 2);
+    $calendar_event = $booking->calendar_event;
+}, 10, 1);
 ```
 
-**Location:** `app/Models/Booking.php`
+**Location:** `app/Hooks/Scheduler/FiveMinuteScheduler.php`
 
 ---
 
@@ -129,15 +133,18 @@ add_action('fluent_booking/booking_schedule_auto_cancelled', function($booking, 
 Fires before a booking schedule is created in the database.
 
 **Parameters:**
-- `$data` (array) - The data being used to create the schedule.
-- `$calendar_event` (object) - The associated calendar event object.
+- `$bookingData` (array) - The processed booking data being used to create the schedule.
+- `$postedData` (array) - The raw posted data from the request.
+- `$calendarEvent` (object) - The associated calendar event/slot object.
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/before_creating_schedule', function($data, $calendar_event) {
-    // Modify or validate data before creation
-}, 10, 2);
+add_action('fluent_booking/before_creating_schedule', function($bookingData, $postedData, $calendarEvent) {
+    // Validate data before creation
+}, 10, 3);
 ```
+
+**Location:** `app/Http/Controllers/BookingController.php`, `app/Hooks/Handlers/FrontEndHandler.php`
 
 ---
 
@@ -146,15 +153,18 @@ add_action('fluent_booking/before_creating_schedule', function($data, $calendar_
 Fires after a booking schedule has been created.
 
 **Parameters:**
-- `$schedule` (object) - The newly created schedule object.
-- `$calendar_event` (object) - The associated calendar event object.
+- `$booking` (object) - The newly created booking object.
+- `$postedData` (array) - The raw posted data from the request.
+- `$calendarEvent` (object) - The associated calendar event/slot object.
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/after_creating_schedule', function($schedule, $calendar_event) {
+add_action('fluent_booking/after_creating_schedule', function($booking, $postedData, $calendarEvent) {
     // Perform actions after schedule creation
-}, 10, 2);
+}, 10, 3);
 ```
+
+**Location:** `app/Http/Controllers/BookingController.php`
 
 ---
 
@@ -163,16 +173,16 @@ add_action('fluent_booking/after_creating_schedule', function($schedule, $calend
 Fires after a booking is deleted from the database.
 
 **Parameters:**
-- `$booking_id` (int) - The ID of the deleted booking.
+- `$bookingId` (int) - The booking ID (when deleted via the Schedules API).
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/after_delete_booking', function($booking_id) {
+add_action('fluent_booking/after_delete_booking', function($bookingId) {
     // Cleanup external data associated with the booking
 }, 10, 1);
 ```
 
-**Location:** `app/Models/Booking.php`
+**Location:** `app/Http/Controllers/SchedulesController.php`, `app/Hooks/Handlers/CleanupHandlers/CalenderEventCleaner.php`
 
 ---
 
@@ -181,29 +191,31 @@ add_action('fluent_booking/after_delete_booking', function($booking_id) {
 Fires when an activity is logged for a booking.
 
 **Parameters:**
-- `$booking_id` (int) - The booking ID.
-- `$activity_data` (array) - Data about the activity being logged.
+- `$activity_data` (array) - Data about the activity being logged. Contains keys: `booking_id` (int), `type` (string), `status` (string), `title` (string), `description` (string).
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/log_booking_activity', function($booking_id, $activity_data) {
+add_action('fluent_booking/log_booking_activity', function($activity_data) {
     // Capture activity logs for external analysis
-}, 10, 2);
+    $booking_id = $activity_data['booking_id'];
+    $title = $activity_data['title'];
+}, 10, 1);
 ```
 
 ---
 
 ## fluent_booking/log_booking_note
 
-Fires when a internal note is added to a booking.
+Fires when an internal note is added to a booking.
 
 **Parameters:**
-- `$booking_id` (int) - The booking ID.
-- `$note_data` (array) - Data about the note being added.
+- `$note_data` (array) - Data about the note being added. Contains keys: `booking_id` (int), `title` (string), `description` (string), `type` (string), and optionally `status` (string).
 
 **Example Usage:**
 ```php
-add_action('fluent_booking/log_booking_note', function($booking_id, $note_data) {
+add_action('fluent_booking/log_booking_note', function($note_data) {
     // Sync notes with external CRM
-}, 10, 2);
+    $booking_id = $note_data['booking_id'];
+    $title = $note_data['title'];
+}, 10, 1);
 ```
