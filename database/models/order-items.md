@@ -14,7 +14,10 @@ The `OrderItems` model represents individual line items within an [Order](order)
 | `quantity` | int | Number of units |
 | `item_price` | decimal | Price per unit |
 | `item_total` | decimal | Total item price (`quantity` * `item_price`) |
-| `rate` | decimal | Tax or discount rate percentage |
+| `rate` | decimal | Currency conversion rate |
+| `line_meta` | text | (Serialized) Additional item metadata |
+| `created_at` | timestamp | Record creation time |
+| `updated_at` | timestamp | Record last update time |
 
 ## Relations
 

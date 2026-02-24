@@ -15,6 +15,8 @@ The `Booking` model represents a scheduled appointment or booking in Fluent Book
 | `host_user_id` | bigint | WordPress User ID of the primary host |
 | `person_user_id` | bigint | WordPress User ID of the guest (if registered) |
 | `person_contact_id` | bigint | CRM Contact ID (if integrated) |
+| `fcrm_id` | bigint | FluentCRM subscriber ID |
+| `person_time_zone` | varchar | Attendee's timezone |
 | `start_time` | timestamp | Booking start time (UTC) |
 | `end_time` | timestamp | Booking end time (UTC) |
 | `slot_minutes` | int | Duration of the booking in minutes |
@@ -24,18 +26,28 @@ The `Booking` model represents a scheduled appointment or booking in Fluent Book
 | `phone` | varchar | Guest's phone number |
 | `message` | text | Message provided by the guest |
 | `internal_note` | text | Private note for hosts |
-| `location_details` | text | JSON/Text details about the meeting location |
-| `status` | varchar | `scheduled`, `pending`, `cancelled`, `rejected`, `rescheduled`, `completed` |
-| `payment_status` | varchar | `pending`, `paid`, `partially-paid`, `partially-refunded` |
-| `payment_method` | varchar | e.g., `stripe`, `paypal` |
-| `source` | varchar | Source of the booking (e.g., `web`, `admin`, `integration`) |
+| `country` | varchar | Guest's country |
 | `ip_address` | varchar | IP address of the guest |
-| `utm_source` | varchar | Tracking parameter |
-| `utm_medium` | varchar | Tracking parameter |
-| `utm_campaign` | varchar | Tracking parameter |
-| `utm_term` | varchar | Tracking parameter |
-| `utm_content` | varchar | Tracking parameter |
+| `browser` | varchar | Guest's browser information |
+| `device` | varchar | Guest's device information |
+| `other_info` | longtext | (Serialized) Custom form field data |
+| `location_details` | longtext | (Serialized) Selected booking location info |
+| `cancelled_by` | bigint | WP User ID who cancelled the booking |
+| `status` | varchar | `scheduled`, `pending`, `cancelled`, `completed`, `rejected`, `rescheduled`, `reserved`, `no_show` |
+| `source` | varchar | Source of the booking — `web`, `admin`, `integration` |
+| `booking_type` | varchar | `scheduling`, `event` |
+| `event_type` | varchar | `single`, `group`, `round_robin`, `collective`, etc. |
+| `payment_status` | varchar | `pending`, `paid`, `partially-paid`, `partially-refunded` |
+| `payment_method` | varchar | e.g., `stripe`, `paypal`, `offline` |
+| `source_url` | text | URL of the page where the booking was made |
+| `source_id` | bigint | ID of the source (form, post, etc.) |
+| `utm_source` | varchar | UTM tracking source |
+| `utm_medium` | varchar | UTM tracking medium |
+| `utm_campaign` | varchar | UTM tracking campaign |
+| `utm_term` | varchar | UTM tracking term |
+| `utm_content` | varchar | UTM tracking content |
 | `created_at` | timestamp | Record creation time in UTC |
+| `updated_at` | timestamp | Record last update time in UTC |
 
 ## Methods
 
@@ -100,6 +112,9 @@ Belongs to the associated [CalendarSlot](calendar-slot) model.
 ### `payment_order` <Badge type="tip" text="Pro" />
 Has one [Order](order) record (if paid appointment).
 
+### `user`
+Belongs to the primary host [User](user) (via `host_user_id`).
+
 ### `booking_meta`
 Has many [BookingMeta](booking-meta) records.
 
@@ -107,7 +122,7 @@ Has many [BookingMeta](booking-meta) records.
 Has many [BookingActivity](booking-activity) records.
 
 ### `hosts`
-Belongs to many [User](user) hosts via `fcal_booking_hosts`.
+Belongs to many [User](user) hosts via `fcal_booking_hosts` pivot table.
 
 ## Usage Examples
 

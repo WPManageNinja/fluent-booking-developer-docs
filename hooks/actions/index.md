@@ -11,3 +11,4 @@ Action hooks allow you to execute custom code at specific points in Fluent Booki
 5. [Landing Pages & Display](/hooks/actions/landing-pages-and-display) - Frontend rendering and landing page events.
 6. [Admin & Settings](/hooks/actions/admin-and-settings) - Administrative functions and settings.
 7. [Payments & Orders](/hooks/actions/payments-and-orders) <Badge type="tip" text="Pro" /> - Payment processing and order management.
+8. [Coupons](/hooks/actions/coupons) <Badge type="tip" text="Pro" /> - Coupon management.

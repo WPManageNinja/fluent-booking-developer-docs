@@ -1,10 +1,13 @@
 # Integrations
 
-The Integrations API allows you to connect Fluent Booking with third-party services and platforms.
+The Integrations API allows you to manage global integration settings in Fluent Booking. This endpoint uses a `settings_key` parameter to identify which integration's settings to retrieve or update.
 
-## Get Available Integrations
+> [!NOTE]
+> For managing per-event integrations (e.g., connecting an event to a specific CRM list), see [Event Integrations](/rest-api/calendars/event-integrations).
 
-Retrieve list of available integration providers.
+## Get Integration Settings
+
+Retrieve settings for a specific integration by its key.
 
 ### Endpoint
 
@@ -12,256 +15,83 @@ Retrieve list of available integration providers.
 GET /integrations
 ```
 
-### Response
-
-Returns array of available integrations with their status.
-
-```json
-{
-    "integrations": [
-        {
-            "key": "google_calendar",
-            "title": "Google Calendar",
-            "description": "Sync events with Google Calendar",
-            "status": "active",
-            "is_configured": true,
-            "logo": "https://example.com/google-logo.png"
-        },
-        {
-            "key": "zoom",
-            "title": "Zoom",
-            "description": "Create Zoom meetings automatically",
-            "status": "active",
-            "is_configured": false,
-            "logo": "https://example.com/zoom-logo.png"
-        },
-        {
-            "key": "microsoft_teams",
-            "title": "Microsoft Teams",
-            "description": "Schedule Teams meetings",
-            "status": "inactive",
-            "is_configured": false,
-            "logo": "https://example.com/teams-logo.png"
-        }
-    ]
-}
-```
-
-## Get Integration Settings
-
-Retrieve configuration for a specific integration.
-
-### Endpoint
-
-```http
-GET /integrations/{integration_key}/settings
-```
-
-### URL Parameters
+### Query Parameters
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `integration_key` | string | Yes | Integration identifier (e.g., "google_calendar", "zoom") |
+| `settings_key` | string | Yes | The integration identifier (e.g., `google_calendar`, `zoom`, `stripe`) |
 
 ### Response
 
-Returns integration-specific settings and configuration.
+Returns the settings for the requested integration.
 
 ```json
 {
-    "integration": {
-        "key": "google_calendar",
-        "title": "Google Calendar",
-        "is_configured": true,
-        "settings": {
-            "client_id": "xxxxxxxxxxxx.apps.googleusercontent.com",
-            "auto_sync": true,
-            "sync_direction": "both",
-            "default_calendar": "primary"
-        },
-        "connected_accounts": [
-            {
-                "id": 1,
-                "email": "user@example.com",
-                "calendar_name": "Primary Calendar",
-                "connected_at": "2024-07-01T10:00:00+00:00"
-            }
-        ]
+    "status": true,
+    "settings": {
+        "...": "Integration-specific settings"
+    },
+    "field_settings": {
+        "...": "Integration-specific field configuration"
     }
 }
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `status` | boolean | Whether the integration has field settings configured |
+| `settings` | object | Integration-specific settings (e.g., API keys, credentials) |
+| `field_settings` | object | Integration-specific field configuration |
+
+### Example Request
+
+```bash
+curl -X GET "https://yoursite.com/wp-json/fluent-booking/v2/integrations?settings_key=google_calendar" \
+  -u "username:application_password" \
+  -H "Content-Type: application/json"
 ```
 
 ## Update Integration Settings
 
-Update configuration for an integration.
+Update settings for a specific integration.
 
 ### Endpoint
 
 ```http
-POST /integrations/{integration_key}/settings
+POST /integrations
 ```
-
-### URL Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `integration_key` | string | Yes | Integration identifier |
-
-### Request Body
-
-Integration-specific configuration (varies by integration).
-
-### Example Request (Google Calendar)
-
-```json
-{
-    "client_id": "your-client-id.apps.googleusercontent.com",
-    "client_secret": "your-client-secret",
-    "auto_sync": true,
-    "sync_direction": "both",
-    "default_calendar": "primary",
-    "conflict_check": true
-}
-```
-
-### Response
-
-Returns updated settings.
-
-## Connect Integration
-
-Initiate OAuth connection for an integration.
-
-### Endpoint
-
-```http
-POST /integrations/{integration_key}/connect
-```
-
-### URL Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `integration_key` | string | Yes | Integration identifier |
-
-### Response
-
-Returns OAuth authorization URL.
-
-```json
-{
-    "auth_url": "https://accounts.google.com/o/oauth2/auth?...",
-    "state": "random_state_token"
-}
-```
-
-## Disconnect Integration
-
-Remove integration connection.
-
-### Endpoint
-
-```http
-POST /integrations/{integration_key}/disconnect
-```
-
-### URL Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `integration_key` | string | Yes | Integration identifier |
 
 ### Request Body
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `account_id` | integer | No | Specific account to disconnect (if multiple) |
+| `settings_key` | string | Yes | The integration identifier |
+| `settings` | object | Yes | Integration-specific settings to save |
 
-### Response
+### Example Request
 
-```json
-{
-    "message": "Integration disconnected successfully"
-}
-```
-
-## Test Integration
-
-Test integration connection and configuration.
-
-### Endpoint
-
-```http
-POST /integrations/{integration_key}/test
-```
-
-### URL Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `integration_key` | string | Yes | Integration identifier |
-
-### Response
-
-Returns test results.
-
-```json
-{
-    "status": "success",
-    "message": "Connection tested successfully",
-    "details": {
-        "api_accessible": true,
-        "permissions_valid": true,
-        "sync_working": true
+```bash
+curl -X POST "https://yoursite.com/wp-json/fluent-booking/v2/integrations" \
+  -u "username:application_password" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "settings_key": "google_calendar",
+    "settings": {
+        "client_id": "your-client-id.apps.googleusercontent.com",
+        "client_secret": "your-client-secret"
     }
-}
+  }'
 ```
 
-## Available Integration Keys
+### Response
 
-| Key | Name | Type |
-| :--- | :--- | :--- |
-| `google_calendar` | Google Calendar | Calendar Sync |
-| `outlook_calendar` | Outlook Calendar | Calendar Sync |
-| `zoom` | Zoom | Video Conferencing |
-| `microsoft_teams` | Microsoft Teams | Video Conferencing |
-| `google_meet` | Google Meet | Video Conferencing |
-| `stripe` | Stripe | Payment Gateway |
-| `paypal` | PayPal | Payment Gateway |
-| `mailchimp` | Mailchimp | Email Marketing |
-| `activecampaign` | ActiveCampaign | Email Marketing |
-| `zapier` | Zapier | Automation |
-| `webhooks` | Custom Webhooks | Automation |
-
-## Integration Settings by Type
-
-### Calendar Integrations (Google, Outlook)
-- OAuth credentials (client_id, client_secret)
-- Auto-sync settings
-- Conflict detection
-- Default calendar selection
-- Sync direction (one-way, two-way)
-
-### Video Conferencing (Zoom, Teams, Google Meet)
-- OAuth credentials
-- Auto-create meeting links
-- Meeting settings (waiting room, password)
-- Default meeting duration
-
-### Payment Gateways (Stripe, PayPal)
-- API keys
-- Webhook endpoints
-- Currency settings
-- Fee handling
-
-### Email Marketing (Mailchimp, ActiveCampaign)
-- API keys
-- List/Tag mapping
-- Field mapping
-- Trigger conditions
+```json
+{
+    "message": "Settings has been successfully saved."
+}
+```
 
 ## Related Resources
 
 - [Event Integrations](/rest-api/calendars/event-integrations)
-- [Webhooks](/rest-api/webhooks/)
-- [Payment Settings](/rest-api/payments/)
+- [Settings](/rest-api/settings/)

@@ -17,13 +17,12 @@ GET /schedules
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
 | `page` | integer | No | Page number (default: 1) |
-| `per_page` | integer | No | Items per page (default: 15) |
-| `status` | string | No | Filter by status: `scheduled`, `pending`, `cancelled`, `completed` |
-| `event_id` | integer | No | Filter by event ID |
-| `calendar_id` | integer | No | Filter by calendar ID |
 | `search` | string | No | Search by attendee name or email |
-| `date_from` | string | No | Filter from date (YYYY-MM-DD) |
-| `date_to` | string | No | Filter to date (YYYY-MM-DD) |
+| `filters[event]` | integer | No | Filter by event ID |
+| `filters[author]` | integer\|string | No | Filter by calendar ID, `me` for current user, or `all` |
+| `filters[event_type]` | string | No | Filter by event type (e.g., `single`, `group`) |
+| `filters[period]` | string | No | Time period: `upcoming`, `past`, `today`, `cancelled`, `pending`, `no_show` (default: `upcoming`) |
+| `filters[range]` | array | No | Custom date range filter |
 
 ### Response
 
@@ -38,26 +37,49 @@ Returns paginated list of scheduled bookings with calendar event information.
                 "id": 1,
                 "event_id": 2,
                 "calendar_id": 1,
+                "group_id": 1,
+                "hash": "abc123def456",
                 "person_user_id": null,
+                "host_user_id": 1,
+                "person_time_zone": "America/New_York",
                 "event_type": "single",
                 "status": "scheduled",
-                "booking_hash": "abc123def456",
+                "payment_status": "paid",
                 "first_name": "John",
                 "last_name": "Doe",
                 "email": "john.doe@example.com",
                 "phone": "+1234567890",
                 "message": "Project discussion",
+                "internal_note": "",
                 "start_time": "2025-01-15 10:00:00",
                 "end_time": "2025-01-15 10:30:00",
-                "duration": 30,
-                "timezone": "America/New_York",
+                "slot_minutes": 30,
+                "source": "web",
+                "source_url": "https://example.com/booking-page",
                 "location_details": {
                     "type": "phone_guest",
-                    "value": "+1234567890"
+                    "description": "+1234567890"
                 },
                 "created_at": "2025-01-10T08:30:00+00:00",
                 "updated_at": "2025-01-10T08:30:00+00:00",
-                "event": {
+                "title": "30 Minute Consultation between Jane Smith and John Doe",
+                "author": {
+                    "id": 1,
+                    "name": "Jane Smith",
+                    "email": "jane@example.com",
+                    "first_name": "Jane",
+                    "last_name": "Smith",
+                    "avatar": "https://example.com/avatar.jpg"
+                },
+                "details": "What:\n30 Minute Consultation\n\nWhen:\nWed Jan 15, 10:00am - 10:30am, America/New_York",
+                "location": "<b>Attendee Phone Number</b>: +1234567890",
+                "reschedule_url": "https://example.com/?fluent-booking=booking&meeting_hash=abc123def456&type=reschedule",
+                "happening_status": {},
+                "booking_status_text": "Scheduled",
+                "payment_status_text": "Paid",
+                "custom_form_data": [],
+                "additional_guests": [],
+                "calendar_event": {
                     "id": 2,
                     "title": "30 Minute Consultation",
                     "slug": "30min",
@@ -87,9 +109,15 @@ Returns paginated list of scheduled bookings with calendar event information.
                 }
             ]
         }
-    ]
+    ],
+    "pending_count": 3,
+    "no_show_count": 1,
+    "cancelled_count": 5
 }
 ```
+
+> [!NOTE]
+> The `pending_count`, `no_show_count`, and `cancelled_count` fields are only included in the response when `page=1` (the first page). These provide summary statistics useful for building dashboards.
 
 ## Get Schedule Details
 
@@ -107,65 +135,88 @@ GET /schedules/{id}
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `with[]` | array | No | Include additional data. Pass `all_data` to include activities, meta info, and payment data |
+
 ### Response
 
 Returns complete booking details with attendee information and event settings.
 
+The `schedule` object contains the same formatted booking fields as described in the [List Schedules](#list-schedules) response above.
+
 ```json
 {
-    "booking": {
+    "schedule": {
         "id": 1,
         "event_id": 2,
         "calendar_id": 1,
-        "booking_hash": "abc123def456",
+        "hash": "abc123def456",
         "status": "scheduled",
         "first_name": "John",
         "last_name": "Doe",
         "email": "john.doe@example.com",
         "phone": "+1234567890",
         "message": "Project discussion",
+        "person_time_zone": "America/New_York",
         "start_time": "2025-01-15 10:00:00",
         "end_time": "2025-01-15 10:30:00",
-        "timezone": "America/New_York",
+        "slot_minutes": 30,
         "location_details": {
             "type": "phone_guest",
-            "value": "+1234567890",
-            "display": "Call attendee at +1234567890"
+            "description": "+1234567890"
         },
-        "additional_fields": {
-            "company": "Acme Corp",
-            "role": "Product Manager"
-        },
-        "guests": [
-            {
-                "email": "jane.smith@example.com",
-                "name": "Jane Smith"
-            }
-        ],
-        "event": {
-            "id": 2,
-            "title": "30 Minute Consultation",
-            "description": "Quick consultation call",
-            "duration": 30
-        },
-        "calendar": {
-            "id": 1,
-            "title": "Jane Smith",
-            "user_id": 1
-        },
-        "host": {
+        "title": "30 Minute Consultation between Jane Smith and John Doe",
+        "author": {
             "id": 1,
             "name": "Jane Smith",
             "email": "jane@example.com",
-            "timezone": "UTC"
-        }
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "avatar": "https://example.com/avatar.jpg"
+        },
+        "...": "See List Schedules response for all fields"
     }
 }
 ```
 
+When `with[]=all_data` is passed, the response includes additional top-level fields:
+
+```json
+{
+    "schedule": { "...": "Full booking object" },
+    "activities": [
+        {
+            "id": 1,
+            "booking_id": 1,
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
+            "description": "Booking created by John Doe",
+            "created_at": "2025-01-10T08:30:00+00:00",
+            "updated_at": "2025-01-10T08:30:00+00:00"
+        }
+    ],
+    "sidebar_contents": [],
+    "payment_order": null,
+    "main_body_contents": []
+}
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `activities` | array | Activity log entries for the booking |
+| `sidebar_contents` | array | Additional sidebar content from integrations (e.g., CRM profile if FluentCRM is active) |
+| `payment_order` | object\|null | Payment order with items, transaction, and discount data (if applicable) |
+| `main_body_contents` | array | Additional metadata content from integrations |
+
 ## Update Schedule
 
-Update a scheduled booking.
+Update a field on a scheduled booking. Updates are applied one field at a time using the `column` and `value` parameters.
 
 ### Endpoint
 
@@ -183,31 +234,76 @@ PUT /schedules/{id}
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `status` | string | No | Update status: `scheduled`, `cancelled`, `completed` |
-| `first_name` | string | No | Update attendee first name |
-| `last_name` | string | No | Update attendee last name |
-| `email` | string | No | Update attendee email |
-| `phone` | string | No | Update phone number |
-| `message` | string | No | Update message/notes |
-| `start_time` | string | No | Reschedule to new time |
-| `location_details` | object | No | Update location details |
+| `column` | string | Yes | Field to update. Valid values: `status`, `payment_status`, `internal_note`, `email`, `phone`, `first_name`, `last_name` |
+| `value` | string | Yes | New value for the field |
+| `cancel_reason` | string | Conditional | Required when setting `column=status` and `value=cancelled` |
+| `reject_reason` | string | Conditional | Required when setting `column=status` and `value=rejected` |
+| `refund_payment` | string | No | Set to `yes` to refund payment when cancelling/rejecting |
+| `update_all` | boolean | No | Update all attendees in a multi-guest booking |
 
-### Example Request
+### Valid Status Values
+
+| Value | Description |
+| :--- | :--- |
+| `scheduled` | Confirm/approve the booking |
+| `completed` | Mark as completed |
+| `cancelled` | Cancel the booking (requires `cancel_reason`) |
+| `rejected` | Reject the booking (requires `reject_reason`) |
+| `no_show` | Mark attendee as no-show |
+
+### Valid Payment Status Values
+
+| Value | Description |
+| :--- | :--- |
+| `pending` | Payment is pending |
+| `paid` | Payment completed |
+
+### Example Requests
+
+**Cancel a booking:**
 
 ```json
 {
-    "status": "completed",
-    "message": "Meeting was very productive"
+    "column": "status",
+    "value": "cancelled",
+    "cancel_reason": "Schedule conflict"
+}
+```
+
+**Update internal note:**
+
+```json
+{
+    "column": "internal_note",
+    "value": "Discussed project requirements"
+}
+```
+
+**Mark payment as paid:**
+
+```json
+{
+    "column": "payment_status",
+    "value": "paid"
 }
 ```
 
 ### Response
 
-Returns the updated booking object.
+The response message varies depending on the column and value:
+
+- For `status` set to `cancelled` or `rejected`: `"The booking has been cancelled"` / `"The booking has been rejected"`
+- For other column updates: `"{Column} has been updated"` (e.g., `"Status has been updated"`, `"Email has been updated"`)
+
+```json
+{
+    "message": "Status has been updated"
+}
+```
 
 ## Delete Schedule
 
-Delete (cancel) a scheduled booking.
+Permanently delete a booking record.
 
 ### Endpoint
 
@@ -221,39 +317,16 @@ DELETE /schedules/{id}
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
-### Request Body
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `cancellation_reason` | string | No | Reason for cancellation |
-
 ### Response
 
 ```json
 {
-    "message": "Booking cancelled successfully"
+    "message": "Booking Deleted Successfully!"
 }
 ```
 
-## Get Schedule Slot
-
-Retrieve availability slot information for a booking.
-
-### Endpoint
-
-```http
-GET /schedules/{id}/slot
-```
-
-### URL Parameters
-
-| Parameter | Type | Required | Description |
-| :--- | :--- | :--- | :--- |
-| `id` | integer | Yes | The schedule/booking ID |
-
-### Response
-
-Returns slot availability and timing information.
+> [!WARNING]
+> This permanently deletes the booking. For multi-guest bookings, all attendees in the group are also deleted. To cancel a booking while preserving the record, use the Update Schedule endpoint with `column=status` and `value=cancelled` instead.
 
 ## Get Booking Activities
 
@@ -281,16 +354,26 @@ Returns array of activity log entries.
         {
             "id": 1,
             "booking_id": 1,
-            "type": "booking_created",
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
             "description": "Booking created by John Doe",
-            "created_at": "2025-01-10T08:30:00+00:00"
+            "created_at": "2025-01-10T08:30:00+00:00",
+            "updated_at": "2025-01-10T08:30:00+00:00"
         },
         {
             "id": 2,
             "booking_id": 1,
-            "type": "email_sent",
+            "parent_id": null,
+            "created_by": null,
+            "status": "closed",
+            "type": "info",
+            "title": "Email Sent",
             "description": "Confirmation email sent to john.doe@example.com",
-            "created_at": "2025-01-10T08:30:15+00:00"
+            "created_at": "2025-01-10T08:30:15+00:00",
+            "updated_at": "2025-01-10T08:30:15+00:00"
         }
     ]
 }
@@ -312,13 +395,48 @@ GET /schedules/{id}/meta-info
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `with` | string | No | Pass `all_data` to include activities, payment order, and transaction data |
+
 ### Response
 
-Returns booking metadata including custom fields and internal data.
+Returns booking metadata including activities, sidebar content, and payment information.
+
+```json
+{
+    "activities": [
+        {
+            "id": 1,
+            "booking_id": 1,
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
+            "description": "Booking created by John Doe",
+            "created_at": "2025-01-10T08:30:00+00:00",
+            "updated_at": "2025-01-10T08:30:00+00:00"
+        }
+    ],
+    "sidebar_contents": [],
+    "payment_order": null,
+    "main_body_contents": []
+}
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `activities` | array | Activity log entries for the booking (see [Get Booking Activities](#get-booking-activities) for field details) |
+| `sidebar_contents` | array | Additional sidebar content from integrations (e.g., CRM profile if FluentCRM is active) |
+| `payment_order` | object\|null | Payment order with items, transaction, and discount data (if applicable) |
+| `main_body_contents` | array | Additional metadata content from integrations |
 
 ## Send Confirmation Email
 
-Manually send confirmation email for a booking.
+Manually resend a confirmation email for a booking.
 
 ### Endpoint
 
@@ -332,11 +450,17 @@ POST /schedules/{id}/send-confirmation-email
 | :--- | :--- | :--- | :--- |
 | `id` | integer | Yes | The schedule/booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `email_to` | string | No | Recipient: `guest` (default) or `host` |
+
 ### Response
 
 ```json
 {
-    "message": "Confirmation email sent successfully"
+    "message": "Notification sent successfully"
 }
 ```
 
@@ -356,30 +480,37 @@ GET /schedules/group-bookings/{group_id}/attendees
 | :--- | :--- | :--- | :--- |
 | `group_id` | integer | Yes | The group booking ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `search` | string | No | Search attendees by name or email |
+
 ### Response
 
-Returns array of attendees in the group booking.
+Returns a paginated list of attendees in the group booking. Each attendee is a formatted booking object with the same fields as described in the [List Schedules](#list-schedules) response.
 
 ```json
 {
-    "attendees": [
-        {
-            "id": 1,
-            "first_name": "John",
-            "last_name": "Doe",
-            "email": "john.doe@example.com",
-            "status": "confirmed"
-        },
-        {
-            "id": 2,
-            "first_name": "Jane",
-            "last_name": "Smith",
-            "email": "jane.smith@example.com",
-            "status": "confirmed"
-        }
-    ],
-    "total_attendees": 2,
-    "max_attendees": 10
+    "attendees": {
+        "current_page": 1,
+        "data": [
+            {
+                "id": 5,
+                "event_id": 2,
+                "group_id": 1,
+                "first_name": "John",
+                "last_name": "Doe",
+                "email": "john.doe@example.com",
+                "status": "scheduled",
+                "...": "See List Schedules response for all fields"
+            }
+        ],
+        "total": 1,
+        "per_page": 15,
+        "current_page": 1,
+        "last_page": 1
+    }
 }
 ```
 

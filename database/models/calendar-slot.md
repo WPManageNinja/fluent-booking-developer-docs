@@ -20,12 +20,14 @@ The `CalendarSlot` model (also referred to as an "Event Type") defines the rules
 | `availability_id` | bigint | ID for existing schedule availability |
 | `status` | varchar | `active` / `inactive` / `draft` / `expired` |
 | `type` | varchar | Payment type (`free` / `paid`) |
-| `event_type` | varchar | `single`, `group`, `single_event`, `group_event`, `round_robin`, `collective`, `single_event`, `group_event` |
+| `event_type` | varchar | `single`, `group`, `single_event`, `group_event`, `round_robin`, `collective` |
 | `location_type` | varchar | e.g., `google_meet`, `zoom_meeting`, `in_person` |
 | `location_heading` | text | Custom heading for location field |
 | `location_settings` | longtext | Serialized configuration for multiple locations |
 | `is_display_spots` | boolean | Whether to show remaining spots for group bookings |
 | `max_book_per_slot` | int | Max guests allowed per time slot |
+| `created_at` | timestamp | Record creation time |
+| `updated_at` | timestamp | Record last update time |
 
 ## Methods
 

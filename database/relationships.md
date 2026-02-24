@@ -1,33 +1,42 @@
-# 🔗 Model Relationships
+# Model Relationships
 
 Fluent Booking database tables are interconnected via primary and foreign key relationships. Our ORM makes managing these relationships effortless.
 
 ## Relationship Types
 
-- **One-to-One**: A User has one profile.
-- **One-to-Many**: A Calendar has many Events.
-- **Many-to-Many**: A Booking has many Hosts (via `fcal_booking_hosts`).
-
-## Visual Relationship Map
-
-```mermaid
-erDiagram
-    CALENDAR ||--o{ CALENDAR_SLOT : "has many"
-    CALENDAR_SLOT ||--o{ BOOKING : "generates"
-    BOOKING ||--o{ BOOKING_META : "has many"
-    BOOKING ||--o{ BOOKING_ACTIVITY : "logs"
-    BOOKING ||--o{ BOOKING_HOST : "pivot"
-    BOOKING_HOST }o--|| USER : "assigned to"
-```
+- **One-to-Many (HasMany)**: A Calendar has many Events. A Booking has many BookingMeta records.
+- **Many-to-Many (BelongsToMany)**: A Booking has many Hosts (via `fcal_booking_hosts` pivot table).
+- **Inverse One-to-Many (BelongsTo)**: A CalendarSlot belongs to a Calendar. An Order belongs to a Booking.
+- **One-to-One (HasOne)**: An Order has one Transaction.
 
 ## Core Model Relationships
 
-| Model | Relation | Type | Description |
-|-------|----------|------|-------------|
-| **Booking** | `calendar` | BelongsTo | The parent calendar |
-| **Booking** | `hosts` | BelongsToMany | The assigned users/hosts |
-| **Calendar** | `events` | HasMany | The booking slots/types |
-| **User** | `calendars` | HasMany | Calendars owned by the user |
+| Parent Model | Relation | Type | Child Model | Foreign Key |
+|-------------|----------|------|-------------|-------------|
+| **Calendar** | `events` / `slots` | HasMany | CalendarSlot | `calendar_id` |
+| **Calendar** | `bookings` | HasMany | Booking | `calendar_id` |
+| **Calendar** | `user` | BelongsTo | User | `user_id` |
+| **Calendar** | `availabilities` | HasMany | Availability | `object_id` (user_id) |
+| **Calendar** | `metas` | HasMany | Meta | `object_id` (where object_type = 'Calendar') |
+| **CalendarSlot** | `calendar` | BelongsTo | Calendar | `calendar_id` |
+| **CalendarSlot** | `bookings` | HasMany | Booking | `event_id` |
+| **CalendarSlot** | `user` | BelongsTo | User | `user_id` |
+| **CalendarSlot** | `event_metas` | HasMany | Meta | `object_id` (where object_type in calendar_event, integration) |
+| **Booking** | `calendar` | BelongsTo | Calendar | `calendar_id` |
+| **Booking** | `slot` / `calendar_event` | BelongsTo | CalendarSlot | `event_id` |
+| **Booking** | `user` | BelongsTo | User | `host_user_id` |
+| **Booking** | `hosts` | BelongsToMany | User | via `fcal_booking_hosts` pivot |
+| **Booking** | `booking_meta` | HasMany | BookingMeta | `booking_id` |
+| **Booking** | `booking_activities` | HasMany | BookingActivity | `booking_id` |
+| **Booking** | `payment_order` | HasOne | Order | `parent_id` (Pro) |
+| **User** | `calendars` | HasMany | Calendar | `user_id` |
+| **BookingActivity** | `booking` | BelongsTo | Booking | `booking_id` |
+| **BookingHost** | `booking` | BelongsTo | Booking | `booking_id` |
+| **BookingMeta** | `booking` | BelongsTo | Booking | `booking_id` |
+| **Order** | `booking` | BelongsTo | Booking | `parent_id` (Pro) |
+| **Order** | `transaction` | HasOne | Transactions | `object_id` (Pro) |
+| **Order** | `items` | HasMany | OrderItems | `order_id` (Pro) |
+| **Order** | `discounts` | HasMany | OrderItems | `order_id` (where type = 'discount') (Pro) |
 
 ## Relationship Best Practices
 

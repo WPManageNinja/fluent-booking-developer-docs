@@ -9,4 +9,5 @@ Filter hooks allow you to modify data, settings, and behavior in Fluent Booking.
 3. [Availability & Slots](/hooks/filters/availability-and-slots) - Availability rules and time slots.
 4. [Display & Templates](/hooks/filters/display-and-templates) - Frontend display and template variables.
 5. [Admin & Configuration](/hooks/filters/admin-and-configuration) - Admin menu and global configuration.
-6. [Payments & Advanced](/hooks/filters/payments-and-advanced) <Badge type="tip" text="Pro" /> - Currency and advanced settings.
+6. [Payments & Advanced](/hooks/filters/payments-and-advanced) <Badge type="tip" text="Pro" /> - Currency, orders, receipts, and payment gateway settings.
+7. [Integrations](/hooks/filters/integrations) <Badge type="tip" text="Pro" /> - Calendar sync, Zoom, Twilio SMS, webhooks, and third-party connections.

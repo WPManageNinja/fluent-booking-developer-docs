@@ -6,6 +6,11 @@ export default defineConfig({
   description: "Complete developer guide for Fluent Booking",
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
+    siteTitle: 'Dev Docs',
+    logo: {
+        light: '/images/logo-light.svg',
+        dark: '/images/logo-dark.svg'
+    },
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Getting Started', link: '/getting-started' },
@@ -175,6 +180,18 @@ export default defineConfig({
 
     socialLinks: [
       { icon: 'github', link: 'https://github.com/fluent-booking' }
-    ]
-  }
+    ],
+
+    footer: {
+        message: 'Fluent Booking developer documentation',
+        copyright: 'Copyright © 2026 Fluent Booking'
+    },
+
+    search: {
+        provider: 'local'
+    }
+  },
+  head: [
+    ['link', { rel: 'icon', type: 'image/webp', href: '/favicon/favicon.svg' }]
+  ]
 })

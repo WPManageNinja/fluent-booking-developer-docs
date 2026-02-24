@@ -122,7 +122,7 @@ DELETE /calendars/{id}/events/{event_id}/integrations/{integration_id}
 
 ```json
 {
-    "message": "Integration deleted successfully"
+    "message": "Successfully deleted the Integration."
 }
 ```
 
@@ -147,13 +147,13 @@ POST /calendars/{id}/events/{event_id}/integrations/clone
 
 | Parameter | Type | Required | Description |
 | :--- | :--- | :--- | :--- |
-| `source_event_id` | integer | Yes | The event ID to copy integrations from |
+| `from_event_id` | integer | Yes | The event ID to copy integrations from |
 
 ### Response
 
 ```json
 {
-    "message": "Integrations cloned successfully"
+    "message": "Integrations has been successfully cloned."
 }
 ```
 
@@ -175,9 +175,22 @@ GET /calendars/{id}/events/{event_id}/integrations/{integration_id}/merge-fields
 | `event_id` | integer | Yes | The event ID |
 | `integration_id` | integer | Yes | The integration ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `integration_name` | string | Yes | The integration identifier (e.g., `fluentcrm`, `mailchimp`) |
+| `list_id` | string | No | The list/audience ID to get merge fields for |
+
 ### Response
 
-Returns available merge fields/smart codes for the integration.
+```json
+{
+    "merge_fields": {
+        "...": "Integration-specific merge field definitions"
+    }
+}
+```
 
 ## Get Integration Config Options
 
@@ -197,9 +210,22 @@ GET /calendars/{id}/events/{event_id}/integrations/{integration_id}/config-field
 | `event_id` | integer | Yes | The event ID |
 | `integration_id` | integer | Yes | The integration ID |
 
+### Query Parameters
+
+| Parameter | Type | Required | Description |
+| :--- | :--- | :--- | :--- |
+| `integration_name` | string | Yes | The integration identifier |
+| `settings` | object | No | Current integration settings for context |
+
 ### Response
 
-Returns configuration options (e.g., available lists, tags, etc.).
+```json
+{
+    "field_options": {
+        "...": "Integration-specific configuration options"
+    }
+}
+```
 
 ## Related Resources
 

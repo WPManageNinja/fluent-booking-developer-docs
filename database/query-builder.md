@@ -170,14 +170,15 @@ App::getInstance('db')->table('fcal_bookings')->where('status', 'cancelled')->de
 ### Host Performance and Revenue
 ```php
 $calendarStats = App::getInstance('db')->table('fcal_calendars')
-    ->leftJoin('fcal_orders', 'fcal_calendars.id', '=', 'fcal_orders.parent_id')
+    ->leftJoin('fcal_bookings', 'fcal_calendars.id', '=', 'fcal_bookings.calendar_id')
+    ->leftJoin('fcal_orders', 'fcal_bookings.id', '=', 'fcal_orders.parent_id')
     ->select([
         'fcal_calendars.id',
         'fcal_calendars.title',
         App::getInstance('db')->raw('COUNT(fcal_orders.id) as total_paid_bookings'),
         App::getInstance('db')->raw('SUM(fcal_orders.total_paid) as total_revenue')
     ])
-    ->where('fcal_orders.status', 'paid')
+    ->where('fcal_orders.status', 'completed')
     ->groupBy('fcal_calendars.id')
     ->get();
 ```

@@ -18,8 +18,9 @@ GET /calendars
 | :--- | :--- | :--- | :--- |
 | `page` | integer | No | Page number for pagination (default: 1) |
 | `per_page` | integer | No | Number of items per page (default: 15) |
-| `search` | string | No | Search by calendar events title |
-| `calendarType` | string | No | Filter by calendar type (e.g., "booking") |
+| `query[search]` | string | No | Search by calendar event title |
+| `query[calendarType]` | string | No | Filter by calendar type (e.g., `simple`, `team`, or `all`) |
+| `with[]` | string | No | Pass `calendar_event_lists` to include calendar/event options grouped by hosts, teams, and events |
 
 ### Response
 
@@ -40,13 +41,25 @@ Returns a paginated collection of calendars with their events and related data.
                 "description": "",
                 "status": "active",
                 "type": "simple",
-                "event_type": "scheduling",
                 "author_timezone": "UTC",
                 "created_at": "2024-07-03T04:16:50+00:00",
                 "updated_at": "2025-05-26T22:41:28+00:00",
+                "author_profile": {
+                    "ID": 1,
+                    "name": "Cameran Goff",
+                    "author_slug": "admin",
+                    "first_name": "Cameran",
+                    "last_name": "Goff",
+                    "avatar": "https://example.com/avatar.jpg",
+                    "phone": "+1234567890",
+                    "featured_image": "https://example.com/banner.jpg"
+                },
+                "public_url": "https://affiliate.test/?fluent-booking=calendar&host=misbah",
+                "event_order": [2, 5, 3],
                 "slots": [
                     {
                         "id": 2,
+                        "hash": "bd009d55f750026d3879cde67a7feebb",
                         "calendar_id": 1,
                         "parent_id": null,
                         "user_id": "1",
@@ -54,7 +67,6 @@ Returns a paginated collection of calendars with their events and related data.
                         "slug": "30min",
                         "description": "Quick 30-minute consultation",
                         "duration": 30,
-                        "duration_unit": "minutes",
                         "status": "active",
                         "type": "paid",
                         "color_schema": "#0099ff",
@@ -67,11 +79,15 @@ Returns a paginated collection of calendars with their events and related data.
                             }
                         ],
                         "event_type": "single",
+                        "is_display_spots": false,
                         "max_book_per_slot": "1",
                         "created_at": "2025-05-28T03:36:51+00:00",
                         "updated_at": "2025-05-28T03:37:04+00:00",
+                        "shortcode": "[fluent_booking id=\"2\"]",
                         "public_url": "https://affiliate.test/?fluent-booking=calendar&host=misbah&event=30min",
-                        "price_total": 100
+                        "price_total": 100,
+                        "location_fields": {},
+                        "author_profiles": []
                     }
                 ],
                 "user": {
@@ -201,7 +217,6 @@ curl -X POST "https://yoursite.com/wp-json/fluent-booking/v2/calendars" \
       }
     }
   }'
-```
 ```
 
 ### Response
