@@ -100,3 +100,115 @@ Filters the sidebar navigation menu items in the event/slot settings view.
 - `$event` (object) - The calendar event (slot) object.
 
 **Return:** (array) Modified menu items.
+
+---
+
+## fluent_booking/get_calendar_event_settings
+
+Filters the settings data for a calendar event when loaded in the admin editor.
+
+**Parameters:**
+- `$eventSettings` (array) - The event settings data.
+- `$calendarEvent` (object) - The calendar event/slot object.
+- `$calendar` (object) - The parent calendar object.
+
+**Return:** (array) Modified event settings.
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/update_event_details_validation_rule
+
+Filters the validation rules when updating an event's details.
+
+**Parameters:**
+- `$rules` (array) - Default validation rules.
+
+**Return:** (array) Modified rules.
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/event_colors
+
+Filters the available color options for calendar events.
+
+**Parameters:**
+- `$colors` (array) - Array of color options, each with `label` and `value` keys.
+
+**Return:** (array) Modified color options.
+
+**Location:** `app/Services/Helper.php`
+
+---
+
+## fluent_booking/event_short_description
+
+Filters the short description text of a calendar event (used in previews/listings).
+
+**Parameters:**
+- `$description` (string) - The truncated description text.
+- `$calendarSlot` (object) - The calendar event/slot object.
+
+**Return:** (string) Modified description.
+
+**Location:** `app/Models/CalendarSlot.php`
+
+---
+
+## fluent_booking/event_short_description_length
+
+Filters the maximum character length for event short descriptions.
+
+**Parameters:**
+- `$maxLength` (int) - The maximum length (default: 160).
+- `$calendarSlot` (object) - The calendar event/slot object.
+
+**Return:** (int) Modified length.
+
+**Location:** `app/Models/CalendarSlot.php`
+
+---
+
+## fluent_booking/get_location_fields
+
+Filters the available location field types for calendar events.
+
+**Parameters:**
+- `$fields` (array) - Array of location field types (e.g., `conferencing`, `in_person`, `phone`).
+
+**Return:** (array) Modified location fields.
+
+**Location:** `app/Models/CalendarSlot.php`
+
+---
+
+## fluent_booking/save_event_booking_field_{fieldType}
+
+Dynamic filter that fires when saving a specific type of booking field. The `{fieldType}` is the field type (e.g., `text`, `select`, `textarea`).
+
+**Parameters:**
+- `$formattedField` (array) - The formatted field data.
+- `$value` (array) - The raw field value from the request.
+- `$calendarEvent` (object) - The calendar event object.
+
+**Return:** (array) Modified field data.
+
+**Location:** `app/Http/Controllers/CalendarController.php`
+
+---
+
+## fluent_booking/editor_shortcodes_groups
+
+Filters the available shortcode/placeholder groups in the notification editor.
+
+**Parameters:**
+- `$groups` (array) - The shortcode groups with their available placeholders.
+- `$calendarEvent` (object) - The calendar event object.
+- `$isHtmlSupported` (bool) - Whether HTML is supported in the current context.
+
+**Return:** (array) Modified shortcode groups.
+
+**Location:** `app/Services/Helper.php`
