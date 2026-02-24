@@ -8,15 +8,37 @@ export default defineConfig({
     hostname: 'https://developers.fluentbooking.com'
   },
   head: [
-    ['link', { rel: 'icon', type: 'image/webp', href: '/favicon/favicon.svg' }],
-    ['meta', { name: 'og:type', content: 'website' }],
-    ['meta', { name: 'og:site_name', content: 'FluentBooking Developer Docs' }],
-    ['meta', { name: 'og:image', content: 'https://developers.fluentbooking.com/images/fluentbooking-og.png' }],
-    ['meta', { name: 'og:url', content: 'https://developers.fluentbooking.com' }],
-    ['meta', { name: 'twitter:card', content: 'summary' }],
-    ['meta', { name: 'twitter:image', content: 'https://developers.fluentbooking.com/images/fluentbooking-og.png' }],
-    ['link', { rel: 'canonical', href: 'https://developers.fluentbooking.com' }]
+    ['link', { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon/favicon-32x32.png' }],
+    ['link', { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon/favicon-16x16.png' }],
+    ['link', { rel: 'apple-touch-icon', sizes: '180x180', href: '/favicon/apple-touch-icon.png' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:site_name', content: 'FluentBooking Developer Docs' }],
+    ['meta', { property: 'og:image', content: 'https://developers.fluentbooking.com/images/og/index.png' }],
+    ['meta', { property: 'og:image:width', content: '1200' }],
+    ['meta', { property: 'og:image:height', content: '630' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:image', content: 'https://developers.fluentbooking.com/images/og/index.png' }],
   ],
+  transformPageData(pageData) {
+    const hostname = 'https://developers.fluentbooking.com'
+    // Build the page key: "rest-api/calendars/events", "database/models/booking", etc.
+    const pageKey = pageData.relativePath.replace(/index\.md$/, 'index').replace(/\.md$/, '')
+
+    // Canonical URL (strip trailing "index")
+    const canonicalPath = pageKey.replace(/\/index$/, '').replace(/^index$/, '')
+    const canonicalUrl = `${hostname}/${canonicalPath}`
+
+    // Per-page OG image: /images/og/{pageKey}.png, fallback to home
+    const ogImage = `${hostname}/images/og/${pageKey}.png`
+
+    pageData.frontmatter.head ??= []
+    pageData.frontmatter.head.push(
+      ['link', { rel: 'canonical', href: canonicalUrl }],
+      ['meta', { property: 'og:url', content: canonicalUrl }],
+      ['meta', { property: 'og:image', content: ogImage }],
+      ['meta', { name: 'twitter:image', content: ogImage }],
+    )
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     siteTitle: 'Dev Docs',

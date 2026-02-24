@@ -5,6 +5,8 @@
     "docs:preview": "vitepress preview"
   },
   "dependencies": {
+    "medium-zoom": "^1.1.0",
+    "sharp": "^0.34.5",
     "vitepress": "^1.6.4"
   }
 }

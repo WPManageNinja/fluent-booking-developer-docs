@@ -59,3 +59,12 @@ h4:has(.VPBadge) {
     font-size: 8px;
     font-weight: 400;
 }
+
+/* Medium Zoom */
+.medium-zoom-overlay {
+  z-index: 20;
+}
+
+.medium-zoom-image {
+  z-index: 21;
+}
