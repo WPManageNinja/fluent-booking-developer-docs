@@ -46,17 +46,10 @@ $calendars = $user->calendars;
 ```
 
 ### `bookings`
-Has many [Booking](booking) records as a customer.
+Belongs to many [CalendarSlot](calendar-slot) records via `fcal_booking_hosts` pivot table (bookings where this user is assigned as a host).
 
 ```php
 $bookings = $user->bookings;
-```
-
-### `staff`
-Has one [Staff](staff) profile record.
-
-```php
-$staffProfile = $user->staff;
 ```
 
 ## Usage Examples

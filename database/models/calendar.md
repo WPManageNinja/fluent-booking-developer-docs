@@ -20,8 +20,11 @@ The `Calendar` model is the top-level container for scheduling settings, availab
 | `type` | varchar | `simple` (individual), `team`, or `event` |
 | `event_type` | varchar | Primary event category |
 | `author_timezone` | varchar | Default timezone for the calendar host |
+| `account_type` | varchar | `free` / `pro` |
 | `visibility` | varchar | `public` / `admin` |
 | `max_book_per_slot` | int | Default limit of guests per time calendar |
+| `created_at` | timestamp | Record creation time |
+| `updated_at` | timestamp | Record last update time |
 
 ### `isHostCalendar()` / `isTeamCalendar()` / `isEventCalendar()`
 Check the primary role/type of the calendar.

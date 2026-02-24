@@ -10,6 +10,8 @@ The `BookingHost` model serves as a pivot table for many-to-many relationships b
 | `booking_id` | bigint | Reference to the booking |
 | `user_id` | bigint | WordPress User ID of the host |
 | `status` | varchar | `confirmed`, `pending`, `declined` |
+| `created_at` | timestamp | Record creation time |
+| `updated_at` | timestamp | Record last update time |
 
 ## Relations
 

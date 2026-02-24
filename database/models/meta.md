@@ -10,7 +10,9 @@ The `Meta` model is a polymorphic table used to store metadata for various entit
 | `object_type` | varchar | e.g., `Calendar`, `calendar_event`, `user_meta` |
 | `object_id` | bigint | ID of the related object |
 | `key` | varchar | Meta key name |
-| `value` | longtext | Meta value (supports serialization) |
+| `value` | longtext | Meta value (auto-serialized/unserialized) |
+| `created_at` | timestamp | Record creation time |
+| `updated_at` | timestamp | Record last update time |
 
 ## Usage Examples
 

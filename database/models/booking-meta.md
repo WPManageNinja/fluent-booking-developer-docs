@@ -9,7 +9,9 @@ The `BookingMeta` model stores key-value data specifically for bookings, such as
 | `id` | bigint | Primary key |
 | `booking_id` | bigint | Reference to the booking |
 | `meta_key` | varchar | Unique key name |
-| `value` | longtext | Meta value |
+| `value` | longtext | Meta value (auto-serialized/unserialized) |
+| `created_at` | timestamp | Record creation time |
+| `updated_at` | timestamp | Record last update time |
 
 ## Relations
 
