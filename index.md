@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "Fluent Booking Developer Docs"
+  name: "FluentBooking Developer Docs"
   text: "Complete Developer Guide"
-  tagline: Extend and customize Fluent Booking with our comprehensive API and Hooks.
+  tagline: Extend and customize FluentBooking with our comprehensive API and Hooks.
   actions:
     - theme: brand
       text: Getting Started

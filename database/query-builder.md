@@ -1,6 +1,6 @@
 # Query Builder
 
-#To use the Query Builder, you can access the database connection through the `App` facade:
+To use the Query Builder, you can access the database connection through the `App` facade:
 
 ```php
 use FluentBooking\App\App;
@@ -9,11 +9,11 @@ $db = App::getInstance('db');
 ```
 
 Alternatively, if you are within a controller or service that has access to the `$app` instance, you can use `$app->make('db')`.
-The Fluent Booking Query Builder provides a convenient, fluent interface for creating and running database queries. It can be used to perform most database operations in your application and works on all supported database systems.
+The FluentBooking Query Builder provides a convenient, fluent interface for creating and running database queries. It can be used to perform most database operations in your application and works on all supported database systems.
 
 ## Introduction
 
-Fluent Booking provides two main ways to interact with your data: **Database Models** (ActiveRecord) and the **Query Builder** (Direct Database Access).
+FluentBooking provides two main ways to interact with your data: **Database Models** (ActiveRecord) and the **Query Builder** (Direct Database Access).
 
 ### Model vs. Query Builder
 
@@ -75,7 +75,7 @@ $emails = App::getInstance('db')->table('fcal_bookings')->pluck('email', 'id');
 ```
 
 ### Aggregates
-The query builder provides variety of aggregate methods:
+The query builder provides a variety of aggregate methods:
 
 ```php
 $count = App::getInstance('db')->table('fcal_bookings')->count();
@@ -121,7 +121,7 @@ $bookings = App::getInstance('db')->table('fcal_bookings')->where('calendar_id',
 - `whereDate('column', '2024-01-01')`
 
 ### Parameter Grouping
-Group constraints within parenthesis for complex logic:
+Group constraints within parentheses for complex logic:
 
 ```php
 App::getInstance('db')->table('fcal_bookings')
@@ -165,7 +165,7 @@ App::getInstance('db')->table('fcal_bookings')
 App::getInstance('db')->table('fcal_bookings')->where('status', 'cancelled')->delete();
 ```
 
-## Fluent Booking Specific Query Examples
+## FluentBooking Specific Query Examples
 
 ### Host Performance and Revenue
 ```php

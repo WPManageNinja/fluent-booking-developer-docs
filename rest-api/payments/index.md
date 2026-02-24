@@ -1,6 +1,6 @@
 # Payments <Badge type="tip" text="Pro" />
 
-Payment configuration in Fluent Booking is managed through the Settings API and per-event payment settings.
+Payment configuration in FluentBooking is managed through the Settings API and per-event payment settings.
 
 > [!NOTE]
 > There is no standalone `/payments` route prefix. Global payment settings are updated via the [Settings API](/rest-api/settings/), and per-event payment configuration is accessed through the Calendars API.

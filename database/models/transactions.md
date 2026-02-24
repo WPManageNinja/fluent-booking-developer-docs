@@ -26,7 +26,7 @@ The `Transactions` model logs individual payment attempts and gateway responses.
 
 ## Usage Examples
 
-### Retrieving gateway meta data
+### Retrieving gateway metadata
 ```php
 use FluentBookingPro\App\Models\Transactions;
 

@@ -267,7 +267,7 @@ add_action('fluent_booking/pre_after_booking_scheduled', function($booking, $cal
 
 ## fluent_booking/after_booking_meta_update
 
-Fires after booking meta data (custom fields) has been saved.
+Fires after booking metadata (custom fields) has been saved.
 
 **Parameters:**
 - `$booking` (object) - The booking model object.

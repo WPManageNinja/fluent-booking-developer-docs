@@ -1,6 +1,6 @@
 # Admin
 
-The Admin API provides endpoints for managing hosts and users within Fluent Booking.
+The Admin API provides endpoints for managing hosts and users within FluentBooking.
 
 ## Get All Hosts
 

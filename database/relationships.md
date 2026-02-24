@@ -1,6 +1,6 @@
 # Model Relationships
 
-Fluent Booking database tables are interconnected via primary and foreign key relationships. Our ORM makes managing these relationships effortless.
+FluentBooking database tables are interconnected via primary and foreign key relationships. Our ORM makes managing these relationships effortless.
 
 ## Relationship Types
 

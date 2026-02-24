@@ -141,7 +141,7 @@ add_action('fluent_booking/front_footer', function() {
 
 ## fluent_booking/main_landing
 
-Fires at the main landing page of Fluent Booking.
+Fires at the main landing page of FluentBooking.
 
 **Example Usage:**
 ```php

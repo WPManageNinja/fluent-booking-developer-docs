@@ -1,6 +1,6 @@
 # Action Hooks
 
-Action hooks allow you to execute custom code at specific points in Fluent Booking's execution flow. They are perfect for triggering side effects, sending notifications, logging events, or performing custom business logic.
+Action hooks allow you to execute custom code at specific points in FluentBooking's execution flow. They are perfect for triggering side effects, sending notifications, logging events, or performing custom business logic.
 
 ## Categories
 

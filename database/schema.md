@@ -1,16 +1,16 @@
 # Database Schema
 
-The Fluent Booking database is designed for high performance, maintaining a clean separation between core scheduling data, host availability, and extensibility via metadata.
+The FluentBooking database is designed for high performance, maintaining a clean separation between core scheduling data, host availability, and extensibility via metadata.
 
 ## Core Entity Relationships
 
-The following diagram illustrates the primary relationships between the core entity tables in Fluent Booking.
+The following diagram illustrates the primary relationships between the core entity tables in FluentBooking.
 
-![Fluent Booking Database Schema](/images/fluent-booking-database-design.png)
+![FluentBooking Database Schema](/images/fluent-booking-database-design.png)
 
 ## Schema Overview
 
-The Fluent Booking schema is built around these core concepts:
+The FluentBooking schema is built around these core concepts:
 
 - **Calendars & Events**: Top-level containers for scheduling rules and specific appointment types.
 - **Bookings**: The central ledger for all scheduled appointments, including customer data and status.
@@ -64,7 +64,7 @@ Represents bookable event types (Slots).
 - `slug`: Event public slug
 - `media_id`: Featured image ID
 - `description`: Event description
-- `settings`: (Serialized) Additional configurations stored. Examples include buffer times, available date ranges, date_overrides, booking limits etc.
+- `settings`: (Serialized) Additional configurations stored. Examples include buffer times, available date ranges, date_overrides, booking limits, etc.
 - `availability_type`: `existing_schedule` / `custom`
 - `availability_id`: ID for existing schedule availability
 - `status`: `active` / `inactive` / `draft` / `expired`
@@ -110,7 +110,7 @@ Stores all appointment records.
 - `booking_type`: `scheduling`, `event`
 - `event_type`: `single`, `group`, `round_robin`, `collective`, etc.
 - `payment_status`: `pending`, `paid`, `partially-paid`, `partially-refunded`
-- `payment_method`: `stripe`, `paypal`, `offline` etc.
+- `payment_method`: `stripe`, `paypal`, `offline`, etc.
 - `source_url`: URL of the page where the booking was made
 - `source_id`: ID of the source (form, post, etc.)
 - `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, `utm_content`: Tracking params

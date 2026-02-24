@@ -1,6 +1,6 @@
 # Authentication
 
-All admin REST API endpoints require authentication. Fluent Booking uses **Application Passwords** (Basic Authentication) to authenticate requests.
+All admin REST API endpoints require authentication. FluentBooking uses **Application Passwords** (Basic Authentication) to authenticate requests.
 
 > [!NOTE]
 > The public-facing booking form uses WordPress AJAX endpoints (`wp_ajax_nopriv_*`), not the REST API. The REST API endpoints documented here are intended for server-to-server integrations and admin use, and all require authentication.
@@ -9,7 +9,7 @@ All admin REST API endpoints require authentication. Fluent Booking uses **Appli
 
 1. Go to **Users > Profile** in your WordPress dashboard.
 2. Scroll to the **Application Passwords** section.
-3. Enter a name for the new application password (e.g., "Fluent Booking API").
+3. Enter a name for the new application password (e.g., "FluentBooking API").
 4. Click **Add New Application Password**.
 5. Copy the generated password.
 

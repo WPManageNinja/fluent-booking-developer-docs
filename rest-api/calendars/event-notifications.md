@@ -75,7 +75,8 @@ Use these placeholders in email templates:
 - <code v-pre>{{guest.last_name}}</code> - Guest last name
 - <code v-pre>{{guest.full_name}}</code> - Guest full name
 - <code v-pre>{{guest.email}}</code> - Guest email
-- <code v-pre>{{guest.note}}</code> - Guest note- <code v-pre>{{booking.phone}}</code> - Guest phone number
+- <code v-pre>{{guest.note}}</code> - Guest note
+- <code v-pre>{{booking.phone}}</code> - Guest phone number
 - <code v-pre>{{guest.timezone}}</code> - Guest timezone
 
 ### Booking Data
@@ -151,7 +152,7 @@ POST /calendars/{id}/events/{event_id}/email-notifications
 
 ```json
 {
-    "message": "Notifications has been saved"
+    "message": "Notifications have been saved"
 }
 ```
 

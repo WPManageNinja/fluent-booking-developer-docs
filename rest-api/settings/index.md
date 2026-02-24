@@ -340,7 +340,7 @@ POST /settings/install-plugin
 
 ```json
 {
-    "message": "Plugin has been installed Successfully"
+    "message": "Plugin has been installed successfully"
 }
 ```
 

@@ -2,8 +2,21 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
-  title: "Fluent Booking Developer Docs",
-  description: "Complete developer guide for Fluent Booking",
+  title: "FluentBooking Developer Docs",
+  description: "Complete developer documentation for FluentBooking — REST API, database models, action hooks, and filter hooks for the WordPress scheduling plugin.",
+  sitemap: {
+    hostname: 'https://developers.fluentbooking.com'
+  },
+  head: [
+    ['link', { rel: 'icon', type: 'image/webp', href: '/favicon/favicon.svg' }],
+    ['meta', { name: 'og:type', content: 'website' }],
+    ['meta', { name: 'og:site_name', content: 'FluentBooking Developer Docs' }],
+    ['meta', { name: 'og:image', content: 'https://developers.fluentbooking.com/images/fluentbooking-og.png' }],
+    ['meta', { name: 'og:url', content: 'https://developers.fluentbooking.com' }],
+    ['meta', { name: 'twitter:card', content: 'summary' }],
+    ['meta', { name: 'twitter:image', content: 'https://developers.fluentbooking.com/images/fluentbooking-og.png' }],
+    ['link', { rel: 'canonical', href: 'https://developers.fluentbooking.com' }]
+  ],
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     siteTitle: 'Dev Docs',
@@ -184,15 +197,12 @@ export default defineConfig({
     ],
 
     footer: {
-        message: 'Fluent Booking developer documentation',
-        copyright: 'Copyright © 2026 Fluent Booking'
+        message: 'FluentBooking developer documentation',
+        copyright: 'Copyright © 2026 FluentBooking'
     },
 
     search: {
         provider: 'local'
     }
-  },
-  head: [
-    ['link', { rel: 'icon', type: 'image/webp', href: '/favicon/favicon.svg' }]
-  ]
+  }
 })

@@ -1,10 +1,10 @@
 # 👥 User Model
 
-The `User` model extends WordPress's user functionality for Fluent Booking, providing additional methods and relationships specific to the booking system.
+The `User` model extends WordPress's user functionality for FluentBooking, providing additional methods and relationships specific to the booking system.
 
 ## Attributes
 
-As this model interacts with the WordPress users table, it includes standard WP_User fields plus Fluent Booking specific logic.
+As this model interacts with the WordPress users table, it includes standard WP_User fields plus FluentBooking specific logic.
 
 | Attribute | Type | Description |
 |-----------|------|-------------|

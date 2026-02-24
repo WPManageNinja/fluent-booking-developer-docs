@@ -43,7 +43,7 @@ add_action('fluent_booking/availability_schedule_cloned', function($clonedSchedu
 
 ## fluent_booking/avaibility_schedule_updated
 
-Fires after an availability schedule is updated. 
+Fires after an availability schedule is updated.
 
 > [!NOTE]
 > Please note the spelling in the hook name: `avaibility_schedule_updated` (missing 'l').
@@ -88,7 +88,7 @@ add_action('fluent_booking/before_delete_availability_schedule', function($sched
 Fires after an availability schedule is deleted.
 
 **Parameters:**
-- `$scheduleId` (int) - The schedule ID (when deleted via the Availability API)
+- `$scheduleId` (int) - The schedule ID (when deleted via the Availability API).
 
 **Example Usage:**
 ```php

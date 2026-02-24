@@ -4,7 +4,7 @@ These hooks are triggered during administrative tasks and plugin lifecycle event
 
 ## fluent_booking/admin_app_rendering
 
-Fires when the main Fluent Booking admin application is about to render.
+Fires when the main FluentBooking admin application is about to render.
 
 **Example Usage:**
 ```php
@@ -17,7 +17,7 @@ add_action('fluent_booking/admin_app_rendering', function() {
 
 ## fluent_booking/loaded
 
-Fires after the Fluent Booking plugin has been fully loaded.
+Fires after the FluentBooking plugin has been fully loaded.
 
 **Parameters:**
 - `$app` (object) - The FluentBooking application instance.
@@ -35,7 +35,7 @@ add_action('fluent_booking/loaded', function($app) {
 
 ## fluent_booking/after_update_advanced_settings
 
-Fires after the advanced global settings are updated. <Badge type="tip" text="Pro" />
+Fires after the advanced event settings are updated. <Badge type="tip" text="Pro" />
 
 **Parameters:**
 - `$event` (object) - The calendar event/slot object whose advanced settings were updated.

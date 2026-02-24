@@ -144,6 +144,7 @@ add_filter('fluent_booking/booking_meeting_title', function($title, $authorName,
 ```
 
 **Location:** `app/Models/Booking.php`
+
 ---
 
 ## fluent_booking/meeting_bookmarks

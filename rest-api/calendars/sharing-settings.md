@@ -94,7 +94,7 @@ POST /calendars/{id}/sharing-settings
 
 ```json
 {
-    "message": "Landing Page settings has been updated"
+    "message": "Landing Page settings have been updated"
 }
 ```
 

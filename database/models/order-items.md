@@ -1,4 +1,4 @@
-# 📦 OrderItems Model (Pro)
+# 📦 OrderItems Model <Badge type="tip" text="Pro" />
 
 The `OrderItems` model represents individual line items within an [Order](order). Each item can be a booking slot price, a service fee, or a discount.
 

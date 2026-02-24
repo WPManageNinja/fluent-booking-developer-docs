@@ -1,6 +1,6 @@
 # 📅 Booking Model
 
-The `Booking` model represents a scheduled appointment or booking in Fluent Booking. It contains all the essential information about a booking including customer details, timing, status, and payment information.
+The `Booking` model represents a scheduled appointment or booking in FluentBooking. It contains all the essential information about a booking including customer details, timing, status, and payment information.
 
 ## Attributes
 
@@ -83,9 +83,6 @@ Returns list of bookmarks or record links associated with the meeting.
 
 ### `getAdminViewUrl()`
 Returns the internal WordPress admin URL to view the booking.
-
-### `canCancel()` / `canReschedule()`
-Check if the booking is currently eligible for cancellation/rescheduling based on event settings.
 
 ## Scopes
 

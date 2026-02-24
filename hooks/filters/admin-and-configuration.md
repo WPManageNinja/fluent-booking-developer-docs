@@ -4,7 +4,7 @@ These filters allow you to customize the admin dashboard, permissions, and globa
 
 ## fluent_booking/admin_menu_items
 
-Filters the list of menu items in the Fluent Booking admin sidebar.
+Filters the list of menu items in the FluentBooking admin sidebar.
 
 **Parameters:**
 - `$menuItems` (array) - List of menu items.
@@ -29,7 +29,7 @@ add_filter('fluent_booking/admin_menu_items', function($menuItems) {
 
 ## fluent_booking/admin_vars
 
-Filters the JavaScript global variables injected into the Fluent Booking admin dashboard.
+Filters the JavaScript global variables injected into the FluentBooking admin dashboard.
 
 **Parameters:**
 - `$vars` (array) - Array of admin variables including `slug`, `nonce`, `rest`, `asset_url`, `event_colors`, `meeting_durations`, `timezones`, `features`, `has_pro`, `trans`, etc.
@@ -55,7 +55,7 @@ Filters the variables passed to the standalone host portal.
 
 ## fluent_booking/dashboard_widgets
 
-Filters the list of widgets displayed on the Fluent Booking overview dashboard.
+Filters the list of widgets displayed on the FluentBooking overview dashboard.
 
 **Parameters:**
 - `$widgets` (array) - Default dashboard widgets.
@@ -172,7 +172,7 @@ Filters the general plugin settings retrieved from the database.
 
 ## fluent_booking/admin_base_url
 
-Filters the base URL for Fluent Booking admin pages.
+Filters the base URL for FluentBooking admin pages.
 
 **Parameters:**
 - `$url` (string) - The admin URL (default: `admin_url('admin.php?page=fluent-booking#/' . $extension)`).

@@ -1,6 +1,6 @@
 # Filter Hooks
 
-Filter hooks allow you to modify data, settings, and behavior in Fluent Booking. They are perfect for customizing functionality, modifying output, and extending plugin capabilities.
+Filter hooks allow you to modify data, settings, and behavior in FluentBooking. They are perfect for customizing functionality, modifying output, and extending plugin capabilities.
 
 ## Categories
 

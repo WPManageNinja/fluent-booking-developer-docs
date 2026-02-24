@@ -146,7 +146,7 @@ POST /calendars
 
 ### Request Body
 
-The payload must contain a `calendar` object
+The payload must contain a `calendar` object.
 
 | Field | Type | Required | Description |
 | :--- | :--- | :--- | :--- |

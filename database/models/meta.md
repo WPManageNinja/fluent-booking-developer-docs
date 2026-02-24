@@ -1,6 +1,6 @@
 # 🏷️ Meta Model
 
-The `Meta` model is a polymorphic table used to store metadata for various entities in Fluent Booking, including Calendars, Events, and Users.
+The `Meta` model is a polymorphic table used to store metadata for various entities in FluentBooking, including Calendars, Events, and Users.
 
 ## Attributes
 

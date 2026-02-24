@@ -50,7 +50,7 @@ Filters the data being used to create a new calendar event.
 
 **Parameters:**
 - `$data` (array) - Initial event data.
-- `$calendar` (object) - The calendar object where event is being created.
+- `$calendar` (object) - The calendar object where the event is being created.
 
 **Return:** (array) Modified data.
 

@@ -1,11 +1,11 @@
 # Database Models
 
-Fluent Booking ORM provides a beautiful, simple ActiveRecord implementation for working with database tables. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in db tables, as well as insert new records into the table.
+FluentBooking ORM provides a beautiful, simple ActiveRecord implementation for working with database tables. Each database table has a corresponding "Model" which is used to interact with that table. Models allow you to query for data in database tables, as well as insert new records into the table.
 
 > [!NOTE]
-> Fluent Booking offers helper functions and methods to interact with its database, so you may use those instead of Models directly. We are documenting these for internal usage and high-level 3rd-party developer integrations.
+> FluentBooking offers helper functions and methods to interact with its database, so you may use those instead of Models directly. We are documenting these for internal usage and high-level 3rd-party developer integrations.
 
-## Built-in Fluent Booking Models
+## Built-in FluentBooking Models
 
 All the built-in database models are available at:
 - `fluent-booking/app/Models/` (Core version)

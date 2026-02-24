@@ -1,36 +1,36 @@
 # Getting Started
 
-Welcome to the **Fluent Booking Developer Guide**. This documentation is designed to help you extend, customize, and integrate with the ultimate scheduling and appointment solution for WordPress.
+Welcome to the **FluentBooking Developer Guide**. This documentation is designed to help you extend, customize, and integrate with the ultimate scheduling and appointment solution for WordPress.
 
-## What is Fluent Booking?
+## What is FluentBooking?
 
-Fluent Booking is a powerful, self-hosted scheduling solution built for WordPress. It allows users to manage multiple calendars, create various event types (slots), and handle complex availability rules—all while maintaining full control over their data and branding.
+FluentBooking is a powerful, self-hosted scheduling solution built for WordPress. It allows users to manage multiple calendars, create various event types (slots), and handle complex availability rules—all while maintaining full control over their data and branding.
 
-## Why Extend Fluent Booking?
+## Why Extend FluentBooking?
 
-Fluent Booking is built with developers in mind, offering a highly flexible architecture that can be tailored to meet unique business requirements.
+FluentBooking is built with developers in mind, offering a highly flexible architecture that can be tailored to meet unique business requirements.
 
 ### 🔧 Built for Customization
-Whether you need to add custom fields to the booking form, modify availability logic, or change the frontend display, Fluent Booking provides the hooks needed to make it happen.
+Whether you need to add custom fields to the booking form, modify availability logic, or change the frontend display, FluentBooking provides the hooks needed to make it happen.
 
 ### 🏗️ Flexible Extension Points
 With hundreds of [Action Hooks](/hooks/actions/) and [Filter Hooks](/hooks/filters/), you can intercept the booking process at almost any point—from before a schedule is created to after a payment is processed.
 
 ### 💼 Business Benefits
-Extend Fluent Booking to build niche scheduling solutions, automate internal workflows, or create custom reporting dashboards for your clients.
+Extend FluentBooking to build niche scheduling solutions, automate internal workflows, or create custom reporting dashboards for your clients.
 
-## Fluent Booking Versions
+## FluentBooking Versions
 
-Fluent Booking follows a modular approach, separating core scheduling functionality from advanced features like payments and deep integrations.
+FluentBooking follows a modular approach, separating core scheduling functionality from advanced features like payments and deep integrations.
 
-### Fluent Booking Core (Free)
+### FluentBooking Core (Free)
 The core plugin provides the foundation for scheduling:
 - Unlimited Calendars & Events.
 - Basic Notification System.
 - Core REST API Access.
 - Standard Availability Management.
 
-### Fluent Booking Pro (Premium) <Badge type="tip" text="Pro" />
+### FluentBooking Pro (Premium) <Badge type="tip" text="Pro" />
 The Pro version unlocks advanced capabilities:
 - **Payments**: Integration with Stripe, PayPal, and WooCommerce.
 - **Advanced Integrations**: Zoom, Google Meet, Apple Calendar, and more.
@@ -40,7 +40,7 @@ The Pro version unlocks advanced capabilities:
 ## Core Development Concepts
 
 ### 📊 Data Architecture
-Fluent Booking uses a hierarchical data model to manage scheduling:
+FluentBooking uses a hierarchical data model to manage scheduling:
 
 - **Calendars**: The top-level container (often representing a person, room, or resource).
 - **Events (Slots)**: Specific types of appointments (e.g., "15 Min Consultation") associated with a calendar.
@@ -71,10 +71,10 @@ fluent-booking/
 ## Development Environment Setup
 
 ### Prerequisites
-To develop with Fluent Booking, ensure your environment meets the following:
+To develop with FluentBooking, ensure your environment meets the following:
 - **WordPress**: 6.0 or higher.
 - **PHP**: 7.4 or higher (8.1+ recommended).
-- **Fluent Booking**: Installed and activated on your local site.
+- **FluentBooking**: Installed and activated on your local site.
 
 ### Development Tools
 - **REST Client**: Insomnia or Postman for testing API endpoints.
@@ -83,14 +83,14 @@ To develop with Fluent Booking, ensure your environment meets the following:
 
 ### Getting Started Checklist
 - [ ] Enable `WP_DEBUG` in your `wp-config.php` for error logging.
-- [ ] Install and activate Fluent Booking (and Pro for payment/advanced integration dev).
+- [ ] Install and activate FluentBooking (and Pro for payment/advanced integration dev).
 - [ ] Explore the [REST API Overview](/rest-api/) to learn how to interact with data.
 - [ ] Check out the [Action Hooks](/hooks/actions/) to start your first integration.
 
 ## Quick Start Guide
 
 ### 1. Database & Models
-Fluent Booking uses a powerful Model system based on the Fluent Framework. You can interact with data easily using PHP:
+FluentBooking uses a powerful Model system based on the Fluent Framework. You can interact with data easily using PHP:
 
 ```php
 // Get all bookings for a specific calendar
@@ -118,5 +118,5 @@ add_action('fluent_booking/after_booking_scheduled', function($booking, $calenda
 
 ## Community & Support
 If you have questions or need assistance:
-- **📚 Learning Resources**: Check our [Rest API Guide](/rest-api/).
+- **📚 Learning Resources**: Check our [REST API Guide](/rest-api/).
 - **💬 Feedback**: Join our developer community or contact support via the official website.

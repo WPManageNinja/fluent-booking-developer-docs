@@ -1,10 +1,10 @@
 # Developer Hooks Overview
 
-Fluent Booking is built on an extensible architecture, offering hundreds of WordPress **Actions** and **Filters** that allow you to customize almost every aspect of the plugin without modifying the core files.
+FluentBooking is built on an extensible architecture, offering hundreds of WordPress **Actions** and **Filters** that allow you to customize almost every aspect of the plugin without modifying the core files.
 
 ## Action Hooks
 
-Actions allow you to "hook" into specific events during the Fluent Booking lifecycle and execute your own custom code. They are perfect for triggering side effects like:
+Actions allow you to "hook" into specific events during the FluentBooking lifecycle and execute your own custom code. They are perfect for triggering side effects like:
 - Syncing booking data with an external CRM.
 - Triggering custom notifications or SMS.
 - Logging activity to a third-party analytics service.
@@ -39,17 +39,17 @@ add_filter('fluent_booking/available_slots_for_view', function($slots, $event, $
 
 ## Why Extend with Hooks?
 
-### 🔋 Battery Included
-Fluent Booking provides hooks for almost everything — from UI rendering in the admin to payment processing in the background.
+### 🔋 Batteries Included
+FluentBooking provides hooks for almost everything — from UI rendering in the admin to payment processing in the background.
 
 ### 🛡️ Future-Proof
-By using hooks instead of modifying plugin files, your customizations remain intact even after you update Fluent Booking to the latest version.
+By using hooks instead of modifying plugin files, your customizations remain intact even after you update FluentBooking to the latest version.
 
 ### 🧩 Plugin Interoperability
-Hooks allow other plugins to interact seamlessly with Fluent Booking, enabling a rich ecosystem of integrations (like FluentCRM, Fluent Boards, etc.).
+Hooks allow other plugins to interact seamlessly with FluentBooking, enabling a rich ecosystem of integrations (like FluentCRM, Fluent Boards, etc.).
 
 ## Hook Naming Standards
-Most Fluent Booking hooks follow a consistent naming pattern:
+Most FluentBooking hooks follow a consistent naming pattern:
 - **Namespace**: All hooks are prefixed with `fluent_booking/`.
 - **Timing**: Prefixes like `before_` or `after_` indicate exactly when the hook fires relative to the event.
 - **Dynamic Hooks**: Some hooks include dynamic segments like `{key}` (e.g., `fluent_booking/integration_notify_{key}`).

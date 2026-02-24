@@ -1,6 +1,6 @@
 # REST API Overview
 
-The Fluent Booking REST API allows you to interact with the scheduling system programmatically. It follows standard RESTful principles and is designed to be intuitive for developers familiar with the WordPress REST API.
+The FluentBooking REST API allows you to interact with the scheduling system programmatically. It follows standard RESTful principles and is designed to be intuitive for developers familiar with the WordPress REST API.
 
 ## Base URL
 
@@ -70,6 +70,6 @@ The API uses standard HTTP status codes to indicate success or failure:
 
 ## Next Steps
 
-1. Review the [Authentication Guide](/rest-api/authentication) to setup your first request.
+1. Review the [Authentication Guide](/rest-api/authentication) to set up your first request.
 2. Explore [Calendars API](/rest-api/calendars/) to manage your scheduling hosts.
 3. Learn how to [Manage Bookings](/rest-api/bookings/) via the API.

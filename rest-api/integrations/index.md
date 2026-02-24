@@ -1,6 +1,6 @@
 # Integrations
 
-The Integrations API allows you to manage global integration settings in Fluent Booking. This endpoint uses a `settings_key` parameter to identify which integration's settings to retrieve or update.
+The Integrations API allows you to manage global integration settings in FluentBooking. This endpoint uses a `settings_key` parameter to identify which integration's settings to retrieve or update.
 
 > [!NOTE]
 > For managing per-event integrations (e.g., connecting an event to a specific CRM list), see [Event Integrations](/rest-api/calendars/event-integrations).
@@ -87,7 +87,7 @@ curl -X POST "https://yoursite.com/wp-json/fluent-booking/v2/integrations" \
 
 ```json
 {
-    "message": "Settings has been successfully saved."
+    "message": "Settings have been successfully saved."
 }
 ```
 

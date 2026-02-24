@@ -1,6 +1,6 @@
-# Fluent Booking Developer Documentation
+# FluentBooking Developer Documentation
 
-Official developer documentation for the Fluent Booking WordPress plugin — appointment scheduling, calendar management, and booking automation.
+Official developer documentation for the FluentBooking WordPress plugin — appointment scheduling, calendar management, and booking automation.
 
 ## Quick Start
 
@@ -112,11 +112,11 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This documentation is licensed under [MIT License](LICENSE).
+This documentation is licensed under the MIT License.
 
 ## Links
 
-- [Fluent Booking Plugin](https://fluentbooking.com/)
+- [FluentBooking Plugin](https://fluentbooking.com/)
 - [Support Forum](https://wpmanageninja.com/support-tickets/)
 
 ## Support

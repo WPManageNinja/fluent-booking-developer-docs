@@ -78,7 +78,7 @@ add_action('fluent_booking/disconnect_general_integration_feed_webhook', functio
 
 ## fluent_boards/task_added_from_fluent_booking
 
-Fires when a task is added to Fluent Boards via a Fluent Booking integration.
+Fires when a task is added to Fluent Boards via a FluentBooking integration.
 
 **Parameters:**
 - `$task` (object) - The newly created task object.
@@ -99,7 +99,7 @@ add_action('fluent_boards/task_added_from_fluent_booking', function($task, $book
 
 ## fluent_crm/contact_added_by_fluent_booking
 
-Fires when a contact is added or updated in FluentCRM via a Fluent Booking integration.
+Fires when a contact is added or updated in FluentCRM via a FluentBooking integration.
 
 **Parameters:**
 - `$subscriber` (object) - The FluentCRM subscriber/contact object.

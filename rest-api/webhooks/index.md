@@ -1,6 +1,6 @@
 # Webhooks & SMS <Badge type="tip" text="Pro" />
 
-Webhooks and SMS notifications in Fluent Booking are managed through per-event integrations, not standalone API endpoints.
+Webhooks and SMS notifications in FluentBooking are managed through per-event integrations, not standalone API endpoints.
 
 > [!NOTE]
 > There are no standalone `/webhooks` or `/sms` route prefixes in the REST API. Webhook and SMS notifications are configured as event-level integrations through the [Event Integrations API](/rest-api/calendars/event-integrations).

@@ -1,6 +1,6 @@
 # Transactions <Badge type="tip" text="Pro" />
 
-Transaction data in Fluent Booking is accessible as part of the booking metadata.
+Transaction data in FluentBooking is accessible as part of the booking metadata.
 
 > [!NOTE]
 > There are no standalone transaction endpoints in the REST API. Transaction and payment information is included when retrieving booking details through the [Schedules API](/rest-api/schedules/).

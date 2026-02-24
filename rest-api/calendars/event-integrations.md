@@ -153,7 +153,7 @@ POST /calendars/{id}/events/{event_id}/integrations/clone
 
 ```json
 {
-    "message": "Integrations has been successfully cloned."
+    "message": "Integrations have been successfully cloned."
 }
 ```
 

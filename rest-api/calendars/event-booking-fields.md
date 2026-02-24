@@ -189,7 +189,7 @@ POST /calendars/{id}/events/{event_id}/booking-fields
 
 ```json
 {
-    "message": "Fields has been updated"
+    "message": "Fields have been updated"
 }
 ```
 
