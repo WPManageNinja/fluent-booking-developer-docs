@@ -94,6 +94,11 @@ Returns an event object with settings normalized to the calendar host’s timezo
                     }
                 }
             }
+        },
+        "author_profile": {
+            "ID": 1,
+            "name": "John Doe",
+            "avatar": "https://example.com/avatar.jpg"
         }
     }
 }
@@ -166,7 +171,7 @@ POST /calendars/{id}/events
 | `description` | string | No | Event description (HTML allowed; sanitized server-side). |
 | `color_schema` | string | No | Hex color code (default `#0099ff`). |
 | `location_type` | string | No | Location type (e.g., `zoom`, `phone`). |
-| `location_settings` | array\<object\> | Conditional | Each item must include `type`. For `custom` provide `title`; for `address_organizer` provide `description`; for `phone_organizer` provide `host_phone_number`. |
+| `location_settings` | array\<object\> | Conditional | Each item must include `type`. For `custom` provide `title`; for `in_person_organizer` provide `title` and `description` (the address); for `phone_organizer` provide `host_phone_number`. |
 | `max_book_per_slot` | integer | Conditional | Required for `group` events; defaults to `1` otherwise. |
 | `is_display_spots` | boolean | Conditional | Required for `group` events. |
 | `settings` | object | Yes | Scheduling configuration (see below). |

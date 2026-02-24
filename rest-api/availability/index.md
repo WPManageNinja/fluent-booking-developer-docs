@@ -190,20 +190,31 @@ POST /availability
 
 ### Response
 
+The create endpoint returns the raw schedule record. Note: the `key` field contains the title, `object_id` contains the host user ID, and `value` contains the settings. This differs from the [List](#list-availability-schedules) and [Get](#get-availability-schedule) endpoints which return formatted fields (`title`, `host_name`, `settings`).
+
 ```json
 {
     "schedule": {
         "id": 3,
-        "key": "Business Hours",
+        "object_type": "availability",
         "object_id": 1,
+        "key": "Business Hours",
         "value": {
             "default": false,
             "timezone": "America/New_York",
+            "date_overrides": [],
             "weekly_schedules": {
-                "...": "Default weekly schedule"
+                "mon": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "tue": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "wed": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "thu": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "fri": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "sat": { "enabled": false, "slots": [] },
+                "sun": { "enabled": false, "slots": [] }
             }
         },
-        "created_at": "2025-01-15T10:00:00+00:00"
+        "created_at": "2025-01-15T10:00:00+00:00",
+        "updated_at": "2025-01-15T10:00:00+00:00"
     },
     "message": "Schedule has been created successfully"
 }
@@ -318,12 +329,21 @@ All schedule data must be nested under `schedule.settings`:
 
 ### Response
 
+Returns the raw schedule record (same format as [Create](#create-availability-schedule) response with `key`, `object_id`, `value` fields).
+
 ```json
 {
     "message": "Schedule has been updated successfully",
     "schedule": {
         "id": 1,
-        "...": "Updated schedule object"
+        "object_type": "availability",
+        "object_id": 1,
+        "key": "Weekly Hours",
+        "value": {
+            "...": "Updated settings"
+        },
+        "created_at": "2024-01-15T10:00:00+00:00",
+        "updated_at": "2025-02-24T11:45:30+00:00"
     }
 }
 ```
@@ -413,15 +433,31 @@ POST /availability/{schedule_id}/clone
 
 ### Response
 
+Returns the raw schedule record (same format as [Create](#create-availability-schedule) response).
+
 ```json
 {
     "schedule": {
         "id": 3,
+        "object_type": "availability",
+        "object_id": 1,
         "key": "Weekly Hours (Clone)",
         "value": {
             "default": false,
-            "...": "Cloned schedule settings"
-        }
+            "timezone": "UTC",
+            "date_overrides": [],
+            "weekly_schedules": {
+                "mon": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "tue": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "wed": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "thu": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "fri": { "enabled": true, "slots": [{ "start": "09:00", "end": "17:00" }] },
+                "sat": { "enabled": false, "slots": [] },
+                "sun": { "enabled": false, "slots": [] }
+            }
+        },
+        "created_at": "2025-01-15T10:00:00+00:00",
+        "updated_at": "2025-01-15T10:00:00+00:00"
     },
     "message": "Schedule has been cloned successfully"
 }

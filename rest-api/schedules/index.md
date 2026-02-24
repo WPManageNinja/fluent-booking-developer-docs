@@ -21,7 +21,7 @@ GET /schedules
 | `filters[event]` | integer | No | Filter by event ID |
 | `filters[author]` | integer\|string | No | Filter by calendar ID, `me` for current user, or `all` |
 | `filters[event_type]` | string | No | Filter by event type (e.g., `single`, `group`) |
-| `filters[period]` | string | No | Time period: `upcoming`, `past`, `today`, `cancelled` (default: `upcoming`) |
+| `filters[period]` | string | No | Time period: `upcoming`, `past`, `today`, `cancelled`, `pending`, `no_show` (default: `upcoming`) |
 | `filters[range]` | array | No | Custom date range filter |
 
 ### Response
@@ -37,26 +37,49 @@ Returns paginated list of scheduled bookings with calendar event information.
                 "id": 1,
                 "event_id": 2,
                 "calendar_id": 1,
+                "group_id": 1,
+                "hash": "abc123def456",
                 "person_user_id": null,
+                "host_user_id": 1,
+                "person_time_zone": "America/New_York",
                 "event_type": "single",
                 "status": "scheduled",
-                "booking_hash": "abc123def456",
+                "payment_status": "paid",
                 "first_name": "John",
                 "last_name": "Doe",
                 "email": "john.doe@example.com",
                 "phone": "+1234567890",
                 "message": "Project discussion",
+                "internal_note": "",
                 "start_time": "2025-01-15 10:00:00",
                 "end_time": "2025-01-15 10:30:00",
-                "duration": 30,
-                "timezone": "America/New_York",
+                "slot_minutes": 30,
+                "source": "web",
+                "source_url": "https://example.com/booking-page",
                 "location_details": {
                     "type": "phone_guest",
-                    "value": "+1234567890"
+                    "description": "+1234567890"
                 },
                 "created_at": "2025-01-10T08:30:00+00:00",
                 "updated_at": "2025-01-10T08:30:00+00:00",
-                "event": {
+                "title": "30 Minute Consultation between Jane Smith and John Doe",
+                "author": {
+                    "id": 1,
+                    "name": "Jane Smith",
+                    "email": "jane@example.com",
+                    "first_name": "Jane",
+                    "last_name": "Smith",
+                    "avatar": "https://example.com/avatar.jpg"
+                },
+                "details": "What:\n30 Minute Consultation\n\nWhen:\nWed Jan 15, 10:00am - 10:30am, America/New_York",
+                "location": "<b>Attendee Phone Number</b>: +1234567890",
+                "reschedule_url": "https://example.com/?fluent-booking=booking&meeting_hash=abc123def456&type=reschedule",
+                "happening_status": {},
+                "booking_status_text": "Scheduled",
+                "payment_status_text": "Paid",
+                "custom_form_data": [],
+                "additional_guests": [],
+                "calendar_event": {
                     "id": 2,
                     "title": "30 Minute Consultation",
                     "slug": "30min",
@@ -86,9 +109,15 @@ Returns paginated list of scheduled bookings with calendar event information.
                 }
             ]
         }
-    ]
+    ],
+    "pending_count": 3,
+    "no_show_count": 1,
+    "cancelled_count": 5
 }
 ```
+
+> [!NOTE]
+> The `pending_count`, `no_show_count`, and `cancelled_count` fields are only included in the response when `page=1` (the first page). These provide summary statistics useful for building dashboards.
 
 ## Get Schedule Details
 
@@ -116,29 +145,74 @@ GET /schedules/{id}
 
 Returns complete booking details with attendee information and event settings.
 
+The `schedule` object contains the same formatted booking fields as described in the [List Schedules](#list-schedules) response above.
+
 ```json
 {
     "schedule": {
         "id": 1,
         "event_id": 2,
         "calendar_id": 1,
-        "booking_hash": "abc123def456",
+        "hash": "abc123def456",
         "status": "scheduled",
         "first_name": "John",
         "last_name": "Doe",
         "email": "john.doe@example.com",
         "phone": "+1234567890",
         "message": "Project discussion",
+        "person_time_zone": "America/New_York",
         "start_time": "2025-01-15 10:00:00",
         "end_time": "2025-01-15 10:30:00",
-        "timezone": "America/New_York",
+        "slot_minutes": 30,
         "location_details": {
             "type": "phone_guest",
-            "value": "+1234567890"
-        }
+            "description": "+1234567890"
+        },
+        "title": "30 Minute Consultation between Jane Smith and John Doe",
+        "author": {
+            "id": 1,
+            "name": "Jane Smith",
+            "email": "jane@example.com",
+            "first_name": "Jane",
+            "last_name": "Smith",
+            "avatar": "https://example.com/avatar.jpg"
+        },
+        "...": "See List Schedules response for all fields"
     }
 }
 ```
+
+When `with[]=all_data` is passed, the response includes additional top-level fields:
+
+```json
+{
+    "schedule": { "...": "Full booking object" },
+    "activities": [
+        {
+            "id": 1,
+            "booking_id": 1,
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
+            "description": "Booking created by John Doe",
+            "created_at": "2025-01-10T08:30:00+00:00",
+            "updated_at": "2025-01-10T08:30:00+00:00"
+        }
+    ],
+    "sidebar_contents": [],
+    "payment_order": null,
+    "main_body_contents": []
+}
+```
+
+| Field | Type | Description |
+| :--- | :--- | :--- |
+| `activities` | array | Activity log entries for the booking |
+| `sidebar_contents` | array | Additional sidebar content from integrations (e.g., CRM profile if FluentCRM is active) |
+| `payment_order` | object\|null | Payment order with items, transaction, and discount data (if applicable) |
+| `main_body_contents` | array | Additional metadata content from integrations |
 
 ## Update Schedule
 
@@ -280,16 +354,26 @@ Returns array of activity log entries.
         {
             "id": 1,
             "booking_id": 1,
-            "type": "booking_created",
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
             "description": "Booking created by John Doe",
-            "created_at": "2025-01-10T08:30:00+00:00"
+            "created_at": "2025-01-10T08:30:00+00:00",
+            "updated_at": "2025-01-10T08:30:00+00:00"
         },
         {
             "id": 2,
             "booking_id": 1,
-            "type": "email_sent",
+            "parent_id": null,
+            "created_by": null,
+            "status": "closed",
+            "type": "info",
+            "title": "Email Sent",
             "description": "Confirmation email sent to john.doe@example.com",
-            "created_at": "2025-01-10T08:30:15+00:00"
+            "created_at": "2025-01-10T08:30:15+00:00",
+            "updated_at": "2025-01-10T08:30:15+00:00"
         }
     ]
 }
@@ -327,9 +411,14 @@ Returns booking metadata including activities, sidebar content, and payment info
         {
             "id": 1,
             "booking_id": 1,
-            "type": "booking_created",
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
             "description": "Booking created by John Doe",
-            "created_at": "2025-01-10T08:30:00+00:00"
+            "created_at": "2025-01-10T08:30:00+00:00",
+            "updated_at": "2025-01-10T08:30:00+00:00"
         }
     ],
     "sidebar_contents": [],
@@ -340,9 +429,9 @@ Returns booking metadata including activities, sidebar content, and payment info
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
-| `activities` | array | Activity log entries for the booking |
-| `sidebar_contents` | array | Additional sidebar content (e.g., CRM profile if FluentCRM is active) |
-| `payment_order` | object\|null | Payment order with items and transaction data (if applicable) |
+| `activities` | array | Activity log entries for the booking (see [Get Booking Activities](#get-booking-activities) for field details) |
+| `sidebar_contents` | array | Additional sidebar content from integrations (e.g., CRM profile if FluentCRM is active) |
+| `payment_order` | object\|null | Payment order with items, transaction, and discount data (if applicable) |
 | `main_body_contents` | array | Additional metadata content from integrations |
 
 ## Send Confirmation Email
@@ -399,7 +488,7 @@ GET /schedules/group-bookings/{group_id}/attendees
 
 ### Response
 
-Returns a paginated list of attendees in the group booking.
+Returns a paginated list of attendees in the group booking. Each attendee is a formatted booking object with the same fields as described in the [List Schedules](#list-schedules) response.
 
 ```json
 {
@@ -413,7 +502,8 @@ Returns a paginated list of attendees in the group booking.
                 "first_name": "John",
                 "last_name": "Doe",
                 "email": "john.doe@example.com",
-                "status": "scheduled"
+                "status": "scheduled",
+                "...": "See List Schedules response for all fields"
             }
         ],
         "total": 1,

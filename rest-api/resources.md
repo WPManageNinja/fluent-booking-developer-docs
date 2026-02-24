@@ -7,7 +7,7 @@ List endpoints support pagination to help manage large datasets. You can control
 | Parameter | Type | Description | Default |
 | :--- | :--- | :--- | :--- |
 | `page` | integer | The page number to retrieve. | `1` |
-| `per_page` | integer | The number of items to return per page. | `10` |
+| `per_page` | integer | The number of items to return per page. | `15` (except Bookings API which defaults to `10`) |
 
 ### Example Request
 

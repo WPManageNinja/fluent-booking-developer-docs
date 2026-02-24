@@ -16,7 +16,7 @@ https://yoursite.com/wp-json/fluent-booking/v2/
 ## Key Features
 
 ### 🔐 Secure Authentication
-All private endpoints require authentication. We recommend using **Basic Authentication** (with Application Passwords) for development and server-to-server integrations.
+All REST API endpoints require authentication. We recommend using **Basic Authentication** (with Application Passwords) for development and server-to-server integrations.
 
 ### 📦 JSON Format
 The API accepts and returns data in **JSON** format. Ensure you include the `Content-Type: application/json` header in your POST and PUT requests.

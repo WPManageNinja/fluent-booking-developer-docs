@@ -85,18 +85,26 @@ Returns an overview array of widget objects, latest bookings, and upcoming meeti
             "author": {
                 "name": "Host Name"
             },
+            "slot": {
+                "id": 2,
+                "title": "30 Minute Consultation"
+            },
+            "booked_count": 5,
             "...": "Additional booking fields"
         }
     ]
 }
 ```
 
+> [!NOTE]
+> The `booked_count` field is only included for multi-guest (group) bookings. It shows the total number of active attendees in the group. The `slot` field contains the associated calendar event; if the event has been deleted, `slot` will be an empty object `{}` and `author.name` will be `"unknown"`.
+
 ### Overview Widget Fields
 
 | Field | Type | Description |
 | :--- | :--- | :--- |
 | `title` | string | Widget title |
-| `period` | string | Period identifier (e.g., `all`, `completed`, `cancelled`) |
+| `period` | string | Period identifier (e.g., `all`, `completed`, `cancelled`). Not present on the "Total Guests" widget |
 | `number` | integer | Count for the metric |
 | `content` | string | Comparison message (e.g., "More than last month") |
 | `icon` | string | SVG icon markup |
@@ -126,40 +134,27 @@ GET /reports/graph-reports?date_range[0]=2025-01-01&date_range[1]=2025-01-31
 
 ### Response
 
-Returns time-series data for booked, completed, and cancelled bookings.
+Returns time-series data for booked, completed, and cancelled bookings. Each stats object is a key-value map where keys are formatted date strings and values are counts.
+
+For daily/weekly ranges, keys use `YYYY-MM-DD` format. For monthly ranges (periods longer than ~92 days), keys use `Mon YYYY` format (e.g., `"Jan 2025"`).
 
 ```json
 {
-    "booked_stats": [
-        {
-            "label": "Jan 01",
-            "count": 5
-        },
-        {
-            "label": "Jan 08",
-            "count": 8
-        }
-    ],
-    "completed_stats": [
-        {
-            "label": "Jan 01",
-            "count": 3
-        },
-        {
-            "label": "Jan 08",
-            "count": 6
-        }
-    ],
-    "cancelled_stats": [
-        {
-            "label": "Jan 01",
-            "count": 1
-        },
-        {
-            "label": "Jan 08",
-            "count": 0
-        }
-    ]
+    "booked_stats": {
+        "2025-01-01": 5,
+        "2025-01-02": 3,
+        "2025-01-03": 8
+    },
+    "completed_stats": {
+        "2025-01-01": 3,
+        "2025-01-02": 2,
+        "2025-01-03": 6
+    },
+    "cancelled_stats": {
+        "2025-01-01": 1,
+        "2025-01-02": 0,
+        "2025-01-03": 0
+    }
 }
 ```
 
@@ -183,16 +178,26 @@ Returns an array of activity log entries.
         {
             "id": 1,
             "booking_id": 1,
-            "type": "booking_created",
+            "parent_id": null,
+            "created_by": 1,
+            "status": "closed",
+            "type": "success",
+            "title": "Booking Created",
             "description": "New booking created for 30 Minute Consultation",
-            "created_at": "2025-01-15T10:30:00+00:00"
+            "created_at": "2025-01-15T10:30:00+00:00",
+            "updated_at": "2025-01-15T10:30:00+00:00"
         },
         {
             "id": 2,
             "booking_id": 1,
-            "type": "email_sent",
+            "parent_id": null,
+            "created_by": null,
+            "status": "closed",
+            "type": "info",
+            "title": "Email Sent",
             "description": "Confirmation email sent to john@example.com",
-            "created_at": "2025-01-15T10:30:15+00:00"
+            "created_at": "2025-01-15T10:30:15+00:00",
+            "updated_at": "2025-01-15T10:30:15+00:00"
         }
     ]
 }

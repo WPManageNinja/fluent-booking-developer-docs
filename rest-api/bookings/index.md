@@ -88,13 +88,22 @@ Returns event details with available time slots.
         "title": "30 Minute Consultation",
         "description": "Quick consultation call",
         "duration": 30,
+        "max_lookup_date": "2025-03-15",
+        "min_lookup_date": "2025-01-15",
+        "min_bookable_date": "2025-01-15 13:00:00",
+        "is_display_spots": false,
         "color_schema": "#0099ff",
+        "event_type": "single",
+        "type": "free",
         "location_settings": [
             {
                 "type": "phone_guest",
                 "title": "Attendee Phone Number"
             }
-        ]
+        ],
+        "location_icon_html": "<svg>...</svg>",
+        "settings": {},
+        "time_format": "12"
     },
     "available_slots": {
         "2025-01-15": [
@@ -104,13 +113,14 @@ Returns event details with available time slots.
             "10:30",
             "11:00"
         ]
-    }
+    },
+    "timezone": "America/New_York"
 }
 ```
 
 ## Create Booking
 
-Create a new booking for an event. This is a public endpoint that does not require authentication.
+Create a new booking for an event.
 
 ### Endpoint
 
@@ -131,26 +141,32 @@ POST /bookings/create/{event_id}
 | `name` | string | Yes | Attendee's name |
 | `email` | string | Yes | Attendee's email address (must be valid) |
 | `timezone` | string | Yes | Attendee's timezone (IANA identifier) |
-| `event_time` | string | Yes | Selected date and time for the booking |
+| `event_time` | string | Yes | Selected date and time for the booking (format: `YYYY-MM-DD HH:mm:ss`) |
+| `status` | string | No | Booking status. Defaults to `scheduled`. Use `pending` if the event requires confirmation |
 | `message` | string | No | Meeting notes or message |
 | `location_type` | string | No | Selected location type |
 | `location_description` | string | Conditional | Phone number or address (required when event requires phone/address) |
+| `phone_number` | string | No | Attendee's phone number |
+| `address` | string | No | Attendee's address |
 | `guests` | array | No | Additional guests. For multi-guest events: array of `{name, email}` objects. Otherwise: array of email strings |
 | `custom_fields` | object | No | Custom field values matching the event's booking fields |
 | `duration` | integer | No | Duration override in minutes (if multi-duration is enabled) |
-| `source` | string | No | Source of booking (e.g., `web`, `admin`) |
+| `source` | string | No | Source of booking: `web` (default) or `admin` |
+| `source_url` | string | No | URL of the page where the booking was made |
 | `host_user_id` | integer | No | Specific host for team events |
 
 ### Example Request
 
 ```bash
 curl -X POST "https://yoursite.com/wp-json/fluent-booking/v2/bookings/create/2" \
+  -u "username:application_password" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "John Doe",
     "email": "john.doe@example.com",
     "timezone": "America/New_York",
     "event_time": "2025-01-15 10:00:00",
+    "status": "scheduled",
     "message": "Looking forward to discussing the project",
     "location_type": "phone_guest",
     "location_description": "+1234567890",
@@ -160,20 +176,39 @@ curl -X POST "https://yoursite.com/wp-json/fluent-booking/v2/bookings/create/2" 
 
 ### Response
 
-Returns the created booking object with confirmation details.
+Returns the created booking object with all fields.
 
 ```json
 {
     "message": "Booking has been created",
     "booking": {
         "id": 1,
+        "calendar_id": 1,
         "event_id": 2,
-        "status": "scheduled",
+        "group_id": 1,
+        "hash": "abc123def456",
+        "person_user_id": null,
+        "host_user_id": 1,
+        "person_time_zone": "America/New_York",
+        "start_time": "2025-01-15 15:00:00",
+        "end_time": "2025-01-15 15:30:00",
+        "slot_minutes": 30,
         "first_name": "John",
         "last_name": "Doe",
         "email": "john.doe@example.com",
-        "start_time": "2025-01-15 10:00:00",
-        "end_time": "2025-01-15 10:30:00"
+        "phone": "+1234567890",
+        "message": "Looking forward to discussing the project",
+        "status": "scheduled",
+        "payment_status": null,
+        "event_type": "single",
+        "source": "web",
+        "source_url": "https://example.com/booking-page",
+        "location_details": {
+            "type": "phone_guest",
+            "description": "+1234567890"
+        },
+        "created_at": "2025-01-10 08:30:00",
+        "updated_at": "2025-01-10 08:30:00"
     }
 }
 ```

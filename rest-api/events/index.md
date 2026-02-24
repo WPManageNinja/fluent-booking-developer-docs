@@ -60,11 +60,35 @@ Returns complete event details.
         "color_schema": "#0099ff",
         "location_settings": [
             {
-                "type": "phone_guest",  
+                "type": "phone_guest",
                 "title": "Attendee Phone Number"
             }
         ],
-        "event_type": "single"
+        "event_type": "single",
+        "short_description": "",
+        "author_profile": {
+            "ID": 1,
+            "name": "Jane Smith",
+            "avatar": "https://example.com/avatar.jpg"
+        },
+        "calendar": {
+            "id": 1,
+            "title": "Jane Smith",
+            "slug": "jane-smith",
+            "type": "simple",
+            "author_timezone": "UTC",
+            "status": "active",
+            "author_profile": {
+                "ID": 1,
+                "name": "Jane Smith",
+                "author_slug": "jane-smith",
+                "first_name": "Jane",
+                "last_name": "Smith",
+                "avatar": "https://example.com/avatar.jpg",
+                "phone": "+1234567890",
+                "featured_image": "https://example.com/banner.jpg"
+            }
+        }
     }
 }
 ```
