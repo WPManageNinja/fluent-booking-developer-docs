@@ -5,18 +5,10 @@ The Fluent Booking database is designed for high performance, maintaining a clea
 ## Core Entity Relationships
 
 🔍 **Interactive ER Diagram**
+
 The following diagram illustrates the primary relationships between the core entity tables in Fluent Booking.
 
-```mermaid
-erDiagram
-    fcal_calendars ||--o{ fcal_calendar_events : contains
-    fcal_calendars ||--o{ fcal_meta : has_meta
-    fcal_calendar_events ||--o{ fcal_bookings : generates
-    fcal_bookings ||--o{ fcal_booking_meta : has_meta
-    fcal_bookings ||--o{ fcal_booking_activity : logs
-    fcal_bookings ||--o{ fcal_booking_hosts : assigned_to
-    fcal_booking_hosts }o--|| wp_users : is_user
-```
+![Fluent Booking Database Schema](/images/fluent-booking-database-design.png)
 
 ## Schema Overview
 
