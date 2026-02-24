@@ -170,7 +170,8 @@ export default defineConfig({
                 { text: 'Availability & Slots', link: '/hooks/filters/availability-and-slots' },
                 { text: 'Display & Templates', link: '/hooks/filters/display-and-templates' },
                 { text: 'Admin & Configuration', link: '/hooks/filters/admin-and-configuration' },
-                { text: 'Payments & Advanced', link: '/hooks/filters/payments-and-advanced' }
+                { text: 'Payments & Advanced', link: '/hooks/filters/payments-and-advanced' },
+                { text: 'Integrations', link: '/hooks/filters/integrations' }
               ]
             }
           ]
@@ -179,7 +180,7 @@ export default defineConfig({
     },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/fluent-booking' }
+      { icon: 'github', link: 'https://github.com/WPManageNinja/fluent-booking' }
     ],
 
     footer: {
