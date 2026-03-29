@@ -18,8 +18,8 @@ export default defineConfig({
     ['meta', { property: 'og:image:height', content: '630' }],
     ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
     ['meta', { name: 'twitter:image', content: 'https://developers.fluentbooking.com/images/og/index.png' }],
-    ['script', { src: 'https://cdn.jsdelivr.net/gh/fluent-docai/fluent-bot-chat-widget-open@latest/fluent-bot-chat-widget.umd.js' }],
-    ['script', {}, '(function() { function initWidget() { if (typeof FluentBotChatWidget !== "undefined") { FluentBotChatWidget.injectWidget("019ba1e2-2c1b-7168-a6fc-216112b67978"); } else { setTimeout(initWidget, 100); } } initWidget(); })();']
+    ['script', { type: 'module', src: 'https://cdn.jsdelivr.net/gh/fluent-docai/chat-widget@latest/chat-widget.js' }],
+    ['script', { type: 'module' }, `FluentBotChatWidget.injectWidget("dbe13b70-6e14-432a-9eda-be1f7d1d9478");`]
   ],
   transformPageData(pageData) {
     const hostname = 'https://developers.fluentbooking.com'
