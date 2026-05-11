@@ -1,0 +1,17 @@
+---
+title: Update Event Details
+description: Update Event Details for the FluentBooking Event Settings API.
+outline: false
+aside: false
+---
+
+## Endpoint
+
+- **Method:** `POST`
+- **Path:** `/calendars/{id}/events/{event_id}/details`
+- **Edition:** Core
+- **Controller:** `CalendarController@updateEventDetails`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:38`
+- **Policy:** `CalendarPolicy`
+
+<OAOperation operationId="updateEventDetails" specUrl="/openapi/public/event-settings/update-event-details.json" />

@@ -1,0 +1,244 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "FluentBooking Webhooks & SMS API",
+    "version": "1.0.0",
+    "description": "Outbound webhook configuration and SMS notification endpoints (Pro)."
+  },
+  "servers": [
+    {
+      "url": "https://your-site.test/wp-json/fluent-booking/v2",
+      "description": "Replace with your own WordPress site."
+    }
+  ],
+  "paths": {
+    "/calendars/{id}/events/{event_id}/sms-notifications": {
+      "post": {
+        "operationId": "saveSlotSmsNotifications",
+        "summary": "Save Slot Sms Notifications",
+        "tags": [
+          "Webhooks & SMS"
+        ],
+        "description": "Handler: `TwilioController@saveSlotSmsNotifications`. Source: `fluent-booking-pro/app/Http/Routes/api.php:56`.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id path parameter."
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Event Id path parameter."
+          }
+        ],
+        "security": [
+          {
+            "ApplicationPasswords": []
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {}
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string"
+                    },
+                    "webhook": {
+                      "type": "object",
+                      "properties": {}
+                    }
+                  }
+                },
+                "example": {
+                  "message": "Successfully updated.",
+                  "webhook": {}
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "rest_not_logged_in",
+                  "message": "You are not currently logged in.",
+                  "data": {
+                    "status": 401
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — current user cannot perform this action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "rest_forbidden",
+                  "message": "Sorry, you are not allowed to do that.",
+                  "data": {
+                    "status": 403
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "not_found",
+                  "message": "Resource not found.",
+                  "data": {
+                    "status": 404
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed — inspect `data.errors` for field-level messages.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        },
+                        "errors": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "validation_failed",
+                  "message": "The given data was invalid.",
+                  "data": {
+                    "status": 422,
+                    "errors": {
+                      "title": [
+                        "The title field is required."
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApplicationPasswords": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "WordPress Application Passwords — use Basic auth with username:application_password."
+      }
+    }
+  }
+}

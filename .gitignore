@@ -38,4 +38,7 @@ dist-ssr
 .vitepress/cache
 .gemini
 
+# Generated output
+.generated
+
 CLAUDE.md

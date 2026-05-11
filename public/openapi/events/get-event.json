@@ -1,0 +1,267 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "FluentBooking Events API",
+    "version": "1.0.0",
+    "description": "Calendar event types — bookable slots configured per calendar."
+  },
+  "servers": [
+    {
+      "url": "https://your-site.test/wp-json/fluent-booking/v2",
+      "description": "Replace with your own WordPress site."
+    }
+  ],
+  "paths": {
+    "/events/{event_id}": {
+      "get": {
+        "operationId": "getEvent",
+        "summary": "Get Event",
+        "tags": [
+          "Events"
+        ],
+        "description": "Handler: `EventController@getEvent`. Source: `fluent-booking/app/Http/Routes/api.php:59`.",
+        "parameters": [
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Event Id path parameter."
+          }
+        ],
+        "security": [
+          {
+            "ApplicationPasswords": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "event": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "hash": {
+                          "type": "string"
+                        },
+                        "user_id": {
+                          "type": "integer"
+                        },
+                        "calendar_id": {
+                          "type": "integer"
+                        },
+                        "duration": {
+                          "type": "integer"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "media_id": {
+                          "type": "integer"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "settings": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "availability_type": {
+                          "type": "string"
+                        },
+                        "availability_id": {
+                          "type": "integer"
+                        },
+                        "status": {
+                          "type": "string"
+                        },
+                        "type": {
+                          "type": "string"
+                        },
+                        "color_schema": {
+                          "type": "string"
+                        },
+                        "location_type": {
+                          "type": "string"
+                        },
+                        "location_heading": {
+                          "type": "string"
+                        },
+                        "location_settings": {
+                          "type": "string"
+                        },
+                        "event_type": {
+                          "type": "string"
+                        },
+                        "is_display_spots": {
+                          "type": "integer"
+                        },
+                        "max_book_per_slot": {
+                          "type": "integer"
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "event": {
+                    "id": 1,
+                    "hash": "a1b2c3d4e5f6g7h8",
+                    "user_id": 1,
+                    "calendar_id": 1,
+                    "duration": 15,
+                    "title": "Sample Title",
+                    "slug": "sample",
+                    "media_id": 1,
+                    "description": "Sample description.",
+                    "settings": {},
+                    "availability_type": "custom",
+                    "availability_id": 1,
+                    "status": "active",
+                    "type": "free",
+                    "color_schema": "default",
+                    "location_type": "",
+                    "location_heading": "",
+                    "location_settings": "",
+                    "event_type": "single",
+                    "is_display_spots": 0,
+                    "max_book_per_slot": 1,
+                    "created_at": "2026-01-15 10:00:00",
+                    "updated_at": "2026-01-15 10:00:00"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "rest_not_logged_in",
+                  "message": "You are not currently logged in.",
+                  "data": {
+                    "status": 401
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — current user cannot perform this action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "rest_forbidden",
+                  "message": "Sorry, you are not allowed to do that.",
+                  "data": {
+                    "status": 403
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "not_found",
+                  "message": "Resource not found.",
+                  "data": {
+                    "status": 404
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApplicationPasswords": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "WordPress Application Passwords — use Basic auth with username:application_password."
+      }
+    }
+  }
+}
