@@ -13,8 +13,8 @@ Action hooks fired by third-party integrations (Google, Outlook, Zoom, FluentCRM
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_boards/task_added_from_fluent_booking`](#fluentboardstaskaddedfromfluentbooking) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:422` |
-| [`fluent_boards/task_assignee_changed`](#fluentboardstaskassigneechanged) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:439` |
+| [`fluent_boards/task_added_from_fluent_booking`](#fluentboardstaskaddedfromfluentbooking) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:432` |
+| [`fluent_boards/task_assignee_changed`](#fluentboardstaskassigneechanged) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:449` |
 | [`fluent_booking/cancel_remote_calendar_event_`](#fluentbookingcancelremotecalendarevent) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:90` |
 | [`fluent_booking/create_remote_calendar_event_`](#fluentbookingcreateremotecalendarevent) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:62` |
 | [`fluent_booking/delete_remote_calendar_event_`](#fluentbookingdeleteremotecalendarevent) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:113` |
@@ -27,7 +27,7 @@ Action hooks fired by third-party integrations (Google, Outlook, Zoom, FluentCRM
 | [`fluent_calendar/disconnect_remote_calendar_`](#fluentcalendardisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:150` |
 | [`fluent_calendar/patch_calendar_additional_settings_`](#fluentcalendarpatchcalendaradditionalsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:126` |
 | [`fluent_calendar/patch_calendar_config_settings_`](#fluentcalendarpatchcalendarconfigsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:112` |
-| [`fluent_crm/contact_added_by_fluent_booking`](#fluentcrmcontactaddedbyfluentbooking) | Core | 2 | `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:391` |
+| [`fluent_crm/contact_added_by_fluent_booking`](#fluentcrmcontactaddedbyfluentbooking) | Core | 2 | `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:392` |
 | [`fluentform/log_data`](#fluentformlogdata) | Core | 3 | `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:281` |
 
 <a id="fluentboardstaskaddedfromfluentbooking"></a>
@@ -40,7 +40,7 @@ Action hooks fired by third-party integrations (Google, Outlook, Zoom, FluentCRM
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:422`
+- `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:432`
 
 **Example**
 
@@ -60,7 +60,7 @@ add_action('fluent_boards/task_added_from_fluent_booking', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:439`
+- `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:449`
 
 **Example**
 
@@ -185,7 +185,7 @@ add_action('fluent_booking/disconnect_integration_', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:43`
-- `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:122`
+- `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:124`
 
 **Example**
 
@@ -329,8 +329,8 @@ add_action('fluent_calendar/patch_calendar_config_settings_', function (...$args
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:391`
-- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:419`
+- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:392`
+- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:420`
 
 **Example**
 

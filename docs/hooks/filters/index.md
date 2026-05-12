@@ -9,8 +9,8 @@ This page is generated from `apply_filters()` / `apply_filters_ref_array()` call
 
 ## Overview
 
-- **Unique filter hook names:** 186
-- **Filter call sites:** 207
+- **Unique filter hook names:** 187
+- **Filter call sites:** 208
 - **Categories covered:** 8 (+ miscellaneous)
 
 ## Categories
@@ -21,6 +21,6 @@ This page is generated from `apply_filters()` / `apply_filters_ref_array()` call
 - [Display & Templates](/hooks/filters/display-and-templates) — 11 hooks
 - [Admin & Configuration](/hooks/filters/admin-and-configuration) — 22 hooks
 - [Payments & Advanced](/hooks/filters/payments-and-advanced) — 16 hooks
-- [Integrations](/hooks/filters/integrations) — 25 hooks
+- [Integrations](/hooks/filters/integrations) — 26 hooks
 - [Miscellaneous](/hooks/filters/miscellaneous) — 69 hooks
 - [Miscellaneous](/hooks/filters/miscellaneous) — 69 hooks

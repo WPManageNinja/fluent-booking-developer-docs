@@ -18,7 +18,7 @@ Hooks that did not match a more specific filter category.
 | [`fluent_booking/get_client_field_settings_`](#fluentbookinggetclientfieldsettings) | Core | 1 | `fluent-booking/app/Http/Controllers/IntegrationController.php:14` |
 | [`fluent_booking/get_client_settings_`](#fluentbookinggetclientsettings) | Core | 1 | `fluent-booking/app/Http/Controllers/IntegrationController.php:13` |
 | [`fluent_booking/global_modules`](#fluentbookingglobalmodules) | Core | 1 | `fluent-booking/app/Services/GlobalModules/GlobalModules.php:36` |
-| [`fluent_booking/global_notification_active_types`](#fluentbookingglobalnotificationactivetypes) | Core | 1 | `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:81` |
+| [`fluent_booking/global_notification_active_types`](#fluentbookingglobalnotificationactivetypes) | Core | 1 | `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:83` |
 | [`fluent_booking/global_notification_feed_`](#fluentbookingglobalnotificationfeed) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:171` |
 | [`fluent_booking/global_notification_types`](#fluentbookingglobalnotificationtypes) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:145` |
 | [`fluent_booking/has_all_calendar_access`](#fluentbookinghasallcalendaraccess) | Core | 1 | `fluent-booking/app/Services/PermissionManager.php:34` |
@@ -35,7 +35,7 @@ Hooks that did not match a more specific filter category.
 | [`fluent_booking/meeting_bookmarks`](#fluentbookingmeetingbookmarks) | Core | 1 | `fluent-booking/app/Models/Booking.php:1287` |
 | [`fluent_booking/meeting_durations_schema`](#fluentbookingmeetingdurationsschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1251` |
 | [`fluent_booking/meeting_multi_durations_schema`](#fluentbookingmeetingmultidurationsschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1277` |
-| [`fluent_booking/notifying_async_`](#fluentbookingnotifyingasync) | Core | 1 | `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:111` |
+| [`fluent_booking/notifying_async_`](#fluentbookingnotifyingasync) | Core | 1 | `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:113` |
 | [`fluent_booking/override_select_times_schema`](#fluentbookingoverrideselecttimesschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1550` |
 | [`fluent_booking/payment_booking_field`](#fluentbookingpaymentbookingfield) | Core | 1 | `fluent-booking/app/Services/BookingFieldService.php:229` |
 | [`fluent_booking/payment_receipt_html`](#fluentbookingpaymentreceipthtml) | Core | 2 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:416` |
@@ -193,7 +193,7 @@ add_filter('fluent_booking/global_modules', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:81`
+- `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:83`
 
 **Example**
 
@@ -534,7 +534,7 @@ add_filter('fluent_booking/meeting_multi_durations_schema', function ($value, ..
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:111`
+- `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:113`
 
 **Example**
 

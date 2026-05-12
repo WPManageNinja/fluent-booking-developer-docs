@@ -7,18 +7,19 @@ description: Filters consumed by integration handlers (Twilio, Google, Outlook, 
 
 Filters consumed by integration handlers (Twilio, Google, Outlook, FluentForm, FluentBoards, FluentCRM, webhooks).
 
-25 unique filter hooks currently map to this category, across 29 call sites.
+26 unique filter hooks currently map to this category, across 30 call sites.
 
 ## Hook Inventory
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
 | [`fluent_booking/before_send_integration_data_twilio`](#fluentbookingbeforesendintegrationdatatwilio) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:136` |
-| [`fluent_booking/crm_meeting_data`](#fluentbookingcrmmeetingdata) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:115` |
-| [`fluent_booking/crm_meetings_response`](#fluentbookingcrmmeetingsresponse) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:124` |
+| [`fluent_booking/crm_meeting_data`](#fluentbookingcrmmeetingdata) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:94` |
+| [`fluent_booking/crm_meetings_limit`](#fluentbookingcrmmeetingslimit) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:68` |
+| [`fluent_booking/crm_meetings_response`](#fluentbookingcrmmeetingsresponse) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:97` |
 | [`fluent_booking/crm_trigger_calendar_options`](#fluentbookingcrmtriggercalendaroptions) | Core | 4 | `fluent-booking/app/Services/Integrations/FluentCRM/BookingCompletedTrigger.php:25` |
 | [`fluent_booking/ff_editor_calendar_options`](#fluentbookingffeditorcalendaroptions) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentForms/BookingElement.php:256` |
-| [`fluent_booking/fluent_board_config_field_options`](#fluentbookingfluentboardconfigfieldoptions) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:244` |
+| [`fluent_booking/fluent_board_config_field_options`](#fluentbookingfluentboardconfigfieldoptions) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:253` |
 | [`fluent_booking/get_available_form_integrations`](#fluentbookinggetavailableformintegrations) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:177` |
 | [`fluent_booking/get_integration_config_field_options_`](#fluentbookinggetintegrationconfigfieldoptions) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:147` |
 | [`fluent_booking/get_integration_defaults_`](#fluentbookinggetintegrationdefaults) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:42` |
@@ -69,12 +70,32 @@ add_filter('fluent_booking/before_send_integration_data_twilio', function ($valu
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:115`
+- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:94`
 
 **Example**
 
 ```php
 add_filter('fluent_booking/crm_meeting_data', function ($value, ...$rest) {
+    return $value;
+}, 10, 1 + count($rest ?? []));
+```
+
+<a id="fluentbookingcrmmeetingslimit"></a>
+
+## `fluent_booking/crm_meetings_limit`
+
+- **Type:** filter
+- **Edition:** Core
+- **Call sites:** 1
+
+**Source locations**
+
+- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:68`
+
+**Example**
+
+```php
+add_filter('fluent_booking/crm_meetings_limit', function ($value, ...$rest) {
     return $value;
 }, 10, 1 + count($rest ?? []));
 ```
@@ -89,7 +110,7 @@ add_filter('fluent_booking/crm_meeting_data', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:124`
+- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:97`
 
 **Example**
 
@@ -152,7 +173,7 @@ add_filter('fluent_booking/ff_editor_calendar_options', function ($value, ...$re
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:244`
+- `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:253`
 
 **Example**
 

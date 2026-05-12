@@ -23,8 +23,8 @@ Filters that shape booking data, fields, exports, and confirmation/rescheduling 
 | [`fluent_booking/booking_export_row`](#fluentbookingbookingexportrow) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:84` |
 | [`fluent_booking/booking_fields`](#fluentbookingbookingfields) | Core | 1 | `fluent-booking/app/Services/BookingFieldService.php:239` |
 | [`fluent_booking/booking_meeting_title`](#fluentbookingbookingmeetingtitle) | Core | 1 | `fluent-booking/app/Models/Booking.php:783` |
-| [`fluent_booking/booking_meta_info_main_meta`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:482` |
-| [`fluent_booking/booking_meta_info_main_meta_`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:483` |
+| [`fluent_booking/booking_meta_info_main_meta`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:487` |
+| [`fluent_booking/booking_meta_info_main_meta_`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:488` |
 | [`fluent_booking/booking_per_page_options`](#fluentbookingbookingperpageoptions) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:392` |
 | [`fluent_booking/booking_period_options`](#fluentbookingbookingperiodoptions) | Core | 1 | `fluent-booking/app/Services/Helper.php:1530` |
 | [`fluent_booking/booking_receipt_landing_base_url`](#fluentbookingbookingreceiptlandingbaseurl) | Core | 1 | `fluent-booking/app/Services/Helper.php:2240` |
@@ -246,7 +246,7 @@ add_filter('fluent_booking/booking_meeting_title', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:482`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:487`
 
 **Example**
 
@@ -266,7 +266,7 @@ add_filter('fluent_booking/booking_meta_info_main_meta', function ($value, ...$r
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:483`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:488`
 
 **Example**
 

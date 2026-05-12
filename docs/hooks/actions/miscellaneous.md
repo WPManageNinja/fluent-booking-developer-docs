@@ -18,11 +18,11 @@ Hooks that did not match a more specific action category.
 | [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:349` |
 | [`fluent_booking/calendar`](#fluentbookingcalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:83` |
 | [`fluent_booking/calendar_slot`](#fluentbookingcalendarslot) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:75` |
-| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:549` |
+| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:554` |
 | [`fluent_booking/landing_page_event`](#fluentbookinglandingpageevent) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:154` |
-| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Http/Controllers/SchedulesController.php:313` |
+| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Http/Controllers/SchedulesController.php:318` |
 | [`fluent_booking/processed_event`](#fluentbookingprocessedevent) | Core | 1 | `fluent-booking/app/Services/CalendarEventService.php:22` |
-| [`fluent_booking/schedules_query`](#fluentbookingschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:158` |
+| [`fluent_booking/schedules_query`](#fluentbookingschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:163` |
 
 <a id="fluentbookingafterdisconnectremotecalendar"></a>
 
@@ -135,7 +135,7 @@ add_action('fluent_booking/calendar_slot', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:549`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:554`
 
 **Example**
 
@@ -175,7 +175,7 @@ add_action('fluent_booking/landing_page_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:313`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:318`
 - `fluent-booking/app/Services/BookingService.php:72`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:308`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:417`
@@ -219,7 +219,7 @@ add_action('fluent_booking/processed_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:158`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:163`
 
 **Example**
 
