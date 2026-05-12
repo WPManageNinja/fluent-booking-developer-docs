@@ -1,0 +1,212 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "FluentBooking Event Availability API",
+    "version": "1.0.0",
+    "description": "Availability rules attached to a specific calendar event."
+  },
+  "servers": [
+    {
+      "url": "https://your-site.test/wp-json/fluent-booking/v2",
+      "description": "Replace with your own WordPress site."
+    }
+  ],
+  "paths": {
+    "/calendars/{id}/events/{event_id}/availability": {
+      "get": {
+        "operationId": "getAvailabilitySettings",
+        "summary": "Get Availability Settings",
+        "tags": [
+          "Event Availability"
+        ],
+        "description": "Handler: `CalendarController@getAvailabilitySettings`. Source: `fluent-booking/app/Http/Routes/api.php:37`.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Id path parameter."
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Event Id path parameter."
+          }
+        ],
+        "security": [
+          {
+            "ApplicationPasswords": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "availability": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "integer"
+                        },
+                        "object_type": {
+                          "type": "string"
+                        },
+                        "object_id": {
+                          "type": "integer"
+                        },
+                        "key": {
+                          "type": "string"
+                        },
+                        "value": {
+                          "type": "object",
+                          "properties": {}
+                        },
+                        "created_at": {
+                          "type": "string"
+                        },
+                        "updated_at": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "availability": {
+                    "id": 1,
+                    "object_type": "calendar",
+                    "object_id": 1,
+                    "key": "sample_key",
+                    "value": {},
+                    "created_at": "2026-01-15 10:00:00",
+                    "updated_at": "2026-01-15 10:00:00"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized — invalid or missing credentials.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "rest_not_logged_in",
+                  "message": "You are not currently logged in.",
+                  "data": {
+                    "status": 401
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden — current user cannot perform this action.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "rest_forbidden",
+                  "message": "Sorry, you are not allowed to do that.",
+                  "data": {
+                    "status": 403
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Resource not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "not_found",
+                  "message": "Resource not found.",
+                  "data": {
+                    "status": 404
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApplicationPasswords": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization",
+        "description": "WordPress Application Passwords — use Basic auth with username:application_password."
+      }
+    }
+  }
+}
