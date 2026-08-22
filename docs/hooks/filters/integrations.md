@@ -7,38 +7,39 @@ description: Filters consumed by integration handlers (Twilio, Google, Outlook, 
 
 Filters consumed by integration handlers (Twilio, Google, Outlook, FluentForm, FluentBoards, FluentCRM, webhooks).
 
-26 unique filter hooks currently map to this category, across 30 call sites.
+27 unique filter hooks currently map to this category, across 31 call sites.
 
 ## Hook Inventory
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
 | [`fluent_booking/before_send_integration_data_twilio`](#fluentbookingbeforesendintegrationdatatwilio) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:136` |
-| [`fluent_booking/crm_meeting_data`](#fluentbookingcrmmeetingdata) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:94` |
-| [`fluent_booking/crm_meetings_limit`](#fluentbookingcrmmeetingslimit) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:68` |
-| [`fluent_booking/crm_meetings_response`](#fluentbookingcrmmeetingsresponse) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:97` |
+| [`fluent_booking/crm_booking_prefill_data`](#fluentbookingcrmbookingprefilldata) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/CrmContactService.php:94` |
+| [`fluent_booking/crm_meeting_data`](#fluentbookingcrmmeetingdata) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:95` |
+| [`fluent_booking/crm_meetings_limit`](#fluentbookingcrmmeetingslimit) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:69` |
+| [`fluent_booking/crm_meetings_response`](#fluentbookingcrmmeetingsresponse) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:98` |
 | [`fluent_booking/crm_trigger_calendar_options`](#fluentbookingcrmtriggercalendaroptions) | Core | 4 | `fluent-booking/app/Services/Integrations/FluentCRM/BookingCompletedTrigger.php:25` |
-| [`fluent_booking/ff_editor_calendar_options`](#fluentbookingffeditorcalendaroptions) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentForms/BookingElement.php:256` |
+| [`fluent_booking/ff_editor_calendar_options`](#fluentbookingffeditorcalendaroptions) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentForms/BookingElement.php:253` |
 | [`fluent_booking/fluent_board_config_field_options`](#fluentbookingfluentboardconfigfieldoptions) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:253` |
 | [`fluent_booking/get_available_form_integrations`](#fluentbookinggetavailableformintegrations) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:177` |
-| [`fluent_booking/get_integration_config_field_options_`](#fluentbookinggetintegrationconfigfieldoptions) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:147` |
+| [`fluent_booking/get_integration_config_field_options_`](#fluentbookinggetintegrationconfigfieldoptions) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:149` |
 | [`fluent_booking/get_integration_defaults_`](#fluentbookinggetintegrationdefaults) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:42` |
 | [`fluent_booking/get_integration_field_settings_`](#fluentbookinggetintegrationfieldsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:21` |
-| [`fluent_booking/get_integration_merge_fields_`](#fluentbookinggetintegrationmergefields) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:128` |
+| [`fluent_booking/get_integration_merge_fields_`](#fluentbookinggetintegrationmergefields) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:130` |
 | [`fluent_booking/get_integration_settings_`](#fluentbookinggetintegrationsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:19` |
 | [`fluent_booking/get_integration_settings_fields_`](#fluentbookinggetintegrationsettingsfields) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:54` |
 | [`fluent_booking/get_integration_values_`](#fluentbookinggetintegrationvalues) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:36` |
-| [`fluent_booking/get_payment_connect_info_`](#fluentbookinggetpaymentconnectinfo) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:92` |
-| [`fluent_booking/get_payment_settings_disconnect_`](#fluentbookinggetpaymentsettingsdisconnect) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:97` |
-| [`fluent_booking/google_additional_setting_fields`](#fluentbookinggoogleadditionalsettingfields) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:977` |
-| [`fluent_booking/google_event_data`](#fluentbookinggoogleeventdata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:422` |
-| [`fluent_booking/outlook_additional_setting_fields`](#fluentbookingoutlookadditionalsettingfields) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:907` |
+| [`fluent_booking/get_payment_connect_info_`](#fluentbookinggetpaymentconnectinfo) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:100` |
+| [`fluent_booking/get_payment_settings_disconnect_`](#fluentbookinggetpaymentsettingsdisconnect) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:105` |
+| [`fluent_booking/google_additional_setting_fields`](#fluentbookinggoogleadditionalsettingfields) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:980` |
+| [`fluent_booking/google_event_data`](#fluentbookinggoogleeventdata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:423` |
+| [`fluent_booking/outlook_additional_setting_fields`](#fluentbookingoutlookadditionalsettingfields) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:919` |
 | [`fluent_booking/outlook_app_credentials`](#fluentbookingoutlookappcredentials) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/OutlookHelper.php:13` |
 | [`fluent_booking/outlook_app_redirect_url`](#fluentbookingoutlookappredirecturl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/OutlookHelper.php:142` |
-| [`fluent_booking/outlook_event_data`](#fluentbookingoutlookeventdata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:478` |
-| [`fluent_booking/outlook_refresh_token_url`](#fluentbookingoutlookrefreshtokenurl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:27` |
-| [`fluent_booking/outlook_revoke_url`](#fluentbookingoutlookrevokeurl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:26` |
-| [`fluent_booking/outlook_token_url`](#fluentbookingoutlooktokenurl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:25` |
+| [`fluent_booking/outlook_event_data`](#fluentbookingoutlookeventdata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:480` |
+| [`fluent_booking/outlook_refresh_token_url`](#fluentbookingoutlookrefreshtokenurl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:28` |
+| [`fluent_booking/outlook_revoke_url`](#fluentbookingoutlookrevokeurl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:27` |
+| [`fluent_booking/outlook_token_url`](#fluentbookingoutlooktokenurl) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:26` |
 
 <a id="fluentbookingbeforesendintegrationdatatwilio"></a>
 
@@ -60,6 +61,26 @@ add_filter('fluent_booking/before_send_integration_data_twilio', function ($valu
 }, 10, 1 + count($rest ?? []));
 ```
 
+<a id="fluentbookingcrmbookingprefilldata"></a>
+
+## `fluent_booking/crm_booking_prefill_data`
+
+- **Type:** filter
+- **Edition:** Core
+- **Call sites:** 1
+
+**Source locations**
+
+- `fluent-booking/app/Services/Integrations/FluentCRM/CrmContactService.php:94`
+
+**Example**
+
+```php
+add_filter('fluent_booking/crm_booking_prefill_data', function ($value, ...$rest) {
+    return $value;
+}, 10, 1 + count($rest ?? []));
+```
+
 <a id="fluentbookingcrmmeetingdata"></a>
 
 ## `fluent_booking/crm_meeting_data`
@@ -70,7 +91,7 @@ add_filter('fluent_booking/before_send_integration_data_twilio', function ($valu
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:94`
+- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:95`
 
 **Example**
 
@@ -90,7 +111,7 @@ add_filter('fluent_booking/crm_meeting_data', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:68`
+- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:69`
 
 **Example**
 
@@ -110,7 +131,7 @@ add_filter('fluent_booking/crm_meetings_limit', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:97`
+- `fluent-booking/app/Services/Integrations/FluentCRM/FluentCrmInit.php:98`
 
 **Example**
 
@@ -153,7 +174,7 @@ add_filter('fluent_booking/crm_trigger_calendar_options', function ($value, ...$
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentForms/BookingElement.php:256`
+- `fluent-booking/app/Services/Integrations/FluentForms/BookingElement.php:253`
 
 **Example**
 
@@ -213,7 +234,7 @@ add_filter('fluent_booking/get_available_form_integrations', function ($value, .
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:147`
+- `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:149`
 
 **Example**
 
@@ -273,7 +294,7 @@ add_filter('fluent_booking/get_integration_field_settings_', function ($value, .
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:128`
+- `fluent-booking/app/Http/Controllers/CalendarIntegrationController.php:130`
 - `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:38`
 
 **Example**
@@ -354,7 +375,7 @@ add_filter('fluent_booking/get_integration_values_', function ($value, ...$rest)
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:92`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:100`
 
 **Example**
 
@@ -374,7 +395,7 @@ add_filter('fluent_booking/get_payment_connect_info_', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:97`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:105`
 
 **Example**
 
@@ -394,7 +415,7 @@ add_filter('fluent_booking/get_payment_settings_disconnect_', function ($value, 
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:977`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:980`
 
 **Example**
 
@@ -414,7 +435,7 @@ add_filter('fluent_booking/google_additional_setting_fields', function ($value, 
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:422`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:423`
 
 **Example**
 
@@ -434,7 +455,7 @@ add_filter('fluent_booking/google_event_data', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:907`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:919`
 
 **Example**
 
@@ -494,7 +515,7 @@ add_filter('fluent_booking/outlook_app_redirect_url', function ($value, ...$rest
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:478`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:480`
 
 **Example**
 
@@ -514,7 +535,7 @@ add_filter('fluent_booking/outlook_event_data', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:27`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:28`
 
 **Example**
 
@@ -534,7 +555,7 @@ add_filter('fluent_booking/outlook_refresh_token_url', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:26`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:27`
 
 **Example**
 
@@ -554,7 +575,7 @@ add_filter('fluent_booking/outlook_revoke_url', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:25`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Client.php:26`
 
 **Example**
 

@@ -9,7 +9,7 @@ Plugin-wide settings — general, branding, dashboard, email, and global configu
 
 ## Authentication
 
-These routes are registered with: `SettingsPolicy`.
+These routes are registered with: `SettingsPolicy`, `SuperAdminPolicy`.
 
 ## Endpoints
 

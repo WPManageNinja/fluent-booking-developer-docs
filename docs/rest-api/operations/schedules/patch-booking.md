@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}`
 - **Edition:** Core
 - **Controller:** `SchedulesController@patchBooking`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:74`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:79`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="patchBooking" specUrl="/openapi/public/schedules/patch-booking.json" />

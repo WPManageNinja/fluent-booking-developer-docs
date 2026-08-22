@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations/zoom/save-user-account`
 - **Edition:** Pro
 - **Controller:** `ZoomController@save`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:87`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:91`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="save" specUrl="/openapi/public/integrations/save.json" />

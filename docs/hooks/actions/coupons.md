@@ -16,7 +16,7 @@ Action hooks fired during coupon lifecycle events (Pro).
 | [`fluent_booking/after_delete_coupon`](#fluentbookingafterdeletecoupon) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/Http/Controllers/CouponController.php:140` |
 | [`fluent_booking/before_delete_coupon`](#fluentbookingbeforedeletecoupon) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/Http/Controllers/CouponController.php:136` |
 | [`fluent_booking/coupon_created`](#fluentbookingcouponcreated) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/Http/Controllers/CouponController.php:79` |
-| [`fluent_booking/coupon_status_changed`](#fluentbookingcouponstatuschanged) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/CouponModel.php:120` |
+| [`fluent_booking/coupon_status_changed`](#fluentbookingcouponstatuschanged) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/CouponModel.php:114` |
 | [`fluent_booking/coupon_updated`](#fluentbookingcouponupdated) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/Http/Controllers/CouponController.php:123` |
 
 <a id="fluentbookingafterdeletecoupon"></a>
@@ -89,7 +89,7 @@ add_action('fluent_booking/coupon_created', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Modules/Coupon/CouponModel.php:120`
+- `fluent-booking-pro/app/Modules/Coupon/CouponModel.php:114`
 
 **Example**
 

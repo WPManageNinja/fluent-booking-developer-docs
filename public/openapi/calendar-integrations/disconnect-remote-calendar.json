@@ -19,7 +19,7 @@
         "tags": [
           "Calendar Integrations"
         ],
-        "description": "Handler: `IntegrationSettingsController@disconnectRemoteCalendar`. Source: `fluent-booking-pro/app/Http/Routes/api.php:41`.",
+        "description": "Handler: `IntegrationSettingsController@disconnectRemoteCalendar`. Source: `fluent-booking-pro/app/Http/Routes/api.php:45`.",
         "parameters": [
           {
             "name": "id",

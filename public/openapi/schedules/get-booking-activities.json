@@ -19,7 +19,7 @@
         "tags": [
           "Schedules"
         ],
-        "description": "Handler: `SchedulesController@getBookingActivities`. Source: `fluent-booking/app/Http/Routes/api.php:75`.",
+        "description": "Handler: `SchedulesController@getBookingActivities`. Source: `fluent-booking/app/Http/Routes/api.php:80`.",
         "parameters": [
           {
             "name": "id",

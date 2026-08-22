@@ -16,6 +16,7 @@ FluentBooking models use the standard WPFluent relationship helpers — `belongs
 | [Booking](/database/models/booking) | `booking_activities()` | `hasMany` | `BookingActivity` |
 | [Booking](/database/models/booking) | `user()` | `belongsTo` | `User` |
 | [Booking](/database/models/booking) | `hosts()` | `belongsToMany` | `$class` |
+| [Booking](/database/models/booking) | `bookingHosts()` | `hasMany` | `BookingHost` |
 | [Booking](/database/models/booking) | `payment_order()` | `hasOne` | `Order` |
 | [Calendar](/database/models/calendar) | `slots()` | `hasMany` | `CalendarSlot` |
 | [Calendar](/database/models/calendar) | `events()` | `hasMany` | `CalendarSlot` |
@@ -35,6 +36,7 @@ FluentBooking models use the standard WPFluent relationship helpers — `belongs
 | [User](/database/models/user) | `calendars()` | `hasMany` | `Calendar` |
 | [User](/database/models/user) | `bookings()` | `belongsToMany` | `CalendarSlot` |
 | [User](/database/models/user) | `staff()` | `hasOne` | `Staff` |
+| [User](/database/models/user) | `metas()` | `hasMany` | `Meta` |
 | [Order](/database/models/order) | `items()` | `hasMany` | `OrderItems` |
 | [Order](/database/models/order) | `discounts()` | `hasMany` | `OrderItems` |
 | [Order](/database/models/order) | `transaction()` | `hasOne` | `Transactions` |

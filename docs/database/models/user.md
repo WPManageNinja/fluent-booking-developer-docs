@@ -21,6 +21,7 @@ Extended WordPress user model exposing FluentBooking-specific relations such as 
 | `calendars()` | `hasMany` | `Calendar` |
 | `bookings()` | `belongsToMany` | `CalendarSlot` |
 | `staff()` | `hasOne` | `Staff` |
+| `metas()` | `hasMany` | `Meta` |
 
 ## Public Methods (sample)
 
@@ -31,5 +32,6 @@ Extended WordPress user model exposing FluentBooking-specific relations such as 
 | `user()` | `—` |
 | `getFullNameAttribute()` | `—` |
 | `staff()` | `—` |
+| `metas()` | `—` |
 | `getMeta()` | `$key, $default = null` |
 | `updateMeta()` | `$key, $value` |

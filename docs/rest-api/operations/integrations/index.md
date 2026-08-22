@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations/{host_id}/settings`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@index`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:80`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:84`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="index" specUrl="/openapi/public/integrations/index.json" />

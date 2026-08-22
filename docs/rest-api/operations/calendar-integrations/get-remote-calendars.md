@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/remote-calendars`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@getRemoteCalendars`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:37`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:41`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getRemoteCalendars" specUrl="/openapi/public/calendar-integrations/get-remote-calendars.json" />

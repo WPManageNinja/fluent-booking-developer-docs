@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/team/{id}`
 - **Edition:** Pro
 - **Controller:** `TeamController@deleteMember`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:25`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:26`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="deleteMember" specUrl="/openapi/public/settings/delete-member.json" />

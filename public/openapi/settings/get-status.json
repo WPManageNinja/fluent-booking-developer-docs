@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `LicenseController@getStatus`. Source: `fluent-booking-pro/app/Http/Routes/api.php:26`.",
+        "description": "Handler: `LicenseController@getStatus`. Source: `fluent-booking-pro/app/Http/Routes/api.php:30`.",
         "parameters": [],
         "security": [
           {

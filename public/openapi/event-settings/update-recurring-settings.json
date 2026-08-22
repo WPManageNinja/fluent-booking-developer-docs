@@ -19,7 +19,7 @@
         "tags": [
           "Event Settings"
         ],
-        "description": "Handler: `CalendarController@updateRecurringSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:52`.",
+        "description": "Handler: `CalendarController@updateRecurringSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:56`.",
         "parameters": [
           {
             "name": "id",

@@ -5,7 +5,7 @@ description: Source-verified REST API reference for FluentBooking.
 
 # FluentBooking REST API
 
-This reference covers 120 routes registered in the FluentBooking core and Pro route files.
+This reference covers 127 routes registered in the FluentBooking core and Pro route files.
 
 ## Base URL
 
@@ -26,11 +26,11 @@ This reference covers 120 routes registered in the FluentBooking core and Pro ro
 | [Event Availability](/rest-api/event-availability) | Core + <span class="pro-badge">PRO</span> | 4 | Availability rules attached to a specific calendar event. |
 | [Event Booking Fields](/rest-api/event-booking-fields) | Core | 2 | Custom booking-form fields configured per calendar event. |
 | [Event Email Notifications](/rest-api/event-notifications) | Core | 3 | Per-event email notification templates and configuration. |
-| [Event Integrations](/rest-api/event-integrations) | Core | 7 | Per-event integration configuration (CRM, automation feeds, custom integrations). |
+| [Event Integrations](/rest-api/event-integrations) | Core | 8 | Per-event integration configuration (CRM, automation feeds, custom integrations). |
 | [Event Settings](/rest-api/event-settings) | Core + <span class="pro-badge">PRO</span> | 5 | Per-event details, limits, and configuration endpoints. |
 | [Sharing & Landing](/rest-api/sharing-settings) | Core | 2 | Public calendar landing-page configuration and sharing settings. |
 | [Bookings](/rest-api/bookings) | Core | 4 | Booking CRUD, listing, search, and patch endpoints. |
-| [Schedules](/rest-api/schedules) | Core | 9 | Schedule management endpoints used by the admin app. |
+| [Schedules](/rest-api/schedules) | Core | 15 | Schedule management endpoints used by the admin app. |
 | [Availability Schedules](/rest-api/availability) | Core | 9 | Standalone (reusable) availability schedules used across events. |
 | [Settings](/rest-api/settings) | Core + <span class="pro-badge">PRO</span> | 16 | Plugin-wide settings — general, branding, dashboard, email, and global configuration. |
 | [Admin & Hosts](/rest-api/admin) | Core | 3 | Admin operations including host management, dashboard, and impersonation. |

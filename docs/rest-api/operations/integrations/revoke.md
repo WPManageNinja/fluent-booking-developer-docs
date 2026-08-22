@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations/{host_id}/disconnect`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@revoke`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:82`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:86`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="revoke" specUrl="/openapi/public/integrations/revoke.json" />

@@ -15,20 +15,20 @@ Action hooks fired by third-party integrations (Google, Outlook, Zoom, FluentCRM
 | --- | --- | --- | --- |
 | [`fluent_boards/task_added_from_fluent_booking`](#fluentboardstaskaddedfromfluentbooking) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:432` |
 | [`fluent_boards/task_assignee_changed`](#fluentboardstaskassigneechanged) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentBoards/Bootstrap.php:449` |
-| [`fluent_booking/cancel_remote_calendar_event_`](#fluentbookingcancelremotecalendarevent) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:90` |
-| [`fluent_booking/create_remote_calendar_event_`](#fluentbookingcreateremotecalendarevent) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:62` |
-| [`fluent_booking/delete_remote_calendar_event_`](#fluentbookingdeleteremotecalendarevent) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:113` |
-| [`fluent_booking/disconnect_general_integration_feed_`](#fluentbookingdisconnectgeneralintegrationfeed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:201` |
+| [`fluent_booking/cancel_remote_calendar_event_`](#fluentbookingcancelremotecalendarevent) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:92` |
+| [`fluent_booking/create_remote_calendar_event_`](#fluentbookingcreateremotecalendarevent) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:63` |
+| [`fluent_booking/delete_remote_calendar_event_`](#fluentbookingdeleteremotecalendarevent) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:116` |
+| [`fluent_booking/disconnect_general_integration_feed_`](#fluentbookingdisconnectgeneralintegrationfeed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:244` |
 | [`fluent_booking/disconnect_integration_`](#fluentbookingdisconnectintegration) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:83` |
 | [`fluent_booking/integration_notify_`](#fluentbookingintegrationnotify) | Core | 2 | `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:43` |
-| [`fluent_booking/patch_remote_calendar_event_`](#fluentbookingpatchremotecalendarevent) | <span class="pro-badge">PRO</span> | 2 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:142` |
-| [`fluent_booking/refresh_remote_calendar_group_members_`](#fluentbookingrefreshremotecalendargroupmembers) | <span class="pro-badge">PRO</span> | 4 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:57` |
+| [`fluent_booking/patch_remote_calendar_event_`](#fluentbookingpatchremotecalendarevent) | <span class="pro-badge">PRO</span> | 2 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:146` |
+| [`fluent_booking/refresh_remote_calendar_group_members_`](#fluentbookingrefreshremotecalendargroupmembers) | <span class="pro-badge">PRO</span> | 4 | `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:58` |
 | [`fluent_booking/save_integration_settings_`](#fluentbookingsaveintegrationsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:69` |
-| [`fluent_calendar/disconnect_remote_calendar_`](#fluentcalendardisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:150` |
-| [`fluent_calendar/patch_calendar_additional_settings_`](#fluentcalendarpatchcalendaradditionalsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:126` |
-| [`fluent_calendar/patch_calendar_config_settings_`](#fluentcalendarpatchcalendarconfigsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:112` |
-| [`fluent_crm/contact_added_by_fluent_booking`](#fluentcrmcontactaddedbyfluentbooking) | Core | 2 | `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:392` |
-| [`fluentform/log_data`](#fluentformlogdata) | Core | 3 | `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:281` |
+| [`fluent_calendar/disconnect_remote_calendar_`](#fluentcalendardisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:172` |
+| [`fluent_calendar/patch_calendar_additional_settings_`](#fluentcalendarpatchcalendaradditionalsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:140` |
+| [`fluent_calendar/patch_calendar_config_settings_`](#fluentcalendarpatchcalendarconfigsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:119` |
+| [`fluent_crm/contact_added_by_fluent_booking`](#fluentcrmcontactaddedbyfluentbooking) | Core | 2 | `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:400` |
+| [`fluentform/log_data`](#fluentformlogdata) | Core | 3 | `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:282` |
 
 <a id="fluentboardstaskaddedfromfluentbooking"></a>
 
@@ -80,7 +80,7 @@ add_action('fluent_boards/task_assignee_changed', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:90`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:92`
 
 **Example**
 
@@ -100,9 +100,9 @@ add_action('fluent_booking/cancel_remote_calendar_event_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:62`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:127`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:138`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:63`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:131`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:142`
 
 **Example**
 
@@ -122,9 +122,9 @@ add_action('fluent_booking/create_remote_calendar_event_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:113`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:134`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:170`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:116`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:138`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:174`
 
 **Example**
 
@@ -144,7 +144,7 @@ add_action('fluent_booking/delete_remote_calendar_event_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:201`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:244`
 
 **Example**
 
@@ -205,8 +205,8 @@ add_action('fluent_booking/integration_notify_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:142`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:156`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:146`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:160`
 
 **Example**
 
@@ -226,10 +226,10 @@ add_action('fluent_booking/patch_remote_calendar_event_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:57`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:85`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:110`
-- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:123`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:58`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:87`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:113`
+- `fluent-booking-pro/app/Services/Integrations/Calendars/RemoteCalendarsInit.php:127`
 
 **Example**
 
@@ -269,7 +269,7 @@ add_action('fluent_booking/save_integration_settings_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:150`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:172`
 
 **Example**
 
@@ -289,7 +289,7 @@ add_action('fluent_calendar/disconnect_remote_calendar_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:126`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:140`
 
 **Example**
 
@@ -309,7 +309,7 @@ add_action('fluent_calendar/patch_calendar_additional_settings_', function (...$
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:112`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:119`
 
 **Example**
 
@@ -329,8 +329,8 @@ add_action('fluent_calendar/patch_calendar_config_settings_', function (...$args
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:392`
-- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:420`
+- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:400`
+- `fluent-booking/app/Services/Integrations/FluentCRM/Bootstrap.php:428`
 
 **Example**
 
@@ -350,9 +350,9 @@ add_action('fluent_crm/contact_added_by_fluent_booking', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:281`
-- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:349`
-- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:361`
+- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:282`
+- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:350`
+- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:362`
 
 **Example**
 

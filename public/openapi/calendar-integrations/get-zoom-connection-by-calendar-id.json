@@ -19,7 +19,7 @@
         "tags": [
           "Calendar Integrations"
         ],
-        "description": "Handler: `ZoomController@getZoomConnectionByCalendarId`. Source: `fluent-booking-pro/app/Http/Routes/api.php:45`.",
+        "description": "Handler: `ZoomController@getZoomConnectionByCalendarId`. Source: `fluent-booking-pro/app/Http/Routes/api.php:49`.",
         "parameters": [
           {
             "name": "id",

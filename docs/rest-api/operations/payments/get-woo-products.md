@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations/options/woo-products`
 - **Edition:** Pro
 - **Controller:** `PaymentMethodController@getWooProducts`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:102`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:106`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="getWooProducts" specUrl="/openapi/public/payments/get-woo-products.json" />

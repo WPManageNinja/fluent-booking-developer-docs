@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/sms-notifications/clone`
 - **Edition:** Pro
 - **Controller:** `TwilioController@cloneSlotSmsNotifications`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:57`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:61`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="cloneSlotSmsNotifications" specUrl="/openapi/public/webhooks/clone-slot-sms-notifications.json" />

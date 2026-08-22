@@ -19,7 +19,7 @@
         "tags": [
           "Availability Schedules"
         ],
-        "description": "Handler: `AvailabilityController@updateSchedule`. Source: `fluent-booking/app/Http/Routes/api.php:106`.",
+        "description": "Handler: `AvailabilityController@updateSchedule`. Source: `fluent-booking/app/Http/Routes/api.php:115`.",
         "parameters": [
           {
             "name": "schedule_id",

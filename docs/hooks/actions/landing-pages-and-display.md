@@ -21,7 +21,7 @@ Action hooks fired around landing page rendering, booking confirmation pages, an
 | [`fluent_booking/booking_details_header`](#fluentbookingbookingdetailsheader) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:9` |
 | [`fluent_booking/front_footer`](#fluentbookingfrontfooter) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:164` |
 | [`fluent_booking/front_head`](#fluentbookingfronthead) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:153` |
-| [`fluent_booking/landing_page_route_`](#fluentbookinglandingpageroute) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:66` |
+| [`fluent_booking/landing_page_route_`](#fluentbookinglandingpageroute) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:67` |
 | [`fluent_booking/main_landing`](#fluentbookingmainlanding) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:66` |
 | [`fluent_booking/main_landing_footer`](#fluentbookingmainlandingfooter) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:88` |
 | [`fluent_booking/payment_receipt/after_content`](#fluentbookingpaymentreceiptaftercontent) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/ReceiptHelper.php:68` |
@@ -196,7 +196,7 @@ add_action('fluent_booking/front_head', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:66`
+- `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:67`
 
 **Example**
 

@@ -72,12 +72,14 @@ Represents an individual booking (appointment) created when an attendee schedule
 | `booking_activities()` | `hasMany` | `BookingActivity` |
 | `user()` | `belongsTo` | `User` |
 | `hosts()` | `belongsToMany` | `$class` |
+| `bookingHosts()` | `hasMany` | `BookingHost` |
 | `payment_order()` | `hasOne` | `Order` |
 
 ## Query Scopes
 
 | Scope | Parameters |
 | --- | --- |
+| `WhereHostAccess` | `$query, $userId` |
 | `Upcoming` | `$query` |
 | `Past` | `$query` |
 | `ApplyDateRangeFilter` | `$query, $range` |
@@ -103,6 +105,7 @@ Represents an individual booking (appointment) created when an attendee schedule
 | `getHostEmails()` | `$excludeHostId = null` |
 | `hosts()` | `—` |
 | `getHostIds()` | `—` |
+| `bookingHosts()` | `—` |
 | `getFullBookingDateTimeText()` | `$timeZone = 'UTC', $isHtml = false` |
 | `getPreviousMeetingDateTimeText()` | `$timeZone = 'UTC'` |
 | `getShortBookingDateTime()` | `$timeZone = 'UTC'` |
@@ -118,4 +121,3 @@ Represents an individual booking (appointment) created when an attendee schedule
 | `getMessage()` | `—` |
 | `setLocationDetailsAttribute()` | `$locationDetails` |
 | `getLocationDetailsAttribute()` | `$locationDetails` |
-| `setOtherInfoAttribute()` | `$otherInfo` |

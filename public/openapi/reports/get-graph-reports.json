@@ -19,7 +19,7 @@
         "tags": [
           "Reports"
         ],
-        "description": "Handler: `ReportController@getGraphReports`. Source: `fluent-booking/app/Http/Routes/api.php:116`.",
+        "description": "Handler: `ReportController@getGraphReports`. Source: `fluent-booking/app/Http/Routes/api.php:125`.",
         "parameters": [],
         "security": [
           {
