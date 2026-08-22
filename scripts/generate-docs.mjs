@@ -1176,6 +1176,7 @@ function emitHooksOverview({ type, calls, allByName, categories }) {
   const totalSites = calls.length
   const usedCategories = []
   for (const cat of categories) {
+    if (cat.slug === 'miscellaneous') continue // listed separately below
     const count = [...allByName.keys()].filter((n) => categorizeHook(n, type) === cat.slug).length
     if (count) usedCategories.push({ ...cat, count })
   }

@@ -19,7 +19,7 @@
         "tags": [
           "Calendar Integrations"
         ],
-        "description": "Handler: `IntegrationSettingsController@syncCreatbleRemoteCalSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:40`.",
+        "description": "Handler: `IntegrationSettingsController@syncCreatbleRemoteCalSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:44`.",
         "parameters": [
           {
             "name": "id",

@@ -13,12 +13,12 @@ Filters affecting front-end templates, html output, landing pages, and receipt r
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/add_to_calendar_html`](#fluentbookingaddtocalendarhtml) | Core | 1 | `fluent-booking/app/Services/Helper.php:1798` |
-| [`fluent_booking/allowed_html_tags`](#fluentbookingallowedhtmltags) | Core | 1 | `fluent-booking/app/Services/Helper.php:1150` |
-| [`fluent_booking/author_photo`](#fluentbookingauthorphoto) | Core | 1 | `fluent-booking/app/Services/Helper.php:2296` |
-| [`fluent_booking/confirm_and_reject_button_html`](#fluentbookingconfirmandrejectbuttonhtml) | Core | 1 | `fluent-booking/app/Services/Helper.php:1807` |
-| [`fluent_booking/get_iframe_html`](#fluentbookinggetiframehtml) | Core | 1 | `fluent-booking/app/Services/Helper.php:1814` |
-| [`fluent_booking/get_location_fields`](#fluentbookinggetlocationfields) | Core | 1 | `fluent-booking/app/Models/CalendarSlot.php:718` |
+| [`fluent_booking/add_to_calendar_html`](#fluentbookingaddtocalendarhtml) | Core | 1 | `fluent-booking/app/Services/Helper.php:1861` |
+| [`fluent_booking/allowed_html_tags`](#fluentbookingallowedhtmltags) | Core | 1 | `fluent-booking/app/Services/Helper.php:1213` |
+| [`fluent_booking/author_photo`](#fluentbookingauthorphoto) | Core | 1 | `fluent-booking/app/Services/Helper.php:2359` |
+| [`fluent_booking/confirm_and_reject_button_html`](#fluentbookingconfirmandrejectbuttonhtml) | Core | 1 | `fluent-booking/app/Services/Helper.php:1870` |
+| [`fluent_booking/get_iframe_html`](#fluentbookinggetiframehtml) | Core | 1 | `fluent-booking/app/Services/Helper.php:1877` |
+| [`fluent_booking/get_location_fields`](#fluentbookinggetlocationfields) | Core | 1 | `fluent-booking/app/Models/CalendarSlot.php:730` |
 | [`fluent_booking/payment_receipt/pre_render_footer`](#fluentbookingpaymentreceiptprerenderfooter) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/ReceiptHelper.php:89` |
 | [`fluent_booking/payment_receipt/pre_render_header`](#fluentbookingpaymentreceiptprerenderheader) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/ReceiptHelper.php:75` |
 | [`fluent_booking/payment_receipt/pre_render_item_details`](#fluentbookingpaymentreceiptprerenderitemdetails) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/ReceiptHelper.php:124` |
@@ -35,7 +35,7 @@ Filters affecting front-end templates, html output, landing pages, and receipt r
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1798`
+- `fluent-booking/app/Services/Helper.php:1861`
 
 **Example**
 
@@ -55,7 +55,7 @@ add_filter('fluent_booking/add_to_calendar_html', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1150`
+- `fluent-booking/app/Services/Helper.php:1213`
 
 **Example**
 
@@ -75,7 +75,7 @@ add_filter('fluent_booking/allowed_html_tags', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:2296`
+- `fluent-booking/app/Services/Helper.php:2359`
 
 **Example**
 
@@ -95,7 +95,7 @@ add_filter('fluent_booking/author_photo', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1807`
+- `fluent-booking/app/Services/Helper.php:1870`
 
 **Example**
 
@@ -115,7 +115,7 @@ add_filter('fluent_booking/confirm_and_reject_button_html', function ($value, ..
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1814`
+- `fluent-booking/app/Services/Helper.php:1877`
 
 **Example**
 
@@ -135,7 +135,7 @@ add_filter('fluent_booking/get_iframe_html', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Models/CalendarSlot.php:718`
+- `fluent-booking/app/Models/CalendarSlot.php:730`
 
 **Example**
 

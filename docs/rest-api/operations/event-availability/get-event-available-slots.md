@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/event-available-slots`
 - **Edition:** Pro
 - **Controller:** `SingleEventController@getEventAvailableSlots`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:74`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:78`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getEventAvailableSlots" specUrl="/openapi/public/event-availability/get-event-available-slots.json" />

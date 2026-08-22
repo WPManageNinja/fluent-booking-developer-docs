@@ -44,6 +44,7 @@
     "/openapi/public/event-booking-fields/get-event-booking-fields.json",
     "/openapi/public/event-booking-fields/save-event-booking-fields.json",
     "/openapi/public/event-integrations/clone-integrations.json",
+    "/openapi/public/event-integrations/create-crm-taxonomy.json",
     "/openapi/public/event-integrations/delete.json",
     "/openapi/public/event-integrations/find.json",
     "/openapi/public/event-integrations/get-config-field-options.json",
@@ -87,10 +88,16 @@
     "/openapi/public/schedules/get-booking-activities.json",
     "/openapi/public/schedules/get-booking-meta-info.json",
     "/openapi/public/schedules/get-booking.json",
+    "/openapi/public/schedules/get-crm-contact-prefill.json",
+    "/openapi/public/schedules/get-crm-contact.json",
+    "/openapi/public/schedules/get-crm-options.json",
     "/openapi/public/schedules/get-group-attendees.json",
     "/openapi/public/schedules/index.json",
     "/openapi/public/schedules/patch-booking.json",
+    "/openapi/public/schedules/search-crm-contacts.json",
     "/openapi/public/schedules/send-confirmation-email.json",
+    "/openapi/public/schedules/update-crm-lists.json",
+    "/openapi/public/schedules/update-crm-tags.json",
     "/openapi/public/settings/deactivate-license.json",
     "/openapi/public/settings/delete-member.json",
     "/openapi/public/settings/get-general-settings.json",
@@ -117,5 +124,5 @@
     "/openapi/public/webhooks/save-feed.json",
     "/openapi/public/webhooks/save-slot-sms-notifications.json"
   ],
-  "generated": "2026-05-12T13:17:23.025Z"
+  "generated": "2026-08-22T05:32:40.629Z"
 }

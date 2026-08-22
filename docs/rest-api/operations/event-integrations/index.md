@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/integrations`
 - **Edition:** Core
 - **Controller:** `CalendarIntegrationController@index`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:122`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:131`
 
 <OAOperation operationId="index" specUrl="/openapi/public/event-integrations/index.json" />

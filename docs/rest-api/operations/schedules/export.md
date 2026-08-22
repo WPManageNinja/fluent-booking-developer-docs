@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/export`
 - **Edition:** Core
 - **Controller:** `SchedulesController@export`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:71`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:74`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="export" specUrl="/openapi/public/schedules/export.json" />

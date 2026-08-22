@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/integrations/{integration_id}/merge-fields`
 - **Edition:** Core
 - **Controller:** `CalendarIntegrationController@integrationListComponent`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:129`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:138`
 
 <OAOperation operationId="integrationListComponent" specUrl="/openapi/public/event-integrations/integration-list-component.json" />

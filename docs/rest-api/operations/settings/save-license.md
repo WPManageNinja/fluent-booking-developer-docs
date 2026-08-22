@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/license`
 - **Edition:** Pro
 - **Controller:** `LicenseController@saveLicense`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:27`
-- **Policy:** `SettingsPolicy`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:31`
+- **Policy:** `SuperAdminPolicy`
 
 <OAOperation operationId="saveLicense" specUrl="/openapi/public/settings/save-license.json" />

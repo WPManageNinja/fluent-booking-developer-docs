@@ -19,7 +19,7 @@
         "tags": [
           "Event Availability"
         ],
-        "description": "Handler: `SingleEventController@getEventAvailableSlots`. Source: `fluent-booking-pro/app/Http/Routes/api.php:74`.",
+        "description": "Handler: `SingleEventController@getEventAvailableSlots`. Source: `fluent-booking-pro/app/Http/Routes/api.php:78`.",
         "parameters": [
           {
             "name": "id",

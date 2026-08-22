@@ -7,22 +7,23 @@ description: Hooks that did not match a more specific action category.
 
 Hooks that did not match a more specific action category.
 
-10 unique action hooks currently map to this category, across 15 call sites.
+11 unique action hooks currently map to this category, across 17 call sites.
 
 ## Hook Inventory
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/after_disconnect_remote_calendar`](#fluentbookingafterdisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:151` |
+| [`fluent_booking/after_disconnect_remote_calendar`](#fluentbookingafterdisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:173` |
 | [`fluent_booking/availability_schedules_query`](#fluentbookingavailabilityschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:38` |
-| [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:349` |
-| [`fluent_booking/calendar`](#fluentbookingcalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:83` |
-| [`fluent_booking/calendar_slot`](#fluentbookingcalendarslot) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:75` |
-| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:554` |
-| [`fluent_booking/landing_page_event`](#fluentbookinglandingpageevent) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:154` |
-| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Http/Controllers/SchedulesController.php:318` |
+| [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:363` |
+| [`fluent_booking/calendar`](#fluentbookingcalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:87` |
+| [`fluent_booking/calendar_slot`](#fluentbookingcalendarslot) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:79` |
+| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:732` |
+| [`fluent_booking/landing_page_event`](#fluentbookinglandingpageevent) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:155` |
+| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Http/Controllers/SchedulesController.php:321` |
 | [`fluent_booking/processed_event`](#fluentbookingprocessedevent) | Core | 1 | `fluent-booking/app/Services/CalendarEventService.php:22` |
-| [`fluent_booking/schedules_query`](#fluentbookingschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:163` |
+| [`fluent_booking/schedules_query`](#fluentbookingschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:166` |
+| [`fluent_booking/update_verification_failed`](#fluentbookingupdateverificationfailed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/PluginManager/UpdateVerifier.php:443` |
 
 <a id="fluentbookingafterdisconnectremotecalendar"></a>
 
@@ -34,7 +35,7 @@ Hooks that did not match a more specific action category.
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:151`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:173`
 
 **Example**
 
@@ -74,7 +75,7 @@ add_action('fluent_booking/availability_schedules_query', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/BookingController.php:349`
+- `fluent-booking/app/Http/Controllers/BookingController.php:363`
 
 **Example**
 
@@ -94,8 +95,8 @@ add_action('fluent_booking/bookings_query', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:83`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:372`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:87`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:395`
 
 **Example**
 
@@ -111,11 +112,12 @@ add_action('fluent_booking/calendar', function (...$args) {
 
 - **Type:** action
 - **Edition:** Core
-- **Call sites:** 1
+- **Call sites:** 2
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:75`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:79`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:314`
 
 **Example**
 
@@ -135,7 +137,7 @@ add_action('fluent_booking/calendar_slot', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:554`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:732`
 
 **Example**
 
@@ -155,7 +157,7 @@ add_action('fluent_booking/format_booking_schedule', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:154`
+- `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:155`
 
 **Example**
 
@@ -175,7 +177,7 @@ add_action('fluent_booking/landing_page_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:318`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:321`
 - `fluent-booking/app/Services/BookingService.php:72`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:308`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:417`
@@ -219,12 +221,32 @@ add_action('fluent_booking/processed_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:163`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:166`
 
 **Example**
 
 ```php
 add_action('fluent_booking/schedules_query', function (...$args) {
+    // Your custom logic here.
+}, 10, count($args ?? []));
+```
+
+<a id="fluentbookingupdateverificationfailed"></a>
+
+## `fluent_booking/update_verification_failed`
+
+- **Type:** action
+- **Edition:** <span class="pro-badge">PRO</span>
+- **Call sites:** 1
+
+**Source locations**
+
+- `fluent-booking-pro/app/Services/PluginManager/UpdateVerifier.php:443`
+
+**Example**
+
+```php
+add_action('fluent_booking/update_verification_failed', function (...$args) {
     // Your custom logic here.
 }, 10, count($args ?? []));
 ```

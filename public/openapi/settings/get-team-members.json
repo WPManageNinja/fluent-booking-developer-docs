@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `TeamController@getTeamMembers`. Source: `fluent-booking-pro/app/Http/Routes/api.php:23`.",
+        "description": "Handler: `TeamController@getTeamMembers`. Source: `fluent-booking-pro/app/Http/Routes/api.php:24`.",
         "parameters": [],
         "security": [
           {

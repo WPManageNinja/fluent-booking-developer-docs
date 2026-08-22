@@ -19,7 +19,7 @@
         "tags": [
           "Payments"
         ],
-        "description": "Handler: `TransactionController@updateTransaction`. Source: `fluent-booking-pro/app/Http/Routes/api.php:32`.",
+        "description": "Handler: `TransactionController@updateTransaction`. Source: `fluent-booking-pro/app/Http/Routes/api.php:36`.",
         "parameters": [
           {
             "name": "id",

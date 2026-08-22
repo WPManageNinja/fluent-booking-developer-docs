@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/remote-calendars/sync-settings`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@syncCreatbleRemoteCalSettings`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:40`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:44`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="syncCreatbleRemoteCalSettings" specUrl="/openapi/public/calendar-integrations/sync-creatble-remote-cal-settings.json" />

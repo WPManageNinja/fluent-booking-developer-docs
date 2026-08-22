@@ -19,7 +19,7 @@
         "tags": [
           "Payments"
         ],
-        "description": "Handler: `PaymentMethodController@store`. Source: `fluent-booking-pro/app/Http/Routes/api.php:93`.",
+        "description": "Handler: `PaymentMethodController@store`. Source: `fluent-booking-pro/app/Http/Routes/api.php:97`.",
         "parameters": [],
         "security": [
           {

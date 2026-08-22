@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `LicenseController@deactivateLicense`. Source: `fluent-booking-pro/app/Http/Routes/api.php:28`.",
+        "description": "Handler: `LicenseController@deactivateLicense`. Source: `fluent-booking-pro/app/Http/Routes/api.php:32`.",
         "parameters": [],
         "security": [
           {

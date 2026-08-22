@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/payment-settings`
 - **Edition:** Pro
 - **Controller:** `PaymentMethodController@getPaymentSettings`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:66`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:70`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getPaymentSettings" specUrl="/openapi/public/payments/get-payment-settings.json" />

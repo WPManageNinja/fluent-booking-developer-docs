@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/availability/{schedule_id}/update-status`
 - **Edition:** Core
 - **Controller:** `AvailabilityController@updateDefaultStatus`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:108`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:117`
 - **Policy:** `AvailabilityPolicy`
 
 <OAOperation operationId="updateDefaultStatus" specUrl="/openapi/public/availability/update-default-status.json" />

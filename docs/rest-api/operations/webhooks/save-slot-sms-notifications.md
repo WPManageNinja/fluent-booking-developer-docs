@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/sms-notifications`
 - **Edition:** Pro
 - **Controller:** `TwilioController@saveSlotSmsNotifications`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:56`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:60`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="saveSlotSmsNotifications" specUrl="/openapi/public/webhooks/save-slot-sms-notifications.json" />

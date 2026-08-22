@@ -7,34 +7,34 @@ description: Action hooks fired through the booking lifecycle — creation, conf
 
 Action hooks fired through the booking lifecycle — creation, confirmation, rescheduling, cancellation, and notes.
 
-22 unique action hooks currently map to this category, across 114 call sites.
+22 unique action hooks currently map to this category, across 116 call sites.
 
 ## Hook Inventory
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/after_booking_`](#fluentbookingafterbooking) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Http/Controllers/SchedulesController.php:322` |
+| [`fluent_booking/after_booking_`](#fluentbookingafterbooking) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Http/Controllers/SchedulesController.php:325` |
 | [`fluent_booking/after_booking_meta_update`](#fluentbookingafterbookingmetaupdate) | Core | 1 | `fluent-booking/app/Services/BookingService.php:275` |
-| [`fluent_booking/after_booking_rescheduled`](#fluentbookingafterbookingrescheduled) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:522` |
+| [`fluent_booking/after_booking_rescheduled`](#fluentbookingafterbookingrescheduled) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:528` |
 | [`fluent_booking/after_booking_scheduled`](#fluentbookingafterbookingscheduled) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:441` |
 | [`fluent_booking/after_delete_booking`](#fluentbookingafterdeletebooking) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderEventCleaner.php:33` |
-| [`fluent_booking/after_patch_booking_`](#fluentbookingafterpatchbooking) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:327` |
-| [`fluent_booking/after_patch_booking_schedule`](#fluentbookingafterpatchbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:325` |
+| [`fluent_booking/after_patch_booking_`](#fluentbookingafterpatchbooking) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:330` |
+| [`fluent_booking/after_patch_booking_schedule`](#fluentbookingafterpatchbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:328` |
 | [`fluent_booking/before_booking`](#fluentbookingbeforebooking) | Core | 1 | `fluent-booking/app/Services/BookingService.php:57` |
 | [`fluent_booking/before_delete_booking`](#fluentbookingbeforedeletebooking) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderEventCleaner.php:31` |
-| [`fluent_booking/before_patch_booking_schedule`](#fluentbookingbeforepatchbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:203` |
-| [`fluent_booking/booking_schedule`](#fluentbookingbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:348` |
-| [`fluent_booking/booking_schedule_`](#fluentbookingbookingschedule) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:316` |
+| [`fluent_booking/before_patch_booking_schedule`](#fluentbookingbeforepatchbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:206` |
+| [`fluent_booking/booking_schedule`](#fluentbookingbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:349` |
+| [`fluent_booking/booking_schedule_`](#fluentbookingbookingschedule) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:319` |
 | [`fluent_booking/booking_schedule_auto_cancelled`](#fluentbookingbookingscheduleautocancelled) | Core | 2 | `fluent-booking/app/Hooks/Scheduler/FiveMinuteScheduler.php:74` |
-| [`fluent_booking/booking_schedule_cancelled`](#fluentbookingbookingschedulecancelled) | Core | 2 | `fluent-booking/app/Models/Booking.php:705` |
+| [`fluent_booking/booking_schedule_cancelled`](#fluentbookingbookingschedulecancelled) | Core | 2 | `fluent-booking/app/Models/Booking.php:733` |
 | [`fluent_booking/booking_schedule_completed`](#fluentbookingbookingschedulecompleted) | Core | 1 | `fluent-booking/app/Hooks/Scheduler/FiveMinuteScheduler.php:46` |
-| [`fluent_booking/booking_schedule_rejected`](#fluentbookingbookingschedulerejected) | Core | 1 | `fluent-booking/app/Models/Booking.php:741` |
-| [`fluent_booking/log_booking_activity`](#fluentbookinglogbookingactivity) | Core + <span class="pro-badge">PRO</span> | 67 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:513` |
+| [`fluent_booking/booking_schedule_rejected`](#fluentbookingbookingschedulerejected) | Core | 1 | `fluent-booking/app/Models/Booking.php:769` |
+| [`fluent_booking/log_booking_activity`](#fluentbookinglogbookingactivity) | Core + <span class="pro-badge">PRO</span> | 69 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:519` |
 | [`fluent_booking/log_booking_note`](#fluentbookinglogbookingnote) | Core + <span class="pro-badge">PRO</span> | 10 | `fluent-booking/app/Http/Controllers/IntegrationManagerController.php:230` |
 | [`fluent_booking/pre_after_booking_scheduled`](#fluentbookingpreafterbookingscheduled) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:437` |
 | [`fluent_booking/saving_addons`](#fluentbookingsavingaddons) | Core | 1 | `fluent-booking/app/Http/Controllers/SettingsController.php:254` |
 | [`fluent_booking/short_code_render`](#fluentbookingshortcoderender) | Core | 1 | `fluent-booking/app/Views/public/calendar.php:19` |
-| [`fluent_booking/starting_scheduling_ajax`](#fluentbookingstartingschedulingajax) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:722` |
+| [`fluent_booking/starting_scheduling_ajax`](#fluentbookingstartingschedulingajax) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:736` |
 
 <a id="fluentbookingafterbooking"></a>
 
@@ -46,7 +46,7 @@ Action hooks fired through the booking lifecycle — creation, confirmation, res
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:322`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:325`
 - `fluent-booking/app/Services/BookingService.php:81`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:310`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:421`
@@ -90,7 +90,7 @@ add_action('fluent_booking/after_booking_meta_update', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:522`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:528`
 
 **Example**
 
@@ -135,7 +135,7 @@ add_action('fluent_booking/after_booking_scheduled', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderEventCleaner.php:33`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:369`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:370`
 
 **Example**
 
@@ -155,7 +155,7 @@ add_action('fluent_booking/after_delete_booking', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:327`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:330`
 
 **Example**
 
@@ -175,7 +175,7 @@ add_action('fluent_booking/after_patch_booking_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:325`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:328`
 
 **Example**
 
@@ -216,7 +216,7 @@ add_action('fluent_booking/before_booking', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderEventCleaner.php:31`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:365`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:366`
 
 **Example**
 
@@ -236,7 +236,7 @@ add_action('fluent_booking/before_delete_booking', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:203`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:206`
 
 **Example**
 
@@ -256,7 +256,7 @@ add_action('fluent_booking/before_patch_booking_schedule', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:348`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:349`
 
 **Example**
 
@@ -276,8 +276,8 @@ add_action('fluent_booking/booking_schedule', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:316`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:530`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:319`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:708`
 
 **Example**
 
@@ -318,8 +318,8 @@ add_action('fluent_booking/booking_schedule_auto_cancelled', function (...$args)
 
 **Source locations**
 
-- `fluent-booking/app/Models/Booking.php:705`
-- `fluent-booking/app/Models/Booking.php:718`
+- `fluent-booking/app/Models/Booking.php:733`
+- `fluent-booking/app/Models/Booking.php:746`
 
 **Example**
 
@@ -359,7 +359,7 @@ add_action('fluent_booking/booking_schedule_completed', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Models/Booking.php:741`
+- `fluent-booking/app/Models/Booking.php:769`
 
 **Example**
 
@@ -375,21 +375,21 @@ add_action('fluent_booking/booking_schedule_rejected', function (...$args) {
 
 - **Type:** action
 - **Edition:** Core + <span class="pro-badge">PRO</span>
-- **Call sites:** 67
+- **Call sites:** 69
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:513`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:250`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:255`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:299`
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:303`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:519`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:253`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:258`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:302`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:306`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:175`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:257`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:284`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:444`
 - `fluent-booking-pro/app/Http/Controllers/TransactionController.php:41`
-- _… and 57 more_
+- _… and 59 more_
 
 **Example**
 
@@ -417,7 +417,7 @@ add_action('fluent_booking/log_booking_activity', function (...$args) {
 - `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:330`
 - `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:401`
 - `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:424`
-- `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:486`
+- `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:484`
 - `fluent-booking-pro/app/Services/Integrations/Twilio/Bootstrap.php:507`
 
 **Example**
@@ -502,7 +502,7 @@ add_action('fluent_booking/short_code_render', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:722`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:736`
 
 **Example**
 
