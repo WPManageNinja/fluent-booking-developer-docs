@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/team`
 - **Edition:** Pro
 - **Controller:** `TeamController@updateMemberPermission`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:25`
-- **Policy:** `SettingsPolicy`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:27`
+- **Policy:** `SuperAdminPolicy`
 
 <OAOperation operationId="updateMemberPermission" specUrl="/openapi/public/settings/update-member-permission.json" />

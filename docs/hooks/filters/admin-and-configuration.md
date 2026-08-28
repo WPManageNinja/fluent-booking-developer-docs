@@ -14,12 +14,12 @@ Filters affecting admin UI, menu items, dashboard widgets, and global defaults.
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
 | [`fluent_booking/admin_base_url`](#fluentbookingadminbaseurl) | Core | 1 | `fluent-booking/app/Services/Helper.php:689` |
-| [`fluent_booking/admin_menu_items`](#fluentbookingadminmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:149` |
-| [`fluent_booking/admin_portal_vars`](#fluentbookingadminportalvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:153` |
-| [`fluent_booking/admin_vars`](#fluentbookingadminvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:351` |
-| [`fluent_booking/asset_listed_slugs`](#fluentbookingassetlistedslugs) | Core | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:208` |
+| [`fluent_booking/admin_menu_items`](#fluentbookingadminmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:184` |
+| [`fluent_booking/admin_portal_vars`](#fluentbookingadminportalvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:188` |
+| [`fluent_booking/admin_vars`](#fluentbookingadminvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:386` |
+| [`fluent_booking/asset_listed_slugs`](#fluentbookingassetlistedslugs) | Core | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:243` |
 | [`fluent_booking/backend_sanitized_values`](#fluentbookingbackendsanitizedvalues) | Core | 1 | `fluent-booking/app/Services/Helper.php:1245` |
-| [`fluent_booking/dashboard_notices`](#fluentbookingdashboardnotices) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:394` |
+| [`fluent_booking/dashboard_notices`](#fluentbookingdashboardnotices) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:431` |
 | [`fluent_booking/dashboard_widgets`](#fluentbookingdashboardwidgets) | Core | 1 | `fluent-booking/app/Http/Controllers/ReportController.php:94` |
 | [`fluent_booking/data_export_limit`](#fluentbookingdataexportlimit) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:59` |
 | [`fluent_booking/default_booking_filters`](#fluentbookingdefaultbookingfilters) | Core | 1 | `fluent-booking/app/Services/Helper.php:2267` |
@@ -67,7 +67,7 @@ add_filter('fluent_booking/admin_base_url', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:149`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:184`
 
 **Example**
 
@@ -87,7 +87,7 @@ add_filter('fluent_booking/admin_menu_items', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:153`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:188`
 
 **Example**
 
@@ -107,7 +107,7 @@ add_filter('fluent_booking/admin_portal_vars', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:351`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:386`
 
 **Example**
 
@@ -127,8 +127,8 @@ add_filter('fluent_booking/admin_vars', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:208`
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:249`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:243`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:284`
 
 **Example**
 
@@ -168,7 +168,7 @@ add_filter('fluent_booking/backend_sanitized_values', function ($value, ...$rest
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:394`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:431`
 
 **Example**
 
