@@ -14,7 +14,7 @@ Action hooks fired around admin app rendering, settings persistence, and configu
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
 | [`action_scheduler_pre_theme_init`](#actionschedulerprethemeinit) | Core | 1 | `fluent-booking/boot/action_scheduler_loader.php:38` |
-| [`fluent_booking/admin_app_rendering`](#fluentbookingadminapprendering) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:163` |
+| [`fluent_booking/admin_app_rendering`](#fluentbookingadminapprendering) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:198` |
 | [`fluent_booking/after_update_advanced_settings`](#fluentbookingafterupdateadvancedsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/CalendarController.php:167` |
 | [`fluent_booking/loaded`](#fluentbookingloaded) | Core | 1 | `fluent-booking/boot/app.php:25` |
 | [`fluent_booking/save_client_settings_`](#fluentbookingsaveclientsettings) | Core | 1 | `fluent-booking/app/Http/Controllers/IntegrationController.php:35` |
@@ -49,7 +49,7 @@ add_action('action_scheduler_pre_theme_init', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:163`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:198`
 
 **Example**
 

@@ -33,7 +33,7 @@ Action hooks fired through the booking lifecycle — creation, confirmation, res
 | [`fluent_booking/log_booking_note`](#fluentbookinglogbookingnote) | Core + <span class="pro-badge">PRO</span> | 10 | `fluent-booking/app/Http/Controllers/IntegrationManagerController.php:230` |
 | [`fluent_booking/pre_after_booking_scheduled`](#fluentbookingpreafterbookingscheduled) | Core + <span class="pro-badge">PRO</span> | 5 | `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:437` |
 | [`fluent_booking/saving_addons`](#fluentbookingsavingaddons) | Core | 1 | `fluent-booking/app/Http/Controllers/SettingsController.php:254` |
-| [`fluent_booking/short_code_render`](#fluentbookingshortcoderender) | Core | 1 | `fluent-booking/app/Views/public/calendar.php:19` |
+| [`fluent_booking/short_code_render`](#fluentbookingshortcoderender) | Core | 1 | `fluent-booking/app/Views/public/calendar.php:21` |
 | [`fluent_booking/starting_scheduling_ajax`](#fluentbookingstartingschedulingajax) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:736` |
 
 <a id="fluentbookingafterbooking"></a>
@@ -49,7 +49,7 @@ Action hooks fired through the booking lifecycle — creation, confirmation, res
 - `fluent-booking/app/Http/Controllers/SchedulesController.php:325`
 - `fluent-booking/app/Services/BookingService.php:81`
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:310`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:421`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:457`
 - `fluent-booking-pro/app/Services/Integrations/Woo/Bootstrap.php:257`
 
 **Example**
@@ -111,7 +111,7 @@ add_action('fluent_booking/after_booking_rescheduled', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:441`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:466`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:502`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:84`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:174`
 - `fluent-booking-pro/app/Services/Integrations/Woo/Bootstrap.php:413`
@@ -439,7 +439,7 @@ add_action('fluent_booking/log_booking_note', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:437`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:462`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:498`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:80`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:170`
 - `fluent-booking-pro/app/Services/Integrations/Woo/Bootstrap.php:409`
@@ -482,7 +482,7 @@ add_action('fluent_booking/saving_addons', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Views/public/calendar.php:19`
+- `fluent-booking/app/Views/public/calendar.php:21`
 
 **Example**
 

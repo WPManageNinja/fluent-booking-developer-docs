@@ -17,13 +17,13 @@ Action hooks fired around landing page rendering, booking confirmation pages, an
 | [`fluent_booking/author_landing_footer`](#fluentbookingauthorlandingfooter) | Core | 1 | `fluent-booking/app/Views/landing/booking.php:84` |
 | [`fluent_booking/author_landing_head`](#fluentbookingauthorlandinghead) | Core | 1 | `fluent-booking/app/Views/landing/booking.php:58` |
 | [`fluent_booking/before_calendar_event_landing_page`](#fluentbookingbeforecalendareventlandingpage) | Core | 1 | `fluent-booking/app/Views/landing/booking.php:63` |
-| [`fluent_booking/booking_confirmation_footer`](#fluentbookingbookingconfirmationfooter) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:106` |
-| [`fluent_booking/booking_details_header`](#fluentbookingbookingdetailsheader) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:9` |
+| [`fluent_booking/booking_confirmation_footer`](#fluentbookingbookingconfirmationfooter) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:118` |
+| [`fluent_booking/booking_details_header`](#fluentbookingbookingdetailsheader) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:21` |
 | [`fluent_booking/front_footer`](#fluentbookingfrontfooter) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:164` |
 | [`fluent_booking/front_head`](#fluentbookingfronthead) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:153` |
 | [`fluent_booking/landing_page_route_`](#fluentbookinglandingpageroute) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:67` |
-| [`fluent_booking/main_landing`](#fluentbookingmainlanding) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:66` |
-| [`fluent_booking/main_landing_footer`](#fluentbookingmainlandingfooter) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:88` |
+| [`fluent_booking/main_landing`](#fluentbookingmainlanding) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:84` |
+| [`fluent_booking/main_landing_footer`](#fluentbookingmainlandingfooter) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:106` |
 | [`fluent_booking/payment_receipt/after_content`](#fluentbookingpaymentreceiptaftercontent) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/ReceiptHelper.php:68` |
 
 <a id="fluentbookingaftercalendareventlandingpage"></a>
@@ -116,7 +116,7 @@ add_action('fluent_booking/before_calendar_event_landing_page', function (...$ar
 
 **Source locations**
 
-- `fluent-booking/app/Views/public/booking_confirmation.php:106`
+- `fluent-booking/app/Views/public/booking_confirmation.php:118`
 
 **Example**
 
@@ -136,7 +136,7 @@ add_action('fluent_booking/booking_confirmation_footer', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Views/public/booking_confirmation.php:9`
+- `fluent-booking/app/Views/public/booking_confirmation.php:21`
 
 **Example**
 
@@ -216,7 +216,7 @@ add_action('fluent_booking/landing_page_route_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Views/landing/author_landing.php:66`
+- `fluent-booking/app/Views/landing/author_landing.php:84`
 
 **Example**
 
@@ -236,7 +236,7 @@ add_action('fluent_booking/main_landing', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Views/landing/author_landing.php:88`
+- `fluent-booking/app/Views/landing/author_landing.php:106`
 
 **Example**
 

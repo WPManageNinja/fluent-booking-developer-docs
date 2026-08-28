@@ -7,7 +7,7 @@ description: Hooks that did not match a more specific filter category.
 
 Hooks that did not match a more specific filter category.
 
-74 unique filter hooks currently map to this category, across 84 call sites.
+75 unique filter hooks currently map to this category, across 85 call sites.
 
 ## Hook Inventory
 
@@ -20,14 +20,14 @@ Hooks that did not match a more specific filter category.
 | [`fluent_booking/get_client_settings_`](#fluentbookinggetclientsettings) | Core | 1 | `fluent-booking/app/Http/Controllers/IntegrationController.php:13` |
 | [`fluent_booking/global_modules`](#fluentbookingglobalmodules) | Core | 1 | `fluent-booking/app/Services/GlobalModules/GlobalModules.php:36` |
 | [`fluent_booking/global_notification_active_types`](#fluentbookingglobalnotificationactivetypes) | Core | 1 | `fluent-booking/app/Hooks/Handlers/GlobalNotificationHandler.php:83` |
-| [`fluent_booking/global_notification_feed_`](#fluentbookingglobalnotificationfeed) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:171` |
-| [`fluent_booking/global_notification_types`](#fluentbookingglobalnotificationtypes) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:145` |
+| [`fluent_booking/global_notification_feed_`](#fluentbookingglobalnotificationfeed) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:175` |
+| [`fluent_booking/global_notification_types`](#fluentbookingglobalnotificationtypes) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:149` |
 | [`fluent_booking/has_all_calendar_access`](#fluentbookinghasallcalendaraccess) | Core | 1 | `fluent-booking/app/Services/PermissionManager.php:34` |
 | [`fluent_booking/has_calendar_access`](#fluentbookinghascalendaraccess) | Core | 1 | `fluent-booking/app/Services/PermissionManager.php:102` |
 | [`fluent_booking/host_view_page_vars`](#fluentbookinghostviewpagevars) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:183` |
 | [`fluent_booking/i18n_date_time_config`](#fluentbookingi18ndatetimeconfig) | Core | 1 | `fluent-booking/app/Services/DateTimeHelper.php:400` |
 | [`fluent_booking/initialize_booking_data`](#fluentbookinginitializebookingdata) | Core | 2 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:860` |
-| [`fluent_booking/is_new`](#fluentbookingisnew) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:432` |
+| [`fluent_booking/is_new`](#fluentbookingisnew) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:469` |
 | [`fluent_booking/is_rtl`](#fluentbookingisrtl) | Core | 1 | `fluent-booking/app/Services/Helper.php:2351` |
 | [`fluent_booking/license_grace_period_days`](#fluentbookinglicensegraceperioddays) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/LicenseController.php:137` |
 | [`fluent_booking/local_booked_events`](#fluentbookinglocalbookedevents) | Core | 1 | `fluent-booking/app/Services/TimeSlotService.php:296` |
@@ -46,27 +46,28 @@ Hooks that did not match a more specific filter category.
 | [`fluent_booking/phone_min_digits`](#fluentbookingphonemindigits) | Core | 1 | `fluent-booking/app/Services/Helper.php:1065` |
 | [`fluent_booking/process_paypal_ipn_data`](#fluentbookingprocesspaypalipndata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/API/IPN.php:53` |
 | [`fluent_booking/public_ajax_ratelimit`](#fluentbookingpublicajaxratelimit) | Core | 1 | `fluent-booking/app/Services/Helper.php:2433` |
-| [`fluent_booking/public_event_settings_keys`](#fluentbookingpubliceventsettingskeys) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1159` |
-| [`fluent_booking/public_event_vars`](#fluentbookingpubliceventvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1102` |
+| [`fluent_booking/public_event_settings_keys`](#fluentbookingpubliceventsettingskeys) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1169` |
+| [`fluent_booking/public_event_vars`](#fluentbookingpubliceventvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1112` |
 | [`fluent_booking/recurring_default_occurrence`](#fluentbookingrecurringdefaultoccurrence) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/RecurringEventHandler.php:131` |
+| [`fluent_booking/reject_unsafe_remote_urls`](#fluentbookingrejectunsaferemoteurls) | Core | 1 | `fluent-booking/app/Services/Integrations/Calendars/RemoteCalendarHelper.php:22` |
 | [`fluent_booking/remote_booked_events`](#fluentbookingremotebookedevents) | Core | 1 | `fluent-booking/app/Services/TimeSlotService.php:298` |
 | [`fluent_booking/remote_calendar_connection_feeds`](#fluentbookingremotecalendarconnectionfeeds) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:96` |
 | [`fluent_booking/remote_calendar_providers`](#fluentbookingremotecalendarproviders) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:95` |
-| [`fluent_booking/save_event_booking_field_`](#fluentbookingsaveeventbookingfield) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:921` |
-| [`fluent_booking/save_integration_settings_`](#fluentbookingsaveintegrationsettings) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:120` |
-| [`fluent_booking/save_integration_value_`](#fluentbookingsaveintegrationvalue) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:92` |
+| [`fluent_booking/save_event_booking_field_`](#fluentbookingsaveeventbookingfield) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:996` |
+| [`fluent_booking/save_integration_settings_`](#fluentbookingsaveintegrationsettings) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:124` |
+| [`fluent_booking/save_integration_value_`](#fluentbookingsaveintegrationvalue) | Core | 1 | `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:96` |
 | [`fluent_booking/schedule_custom_field_data`](#fluentbookingschedulecustomfielddata) | Core | 2 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:823` |
 | [`fluent_booking/schedule_receipt_data`](#fluentbookingschedulereceiptdata) | Core | 1 | `fluent-booking/app/Services/BookingService.php:431` |
 | [`fluent_booking/schedule_validation_rules_data`](#fluentbookingschedulevalidationrulesdata) | Core | 2 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:808` |
-| [`fluent_booking/settings_menu_items`](#fluentbookingsettingsmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:476` |
-| [`fluent_booking/skip_no_conflict`](#fluentbookingskipnoconflict) | Core | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:197` |
+| [`fluent_booking/settings_menu_items`](#fluentbookingsettingsmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:513` |
+| [`fluent_booking/skip_no_conflict`](#fluentbookingskipnoconflict) | Core | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:232` |
 | [`fluent_booking/slot_intervals_schema`](#fluentbookingslotintervalsschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1481` |
 | [`fluent_booking/slot_slug`](#fluentbookingslotslug) | Core | 1 | `fluent-booking/app/Services/Helper.php:985` |
-| [`fluent_booking/supported_featured`](#fluentbookingsupportedfeatured) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:386` |
+| [`fluent_booking/supported_featured`](#fluentbookingsupportedfeatured) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:423` |
 | [`fluent_booking/total_payment_widget`](#fluentbookingtotalpaymentwidget) | Core | 1 | `fluent-booking/app/Http/Controllers/ReportController.php:66` |
 | [`fluent_booking/update_advanced_settings_validation_rule`](#fluentbookingupdateadvancedsettingsvalidationrule) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/CalendarController.php:108` |
 | [`fluent_booking/update_coupon_data`](#fluentbookingupdatecoupondata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/Http/Controllers/CouponController.php:115` |
-| [`fluent_booking/update_event_details_validation_rule`](#fluentbookingupdateeventdetailsvalidationrule) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:602` |
+| [`fluent_booking/update_event_details_validation_rule`](#fluentbookingupdateeventdetailsvalidationrule) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:627` |
 | [`fluent_booking/update_recurring_settings_validation_rule`](#fluentbookingupdaterecurringsettingsvalidationrule) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/CalendarController.php:197` |
 | [`fluent_booking/upload_folder_name`](#fluentbookinguploadfoldername) | Core | 2 | `fluent-booking/app/Services/Libs/FileSystem.php:28` |
 | [`fluent_booking/user_ip`](#fluentbookinguserip) | Core | 1 | `fluent-booking/app/Services/Helper.php:1034` |
@@ -238,7 +239,7 @@ add_filter('fluent_booking/global_notification_active_types', function ($value, 
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:171`
+- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:175`
 
 **Example**
 
@@ -258,7 +259,7 @@ add_filter('fluent_booking/global_notification_feed_', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:145`
+- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:149`
 
 **Example**
 
@@ -379,7 +380,7 @@ add_filter('fluent_booking/initialize_booking_data', function ($value, ...$rest)
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:432`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:469`
 
 **Example**
 
@@ -660,7 +661,7 @@ add_filter('fluent_booking/payment_booking_field', function ($value, ...$rest) {
 **Source locations**
 
 - `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:412`
-- `fluent-booking/app/Services/EditorShortCodeParser.php:365`
+- `fluent-booking/app/Services/EditorShortCodeParser.php:378`
 
 **Example**
 
@@ -760,7 +761,7 @@ add_filter('fluent_booking/public_ajax_ratelimit', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1159`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1169`
 
 **Example**
 
@@ -780,7 +781,7 @@ add_filter('fluent_booking/public_event_settings_keys', function ($value, ...$re
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1102`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:1112`
 
 **Example**
 
@@ -806,6 +807,26 @@ add_filter('fluent_booking/public_event_vars', function ($value, ...$rest) {
 
 ```php
 add_filter('fluent_booking/recurring_default_occurrence', function ($value, ...$rest) {
+    return $value;
+}, 10, 1 + count($rest ?? []));
+```
+
+<a id="fluentbookingrejectunsaferemoteurls"></a>
+
+## `fluent_booking/reject_unsafe_remote_urls`
+
+- **Type:** filter
+- **Edition:** Core
+- **Call sites:** 1
+
+**Source locations**
+
+- `fluent-booking/app/Services/Integrations/Calendars/RemoteCalendarHelper.php:22`
+
+**Example**
+
+```php
+add_filter('fluent_booking/reject_unsafe_remote_urls', function ($value, ...$rest) {
     return $value;
 }, 10, 1 + count($rest ?? []));
 ```
@@ -880,7 +901,7 @@ add_filter('fluent_booking/remote_calendar_providers', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:921`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:996`
 
 **Example**
 
@@ -900,7 +921,7 @@ add_filter('fluent_booking/save_event_booking_field_', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:120`
+- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:124`
 
 **Example**
 
@@ -920,7 +941,7 @@ add_filter('fluent_booking/save_integration_settings_', function ($value, ...$re
 
 **Source locations**
 
-- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:92`
+- `fluent-booking/app/Services/Integrations/CalendarIntegrationService.php:96`
 
 **Example**
 
@@ -1002,7 +1023,7 @@ add_filter('fluent_booking/schedule_validation_rules_data', function ($value, ..
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:476`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:513`
 
 **Example**
 
@@ -1022,8 +1043,8 @@ add_filter('fluent_booking/settings_menu_items', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:197`
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:238`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:232`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:273`
 
 **Example**
 
@@ -1083,7 +1104,7 @@ add_filter('fluent_booking/slot_slug', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:386`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:423`
 
 **Example**
 
@@ -1163,7 +1184,7 @@ add_filter('fluent_booking/update_coupon_data', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:602`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:627`
 
 **Example**
 
