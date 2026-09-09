@@ -19,7 +19,7 @@ Lightweight representation of a host/staff user — wraps WP user data with Flue
 | --- | --- | --- |
 | `user()` | `belongsTo` | `User` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

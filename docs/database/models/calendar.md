@@ -49,7 +49,7 @@ Top-level scheduling container that owns event types, availability, and bookings
 | `availabilities()` | `hasMany` | `Availability` |
 | `metas()` | `hasMany` | `Meta` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

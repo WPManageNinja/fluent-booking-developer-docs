@@ -31,7 +31,7 @@ Key/value metadata attached to bookings (booking field answers, location details
 | --- | --- | --- |
 | `booking()` | `belongsTo` | `Booking` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

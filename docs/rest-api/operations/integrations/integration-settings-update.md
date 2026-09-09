@@ -1,6 +1,6 @@
 ---
-title: Update
-description: Update for the FluentBooking Integrations API.
+title: Integration Settings Update
+description: Integration Settings Update for the FluentBooking Integrations API.
 outline: false
 aside: false
 ---
@@ -14,4 +14,4 @@ aside: false
 - **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:85`
 - **Policy:** `SettingsPolicy`
 
-<OAOperation operationId="update" specUrl="/openapi/public/integrations/update.json" />
+<OAOperation operationId="integrationSettingsUpdate" specUrl="/openapi/public/integrations/integration-settings-update.json" />

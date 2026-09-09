@@ -19,7 +19,7 @@
         "tags": [
           "Event Booking Fields"
         ],
-        "description": "Handler: `CalendarController@saveEventBookingFields`. Source: `fluent-booking/app/Http/Routes/api.php:47`.",
+        "description": "Handler: `CalendarController@saveEventBookingFields`. Source: `fluent-booking/app/Http/Routes/api.php:45`.",
         "parameters": [
           {
             "name": "id",

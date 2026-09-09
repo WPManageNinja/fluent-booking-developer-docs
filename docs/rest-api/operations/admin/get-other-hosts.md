@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/admin/other-hosts`
 - **Edition:** Core
 - **Controller:** `AdminController@getOtherHosts`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:57`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:55`
 - **Policy:** `AdminPolicy`
 
 <OAOperation operationId="getOtherHosts" specUrl="/openapi/public/admin/get-other-hosts.json" />

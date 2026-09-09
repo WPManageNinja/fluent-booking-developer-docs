@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/details`
 - **Edition:** Core
 - **Controller:** `CalendarController@updateEventDetails`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:38`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:36`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="updateEventDetails" specUrl="/openapi/public/event-settings/update-event-details.json" />

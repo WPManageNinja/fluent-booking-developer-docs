@@ -16,11 +16,13 @@ const ACCENTS = {
   'rest-api': '#2653C7',
   database: '#1a41a8',
   hooks: '#455689',
+  mcp: '#2653C7',
   'getting-started': '#2653C7',
 };
 
 // Section labels for subtitle line
 const SECTION_LABELS = {
+  mcp: 'MCP Server',
   'rest-api': 'REST API',
   'rest-api/calendars': 'REST API / Calendars',
   'rest-api/events': 'REST API / Events',
@@ -118,6 +120,9 @@ const pages = [
   // Helpers
   { path: 'helpers/index', title: 'Helpers', description: 'Shared Service Classes & Static Helpers' },
   { path: 'helpers/helper-class', title: 'Helper Class Reference', description: 'Catalog of Static Helper Methods' },
+  { path: 'helpers/service-api', title: 'Service API Index', description: 'Every Public Method on the Helper Services' },
+  // MCP
+  { path: 'mcp/index', title: 'MCP Server', description: 'AI Agent Abilities, Toolsets & Permissions' },
   // Guides
   { path: 'guides/index', title: 'Guides', description: 'Practical Recipes for Extending FluentBooking' },
   { path: 'guides/code-snippets', title: 'Code Snippets', description: 'Drop-in Examples for Common Customizations' },

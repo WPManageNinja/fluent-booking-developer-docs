@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/integrations/{integration_id}`
 - **Edition:** Core
 - **Controller:** `CalendarIntegrationController@update`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:136`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:139`
 
 <OAOperation operationId="update" specUrl="/openapi/public/event-integrations/update.json" />

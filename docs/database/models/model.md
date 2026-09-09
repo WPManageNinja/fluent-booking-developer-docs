@@ -20,7 +20,7 @@ Shared base ORM class extended by every FluentBooking model. Sets up timestamps,
 | `Latest` | `$query, $field = 'created_at'` |
 | `Newest` | `$query, $field = 'created_at'` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

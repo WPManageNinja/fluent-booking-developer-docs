@@ -12,25 +12,15 @@
     }
   ],
   "paths": {
-    "/integrations/{host_id}/settings": {
+    "/integrations": {
       "get": {
-        "operationId": "index",
-        "summary": "Index",
+        "operationId": "integrationIndex",
+        "summary": "Integration Index",
         "tags": [
           "Integrations"
         ],
-        "description": "Handler: `IntegrationSettingsController@index`. Source: `fluent-booking-pro/app/Http/Routes/api.php:84`.",
-        "parameters": [
-          {
-            "name": "host_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Host Id path parameter."
-          }
-        ],
+        "description": "Handler: `IntegrationController@index`. Source: `fluent-booking/app/Http/Routes/api.php:90`.",
+        "parameters": [],
         "security": [
           {
             "ApplicationPasswords": []
@@ -45,13 +35,39 @@
                   "type": "object",
                   "properties": {
                     "data": {
-                      "type": "object",
-                      "properties": {}
+                      "type": "array",
+                      "items": {
+                        "type": "object"
+                      }
+                    },
+                    "total": {
+                      "type": "integer"
+                    },
+                    "per_page": {
+                      "type": "integer"
+                    },
+                    "current_page": {
+                      "type": "integer"
+                    },
+                    "last_page": {
+                      "type": "integer"
+                    },
+                    "from": {
+                      "type": "integer"
+                    },
+                    "to": {
+                      "type": "integer"
                     }
                   }
                 },
                 "example": {
-                  "data": {}
+                  "data": [],
+                  "total": 0,
+                  "per_page": 20,
+                  "current_page": 1,
+                  "last_page": 1,
+                  "from": 0,
+                  "to": 0
                 }
               }
             }
@@ -117,39 +133,6 @@
                   "message": "Sorry, you are not allowed to do that.",
                   "data": {
                     "status": 403
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "code": "not_found",
-                  "message": "Resource not found.",
-                  "data": {
-                    "status": 404
                   }
                 }
               }

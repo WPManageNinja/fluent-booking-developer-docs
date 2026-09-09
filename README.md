@@ -18,8 +18,11 @@ npm install
 # Start development server
 npm run docs:dev
 
-# Build for production
+# Build for production (regenerates, verifies against the plugin source, then builds)
 npm run docs:build
+
+# Verify the generated docs still match the plugin source
+npm run verify:docs
 
 # Preview production build
 npm run docs:preview
@@ -73,6 +76,13 @@ fluent-booking-developer-docs/
 │       ├── transactions.md
 │       ├── order-items.md
 │       └── webhook.md
+├── mcp/
+│   ├── index.md                  # MCP server overview, toolsets, extension hooks
+│   └── abilities/                # One page per MCP ability (generated)
+├── helpers/
+│   ├── index.md                  # Helper services overview (curated)
+│   ├── helper-class.md           # Grouped Helper reference (curated)
+│   └── service-api.md            # Complete method index (generated)
 └── hooks/
     ├── actions/                  # Action Hooks
     │   ├── index.md

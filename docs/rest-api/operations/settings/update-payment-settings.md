@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/payment`
 - **Edition:** Core
 - **Controller:** `SettingsController@updatePaymentSettings`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:99`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:97`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="updatePaymentSettings" specUrl="/openapi/public/settings/update-payment-settings.json" />

@@ -22,7 +22,7 @@ Outbound webhook configuration (Pro). Defines event triggers, target URL, header
 - `object_type`
 - `object_id`
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

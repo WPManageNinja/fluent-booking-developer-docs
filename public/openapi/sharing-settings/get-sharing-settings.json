@@ -19,7 +19,7 @@
         "tags": [
           "Sharing & Landing"
         ],
-        "description": "Handler: `CalendarController@getSharingSettings`. Source: `fluent-booking/app/Http/Routes/api.php:26`.",
+        "description": "Handler: `CalendarController@getSharingSettings`. Source: `fluent-booking/app/Http/Routes/api.php:24`.",
         "parameters": [
           {
             "name": "id",

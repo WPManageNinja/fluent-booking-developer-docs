@@ -5,7 +5,7 @@ description: Source-verified REST API reference for FluentBooking.
 
 # FluentBooking REST API
 
-This reference covers 127 routes registered in the FluentBooking core and Pro route files.
+This reference covers 129 routes registered in the FluentBooking core and Pro route files.
 
 ## Base URL
 
@@ -21,7 +21,7 @@ This reference covers 127 routes registered in the FluentBooking core and Pro ro
 
 | Module | Edition | Routes | Description |
 | --- | --- | --- | --- |
-| [Calendars](/rest-api/calendars) | Core | 11 | Calendar CRUD, ordering, sharing-page configuration, and event-type lifecycle for each calendar. |
+| [Calendars](/rest-api/calendars) | Core | 10 | Calendar CRUD, ordering, sharing-page configuration, and event-type lifecycle for each calendar. |
 | [Events](/rest-api/events) | Core | 4 | Calendar event types — bookable slots configured per calendar. |
 | [Event Availability](/rest-api/event-availability) | Core + <span class="pro-badge">PRO</span> | 4 | Availability rules attached to a specific calendar event. |
 | [Event Booking Fields](/rest-api/event-booking-fields) | Core | 2 | Custom booking-form fields configured per calendar event. |
@@ -32,7 +32,7 @@ This reference covers 127 routes registered in the FluentBooking core and Pro ro
 | [Bookings](/rest-api/bookings) | Core | 4 | Booking CRUD, listing, search, and patch endpoints. |
 | [Schedules](/rest-api/schedules) | Core | 15 | Schedule management endpoints used by the admin app. |
 | [Availability Schedules](/rest-api/availability) | Core | 9 | Standalone (reusable) availability schedules used across events. |
-| [Settings](/rest-api/settings) | Core + <span class="pro-badge">PRO</span> | 16 | Plugin-wide settings — general, branding, dashboard, email, and global configuration. |
+| [Settings](/rest-api/settings) | Core + <span class="pro-badge">PRO</span> | 19 | Plugin-wide settings — general, branding, dashboard, email, and global configuration. |
 | [Admin & Hosts](/rest-api/admin) | Core | 3 | Admin operations including host management, dashboard, and impersonation. |
 | [Reports](/rest-api/reports) | Core | 3 | Analytics, exports, and reporting endpoints (Pro features included). |
 | [Integrations](/rest-api/integrations) | Core + <span class="pro-badge">PRO</span> | 9 | Global integration configuration (Zoom, Google, Outlook, Apple, FluentCRM, webhooks). |

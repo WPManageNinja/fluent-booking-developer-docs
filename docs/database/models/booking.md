@@ -87,7 +87,7 @@ Represents an individual booking (appointment) created when an attendee schedule
 | `ApplyBookingOrderByStatus` | `$query, $status` |
 | `SearchBy` | `$query, $search` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |
@@ -121,3 +121,45 @@ Represents an individual booking (appointment) created when an attendee schedule
 | `getMessage()` | `—` |
 | `setLocationDetailsAttribute()` | `$locationDetails` |
 | `getLocationDetailsAttribute()` | `$locationDetails` |
+| `setOtherInfoAttribute()` | `$otherInfo` |
+| `getOtherInfoAttribute()` | `$otherInfo` |
+| `getOngoingStatus()` | `—` |
+| `getBookingStatus()` | `—` |
+| `getPaymentStatus()` | `—` |
+| `payment_order()` | `—` |
+| `getCancelReason()` | `$isText = false, $isHtml = false` |
+| `getRejectReason()` | `$isText = false, $isHtml = false` |
+| `addCancelOrRejectReason()` | `$title, $reason, $type = 'cancel_reason'` |
+| `cancelMeeting()` | `$reason = '', $cancelledByType = 'guest', $cancelledByUserId = null` |
+| `rejectMeeting()` | `$reason = '', $rejectByUserId = null` |
+| `getRescheduleReason()` | `$html = false` |
+| `getBookingTitle()` | `$html = false` |
+| `getActivities()` | `—` |
+| `updateMeta()` | `$key, $value` |
+| `deleteMeta()` | `$key` |
+| `getMeta()` | `$key, $default = ''` |
+| `getRedirectUrlWithQuery()` | `—` |
+| `getConfirmationUrl()` | `—` |
+| `getAdminViewUrl()` | `—` |
+| `getIcsDownloadUrl()` | `—` |
+| `getRescheduleUrl()` | `—` |
+| `getCancelUrl()` | `—` |
+| `hasBookingAccess()` | `—` |
+| `canCancel()` | `—` |
+| `canReschedule()` | `—` |
+| `isMultiGuestBooking()` | `—` |
+| `isRoundRobinBooking()` | `—` |
+| `isMultiHostBooking()` | `—` |
+| `isRecurringBooking()` | `—` |
+| `getHostProfiles()` | `$public = true` |
+| `getInviteePhoneNumber()` | `$calendarEvent` |
+| `getCancellationMessage()` | `—` |
+| `getRescheduleMessage()` | `—` |
+| `getHostDetails()` | `$isPublic = true, $hostId = null` |
+| `getHostsDetails()` | `$isPublic = true, $excludeHostId = null` |
+| `getHostTimezone()` | `—` |
+| `getCalendarLinkDescription()` | `—` |
+| `getIcsBookingDescription()` | `—` |
+| `getAdditionalData()` | `$isHtml = false` |
+| `getConfirmationData()` | `$html = false` |
+| `getMeetingBookmarks()` | `$assetsUrl = ''` |

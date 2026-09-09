@@ -16,13 +16,13 @@ Action hooks for calendar and event-type creation, updates, deletion, and event 
 | [`fluent_booking/after_create_calendar`](#fluentbookingaftercreatecalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:305` |
 | [`fluent_booking/after_create_calendar_slot`](#fluentbookingaftercreatecalendarslot) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:307` |
 | [`fluent_booking/after_create_event`](#fluentbookingaftercreateevent) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:575` |
-| [`fluent_booking/after_delete_calendar`](#fluentbookingafterdeletecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:1072` |
+| [`fluent_booking/after_delete_calendar`](#fluentbookingafterdeletecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:1027` |
 | [`fluent_booking/after_delete_calendar_event`](#fluentbookingafterdeletecalendarevent) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:36` |
 | [`fluent_booking/after_update_calendar`](#fluentbookingafterupdatecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:416` |
 | [`fluent_booking/after_update_event_details`](#fluentbookingafterupdateeventdetails) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:653` |
 | [`fluent_booking/before_create_calendar`](#fluentbookingbeforecreatecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:157` |
 | [`fluent_booking/before_create_event`](#fluentbookingbeforecreateevent) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:571` |
-| [`fluent_booking/before_delete_calendar`](#fluentbookingbeforedeletecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:1068` |
+| [`fluent_booking/before_delete_calendar`](#fluentbookingbeforedeletecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:1023` |
 | [`fluent_booking/before_delete_calendar_event`](#fluentbookingbeforedeletecalendarevent) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:34` |
 | [`fluent_booking/before_get_all_calendars`](#fluentbookingbeforegetallcalendars) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:25` |
 | [`fluent_booking/before_update_calendar`](#fluentbookingbeforeupdatecalendar) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:412` |
@@ -98,7 +98,7 @@ add_action('fluent_booking/after_create_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:1072`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:1027`
 
 **Example**
 
@@ -119,7 +119,7 @@ add_action('fluent_booking/after_delete_calendar', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:36`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:1044`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:999`
 
 **Example**
 
@@ -219,7 +219,7 @@ add_action('fluent_booking/before_create_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:1068`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:1023`
 
 **Example**
 
@@ -240,7 +240,7 @@ add_action('fluent_booking/before_delete_calendar', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:34`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:1040`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:995`
 
 **Example**
 

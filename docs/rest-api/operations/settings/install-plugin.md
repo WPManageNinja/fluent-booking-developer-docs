@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/install-plugin`
 - **Edition:** Core
 - **Controller:** `SettingsController@installPlugin`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:106`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:104`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="installPlugin" specUrl="/openapi/public/settings/install-plugin.json" />

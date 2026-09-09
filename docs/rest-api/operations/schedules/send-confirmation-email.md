@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/send-confirmation-email`
 - **Edition:** Core
 - **Controller:** `SchedulesController@sendConfirmationEmail`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:86`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:84`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="sendConfirmationEmail" specUrl="/openapi/public/schedules/send-confirmation-email.json" />

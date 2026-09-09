@@ -426,9 +426,18 @@ function parseTableSchemas() {
           })
           continue
         }
-        const keyMatch = line.match(/^KEY\s+`([^`]+)`\s+\(([^)]+)\)/i) || line.match(/^UNIQUE\s+KEY\s+`([^`]+)`\s+\(([^)]+)\)/i)
+        // KEY / UNIQUE KEY / INDEX / UNIQUE INDEX. Several migrators build the
+        // index name from an interpolated prefix (`{$indexPrefix}_status_idx`),
+        // and column lists can carry a prefix length and a sort direction
+        // (`vendor_charge_id`(64) ASC).
+        const keyMatch = line.match(/^(?:UNIQUE\s+)?(?:KEY|INDEX)\s+`([^`]+)`\s*\(([^)]*(?:\([^)]*\)[^)]*)*)\)/i)
         if (keyMatch) {
-          indexes.push({ name: keyMatch[1], columns: keyMatch[2].split(',').map((s) => s.replace(/`/g, '').trim()) })
+          const name = keyMatch[1].replace(/\{\$[A-Za-z0-9_]+\}/g, '').replace(/^_+/, '')
+          const columns = keyMatch[2]
+            .split(',')
+            .map((s) => s.replace(/`/g, '').replace(/\(\d+\)/g, '').replace(/\s+(ASC|DESC)\s*$/i, '').trim())
+            .filter(Boolean)
+          indexes.push({ name, columns, unique: /^UNIQUE/i.test(line) })
         }
       }
 
@@ -496,7 +505,7 @@ function extractPublicMethods(content) {
     if (['boot', 'booted', 'newQuery', 'getCasts', 'getDates', 'getTable'].includes(name)) continue
     methods.push({ name, params: m[2].trim() })
   }
-  return methods.slice(0, 30)
+  return methods
 }
 
 function parseModels(classIndex, tableSchemas) {
@@ -716,9 +725,10 @@ function classifyRoute(route) {
 }
 
 function slugifyOperation(route) {
-  const action = route.action || 'op'
-  // CamelCase → kebab-case
-  return action.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase()
+  // Set by assignOperationSlugs() once the module grouping is known; the
+  // action-derived form is the fallback for routes rendered outside a group.
+  if (route.opSlug) return route.opSlug
+  return kebab(route.action || 'op')
 }
 
 function titleForOperation(route) {
@@ -734,19 +744,20 @@ function extractHookCalls() {
     for (const dir of dirs) {
       for (const file of listFiles(dir, (p) => p.endsWith('.php'))) {
         const content = read(file)
-        const lines = content.split('\n')
-        for (let i = 0; i < lines.length; i++) {
-          const line = lines[i]
-          // do_action / do_action_ref_array
-          const actionRe = /do_action(?:_ref_array)?\s*\(\s*['"]([^'"]+)['"]/g
-          let m
-          while ((m = actionRe.exec(line))) {
-            calls.push({ name: m[1], type: 'action', file, line: i + 1, sourceId: cfg.id })
-          }
-          const filterRe = /apply_filters(?:_ref_array)?\s*\(\s*['"]([^'"]+)['"]/g
-          while ((m = filterRe.exec(line))) {
-            calls.push({ name: m[1], type: 'filter', file, line: i + 1, sourceId: cfg.id })
-          }
+        // Scanned over the whole file, not line by line: plenty of call sites
+        // wrap the hook name onto its own line, e.g.
+        //   apply_filters(
+        //       'fluent_booking/pro_upgrade_base_url',
+        const hookRe = /(do_action|apply_filters)(?:_ref_array)?\s*\(\s*['"]([^'"\n]+)['"]/g
+        let m
+        while ((m = hookRe.exec(content))) {
+          calls.push({
+            name: m[2],
+            type: m[1] === 'do_action' ? 'action' : 'filter',
+            file,
+            line: content.slice(0, m.index).split('\n').length,
+            sourceId: cfg.id,
+          })
         }
       }
     }
@@ -904,7 +915,7 @@ function renderSchemaPage(models) {
     if (m.schema.indexes.length) {
       lines.push('\n**Indexes**\n')
       for (const idx of m.schema.indexes) {
-        lines.push(`- \`${idx.name}\` on (${idx.columns.map((c) => `\`${c}\``).join(', ')})`)
+        lines.push(`- \`${idx.name}\`${idx.unique ? ' (unique)' : ''} on (${idx.columns.map((c) => `\`${c}\``).join(', ')})`)
       }
     }
     lines.push('')
@@ -972,7 +983,7 @@ function renderModelDoc(model) {
   }
 
   if (model.methods.length) {
-    lines.push('## Public Methods (sample)\n')
+    lines.push('## Public Methods\n')
     lines.push('| Method | Signature |')
     lines.push('| --- | --- |')
     for (const m of model.methods) {
@@ -1253,7 +1264,55 @@ function groupRoutes(routes) {
     if (!map.has(module)) map.set(module, [])
     map.get(module).push(r)
   }
+  for (const list of map.values()) assignOperationSlugs(list)
   return map
+}
+
+/**
+ * Page slugs are derived from the controller action, so two controllers landing
+ * in the same module with the same action name (core `IntegrationController@index`
+ * and Pro `IntegrationSettingsController@index`) would write to the same file and
+ * the second would silently erase the first. Disambiguate every colliding slug
+ * with its controller name, and keep the assignment on the route so the module
+ * table, the operation page, and the OpenAPI spec all agree.
+ */
+function assignOperationSlugs(routes) {
+  const byBase = new Map()
+  for (const r of routes) {
+    const base = kebab(r.action || 'op')
+    if (!byBase.has(base)) byBase.set(base, [])
+    byBase.get(base).push(r)
+  }
+
+  for (const [base, list] of byBase) {
+    if (list.length === 1) {
+      list[0].opSlug = base
+      continue
+    }
+    const seen = new Map()
+    for (const r of list) {
+      const controller = kebab((r.controller || 'controller').replace(/Controller$/, ''))
+      let slug = `${controller}-${base}`
+      // Same controller AND same action twice in one module (a route registered
+      // under two paths): fall back to a method + path suffix so both survive.
+      if (seen.has(slug)) {
+        slug = `${slug}-${r.method.toLowerCase()}-${kebab(r.path.split('/').filter((p) => p && !p.startsWith('{')).pop() || 'route')}`
+      }
+      let unique = slug
+      let n = 2
+      while (seen.has(unique)) unique = `${slug}-${n++}`
+      seen.set(unique, r)
+      r.opSlug = unique
+    }
+  }
+}
+
+function kebab(value) {
+  return String(value)
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/[^A-Za-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .toLowerCase()
 }
 
 function emitRestApiIndex(routes, grouped) {
@@ -1327,7 +1386,10 @@ function emitOperationPage(slug, route) {
 }
 
 function camelOperationId(route) {
-  return `${route.action}`
+  // Must be unique across the whole spec set, so it follows the (already
+  // disambiguated) page slug rather than the raw action name.
+  const slug = slugifyOperation(route)
+  return slug.replace(/-([a-z0-9])/g, (_, c) => c.toUpperCase())
 }
 
 // ── Response example builders ────────────────────────────────────────────────
@@ -1774,6 +1836,7 @@ function cleanGeneratedDocs() {
     join(docsRoot, 'hooks', 'actions'),
     join(docsRoot, 'hooks', 'filters'),
     join(docsRoot, 'rest-api', 'operations'),
+    join(docsRoot, 'mcp', 'abilities'),
     openapiRoot,
   ]
   for (const d of dirsToClean) {
@@ -1781,6 +1844,575 @@ function cleanGeneratedDocs() {
     ensureDir(d)
   }
   // Single-file outputs we'll overwrite (don't delete manually-curated guides/helpers/etc).
+}
+
+
+/**
+ * The home page is hand-written apart from its counters, which have to track
+ * what was actually generated — a stale "74 API Routes" on the front page is a
+ * worse lie than a missing page.
+ */
+function updateHomeStats(stats) {
+  const file = join(docsRoot, 'index.md')
+  if (!existsSync(file)) return
+  const content = read(file)
+  const next = content.replace(
+    /<DocsHome\s+:stats="\{[^}]*\}"\s*\/>/,
+    `<DocsHome :stats="{ models: ${stats.models}, routes: ${stats.routes}, hooks: ${stats.hooks}, openapiSpecs: ${stats.openapiSpecs}, mcpAbilities: ${stats.mcpAbilities} }" />`,
+  )
+  if (next !== content) writeFile(file, next)
+}
+
+// ── Helper / service classes ─────────────────────────────────────────────────
+
+/**
+ * The service classes the curated helper guide points integrators at. Their
+ * method lists are parsed rather than hand-maintained: the prose page groups
+ * the useful ones, this index is the complete surface.
+ */
+const HELPER_CLASSES = [
+  { class: 'Helper', file: 'app/Services/Helper.php', source: 'core', summary: 'Catch-all static service: meta access, URL builders, settings, encryption, sanitization, and lookups.' },
+  { class: 'DateTimeHelper', file: 'app/Services/DateTimeHelper.php', source: 'core', summary: 'Timezone-aware datetime conversion, formatting, and slot math.' },
+  { class: 'LocationService', file: 'app/Services/LocationService.php', source: 'core', summary: 'Meeting location types, their settings shape, and their rendered output.' },
+  { class: 'PermissionManager', file: 'app/Services/PermissionManager.php', source: 'core', summary: 'Capability checks for hosts, admins, and the REST policies.' },
+  { class: 'BookingFieldService', file: 'app/Services/BookingFieldService.php', source: 'core', summary: 'Booking-form field definitions, validation, and stored answers.' },
+  { class: 'EditorShortCodeParser', file: 'app/Services/EditorShortCodeParser.php', source: 'core', summary: 'Smartcode parsing used by email templates and landing pages.' },
+]
+
+function parseHelperClasses() {
+  const result = []
+  for (const entry of HELPER_CLASSES) {
+    const cfg = SOURCE_CONFIGS.find((c) => c.id === entry.source)
+    if (!cfg) continue
+    const file = join(cfg.root, entry.file)
+    if (!existsSync(file)) continue
+    const content = read(file)
+    const methods = []
+    const re = /public\s+(static\s+)?function\s+([a-zA-Z0-9_]+)\s*\(([^)]*)\)/g
+    let m
+    while ((m = re.exec(content))) {
+      if (m[2].startsWith('__')) continue
+      methods.push({
+        name: m[2],
+        static: Boolean(m[1]),
+        params: m[3].replace(/\s+/g, ' ').trim(),
+        line: content.slice(0, m.index).split('\n').length,
+      })
+    }
+    result.push({ ...entry, file, methods })
+  }
+  return result
+}
+
+function emitHelperApiIndex(classes) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Service API Index',
+    description: 'Complete, source-parsed method index for the FluentBooking helper and service classes.',
+  }))
+  lines.push('# Service API Index\n')
+  lines.push('Every public method on the helper and service classes integrators call directly, parsed from the plugin source. The [Helper Class Reference](/helpers/helper-class) groups the most useful ones with notes; this page is the complete list.\n')
+
+  lines.push('## Classes\n')
+  lines.push('| Class | Methods | Purpose |')
+  lines.push('| --- | --- | --- |')
+  for (const cls of classes) {
+    lines.push(`| [\`${cls.class}\`](#${cls.class.toLowerCase()}) | ${cls.methods.length} | ${escapeMd(cls.summary)} |`)
+  }
+  lines.push('')
+
+  for (const cls of classes) {
+    lines.push(`## ${cls.class}\n`)
+    lines.push(`\`FluentBooking\\App\\Services\\${cls.class}\` — \`${displaySourcePath(cls.file)}\`\n`)
+    lines.push('| Method | Signature | Line |')
+    lines.push('| --- | --- | --- |')
+    for (const method of cls.methods) {
+      lines.push(`| \`${method.name}\` | \`${method.static ? 'static ' : ''}${method.name}(${method.params})\` | ${method.line} |`)
+    }
+    lines.push('')
+  }
+
+  return lines.join('\n')
+}
+
+// ── MCP server ───────────────────────────────────────────────────────────────
+
+/**
+ * The MCP server is a second stack next to the REST controllers: ability
+ * callbacks registered with the WordPress Abilities API and exposed on their
+ * own REST namespace. It has no routes and no Policy, so parseRoutes() cannot
+ * see it — the ability schemas are read straight out of each tool class's
+ * `definitions()` array instead.
+ */
+const MCP_TOOLSETS = [
+  {
+    slug: 'core',
+    title: 'Core',
+    edition: 'core',
+    summary: 'Bookings, event types, slots, context and reports. On by default.',
+  },
+  {
+    slug: 'scheduling',
+    title: 'Scheduling',
+    edition: 'core',
+    summary: 'Availability schedules — reading them and writing weekly hours and date overrides.',
+  },
+  {
+    slug: 'payments',
+    title: 'Payments',
+    edition: 'pro',
+    summary: 'Orders and transactions (Pro). Read only; refunds stay in the admin.',
+  },
+]
+
+/** Find the matching close bracket for the opening bracket at `start`. */
+function matchBracket(content, start, open = '[', close = ']') {
+  let depth = 0
+  let inString = null
+  for (let i = start; i < content.length; i++) {
+    const ch = content[i]
+    if (inString) {
+      if (ch === '\\') {
+        i++
+        continue
+      }
+      if (ch === inString) inString = null
+      continue
+    }
+    if (ch === "'" || ch === '"') {
+      inString = ch
+      continue
+    }
+    if (ch === open) depth++
+    else if (ch === close) {
+      depth--
+      if (depth === 0) return i
+    }
+  }
+  return -1
+}
+
+/** Split an array body on its top-level commas. */
+function splitTopLevel(body) {
+  const parts = []
+  let depth = 0
+  let inString = null
+  let current = ''
+  for (let i = 0; i < body.length; i++) {
+    const ch = body[i]
+    current += ch
+    if (inString) {
+      if (ch === '\\') {
+        current += body[++i] ?? ''
+        continue
+      }
+      if (ch === inString) inString = null
+      continue
+    }
+    if (ch === "'" || ch === '"') {
+      inString = ch
+      continue
+    }
+    if (ch === '[' || ch === '(') depth++
+    else if (ch === ']' || ch === ')') depth--
+    else if (ch === ',' && depth === 0) {
+      parts.push(current.slice(0, -1))
+      current = ''
+    }
+  }
+  if (current.trim()) parts.push(current)
+  return parts
+}
+
+/**
+ * Unwrap the value forms the tool definitions actually use: a plain string, a
+ * `__()` / `esc_html__()` translation call, or a `sprintf()` whose first
+ * argument is one. Anything else (a class constant, a concatenation) is
+ * reported as-is so it never silently becomes an empty description.
+ */
+function phpStringValue(raw) {
+  const value = raw.trim()
+  const sprintfMatch = value.match(/^sprintf\s*\(/)
+  const inner = sprintfMatch ? value.slice(sprintfMatch[0].length) : value
+  const translated = inner.match(/^(?:__|esc_html__|esc_attr__|_x)\s*\(\s*(['"])((?:\\.|(?!\1).)*)\1/)
+  if (translated) return unescapePhpString(translated[2], translated[1])
+  const literal = inner.match(/^(['"])((?:\\.|(?!\1).)*)\1/)
+  if (literal) return unescapePhpString(literal[2], literal[1])
+  if (/^(true|false)$/i.test(value)) return value.toLowerCase() === 'true'
+  if (/^-?\d+$/.test(value)) return Number(value)
+  return null
+}
+
+function unescapePhpString(value, quote) {
+  const unescaped = value.replace(/\\\\/g, '\\').replace(new RegExp(`\\\\${quote}`, 'g'), quote)
+  // Drop printf placeholders — they read as noise in prose.
+  return unescaped.replace(/%\d+\$[ds]/g, '…').replace(/%[ds]/g, '…')
+}
+
+/** `'key' => value` pairs of an array body, values left as raw PHP text. */
+function phpArrayEntries(body) {
+  const entries = []
+  for (const part of splitTopLevel(body)) {
+    const trimmed = part.trim()
+    if (!trimmed) continue
+    const keyMatch = trimmed.match(/^(['"])((?:\\.|(?!\1).)*)\1\s*=>\s*/)
+    if (!keyMatch) {
+      entries.push({ key: null, value: trimmed })
+      continue
+    }
+    entries.push({ key: unescapePhpString(keyMatch[2], keyMatch[1]), value: trimmed.slice(keyMatch[0].length).trim() })
+  }
+  return entries
+}
+
+/** The body of an array value, or null when the value is not an array. */
+function phpArrayBody(value) {
+  const trimmed = value.trim()
+  if (!trimmed.startsWith('[')) return null
+  const end = matchBracket(trimmed, 0)
+  if (end === -1) return null
+  return trimmed.slice(1, end)
+}
+
+function parseMcpSchemaProperty(name, raw, requiredNames) {
+  const body = phpArrayBody(raw)
+  const prop = { name, type: null, description: null, required: requiredNames.includes(name), enum: null, itemsType: null }
+  if (!body) return prop
+  for (const { key, value } of phpArrayEntries(body)) {
+    if (key === 'type') prop.type = phpStringValue(value)
+    else if (key === 'description') prop.description = phpStringValue(value)
+    else if (key === 'enum') {
+      const enumBody = phpArrayBody(value)
+      if (enumBody) prop.enum = phpArrayEntries(enumBody).map((e) => phpStringValue(e.value)).filter((v) => v !== null)
+    } else if (key === 'items') {
+      const itemsBody = phpArrayBody(value)
+      if (itemsBody) {
+        for (const item of phpArrayEntries(itemsBody)) {
+          if (item.key === 'type') prop.itemsType = phpStringValue(item.value)
+        }
+      }
+    }
+  }
+  return prop
+}
+
+function parseMcpInputSchema(raw) {
+  const body = phpArrayBody(raw)
+  if (!body) return { properties: [], required: [] }
+  let propertiesRaw = null
+  let required = []
+  for (const { key, value } of phpArrayEntries(body)) {
+    if (key === 'properties') propertiesRaw = value
+    else if (key === 'required') {
+      const reqBody = phpArrayBody(value)
+      if (reqBody) required = phpArrayEntries(reqBody).map((e) => phpStringValue(e.value)).filter(Boolean)
+    }
+  }
+  const properties = []
+  const propsBody = propertiesRaw ? phpArrayBody(propertiesRaw) : null
+  if (propsBody) {
+    for (const { key, value } of phpArrayEntries(propsBody)) {
+      if (!key) continue
+      properties.push(parseMcpSchemaProperty(key, value, required))
+    }
+  }
+  return { properties, required }
+}
+
+function parseMcpCallback(raw) {
+  const match = raw.match(/\[\s*([A-Za-z0-9_\\]+)::class\s*,\s*['"]([^'"]+)['"]\s*\]/)
+  if (!match) return null
+  const cls = match[1] === 'self' ? null : match[1].split('\\').pop()
+  return { class: cls, method: match[2] }
+}
+
+/** Every ability a tool or prompt class declares in its `definitions()`. */
+function parseMcpDefinitions(file, sourceId, toolsetBySourceClass) {
+  const content = read(file)
+  const className = (content.match(/^\s*(?:final\s+)?class\s+([A-Za-z0-9_]+)/m) || [])[1] || basename(file, '.php')
+  const defsIndex = content.search(/public\s+static\s+function\s+definitions\s*\(/)
+  if (defsIndex === -1) return []
+
+  const arrayStart = content.indexOf('[', content.indexOf('return', defsIndex))
+  if (arrayStart === -1) return []
+  const arrayEnd = matchBracket(content, arrayStart)
+  if (arrayEnd === -1) return []
+
+  const abilities = []
+  for (const { key, value } of phpArrayEntries(content.slice(arrayStart + 1, arrayEnd))) {
+    if (!key || !key.includes('/')) continue
+    const body = phpArrayBody(value)
+    if (!body) continue
+
+    const ability = {
+      name: key,
+      slug: key.split('/').pop(),
+      class: className,
+      file,
+      line: content.slice(0, content.indexOf(`'${key}'`, arrayStart)).split('\n').length,
+      sourceId,
+      toolset: toolsetBySourceClass.get(className) || (sourceId === 'pro' ? 'payments' : 'core'),
+      label: null,
+      description: null,
+      annotations: {},
+      permission: null,
+      execute: null,
+      schema: { properties: [], required: [] },
+      isPrompt: /Prompts?$/.test(className),
+    }
+
+    for (const entry of phpArrayEntries(body)) {
+      switch (entry.key) {
+        case 'label':
+          ability.label = phpStringValue(entry.value)
+          break
+        case 'description':
+          ability.description = phpStringValue(entry.value)
+          break
+        case 'input_schema':
+          ability.schema = parseMcpInputSchema(entry.value)
+          break
+        case 'annotations': {
+          const annBody = phpArrayBody(entry.value)
+          if (annBody) {
+            for (const ann of phpArrayEntries(annBody)) {
+              if (ann.key) ability.annotations[ann.key] = phpStringValue(ann.value)
+            }
+          }
+          break
+        }
+        case 'permission_callback':
+          ability.permission = parseMcpCallback(entry.value)
+          break
+        case 'execute_callback':
+          ability.execute = parseMcpCallback(entry.value)
+          break
+        default:
+          break
+      }
+    }
+
+    abilities.push(ability)
+  }
+
+  return abilities
+}
+
+/** toolset slug per tool class, read from the registrar's own class map. */
+function parseMcpToolsetMap(coreRoot) {
+  const map = new Map()
+  const registrar = join(coreRoot, 'app', 'Modules', 'MCP', 'AbilitiesRegistrar.php')
+  if (!existsSync(registrar)) return map
+  const content = read(registrar)
+  const start = content.search(/private\s+static\s+function\s+toolClasses\s*\(/)
+  if (start === -1) return map
+  const arrayStart = content.indexOf('[', content.indexOf('$classes =', start))
+  if (arrayStart === -1) return map
+  const arrayEnd = matchBracket(content, arrayStart)
+  if (arrayEnd === -1) return map
+
+  const constToSlug = { TOOLSET_CORE: 'core', TOOLSET_SCHEDULING: 'scheduling', TOOLSET_PAYMENTS: 'payments' }
+  for (const part of splitTopLevel(content.slice(arrayStart + 1, arrayEnd))) {
+    const header = part.match(/([A-Za-z0-9_]+)::([A-Z_]+)\s*=>\s*\[/)
+    if (!header) continue
+    const toolset = constToSlug[header[2]]
+    if (!toolset) continue
+    const listStart = part.indexOf('[', part.indexOf('=>'))
+    const listEnd = matchBracket(part, listStart)
+    if (listStart === -1 || listEnd === -1) continue
+    for (const cls of part.slice(listStart + 1, listEnd).matchAll(/([A-Za-z0-9_]+)::class/g)) {
+      map.set(cls[1], toolset)
+    }
+  }
+  return map
+}
+
+function parseMcpAbilities() {
+  const coreCfg = SOURCE_CONFIGS.find((c) => c.id === 'core')
+  const toolsetBySourceClass = parseMcpToolsetMap(coreCfg.root)
+
+  // Pro registers its classes through the fluent_booking/mcp_tool_classes
+  // filter rather than the registrar's literal map, so read the toolset key it
+  // pushes into ($classes['payments'][] = self::class).
+  for (const cfg of SOURCE_CONFIGS) {
+    const mcpRoot = join(cfg.root, 'app', 'Modules', 'MCP')
+    if (!existsSync(mcpRoot)) continue
+    for (const file of listFiles(mcpRoot, (p) => p.endsWith('.php'))) {
+      const content = read(file)
+      const pushed = content.match(/\$classes\[\s*['"]([a-z_]+)['"]\s*\]\[\s*\]\s*=\s*self::class/)
+      if (!pushed) continue
+      const className = (content.match(/^\s*(?:final\s+)?class\s+([A-Za-z0-9_]+)/m) || [])[1]
+      if (className) toolsetBySourceClass.set(className, pushed[1])
+    }
+  }
+
+  const abilities = []
+  for (const cfg of SOURCE_CONFIGS) {
+    const mcpRoot = join(cfg.root, 'app', 'Modules', 'MCP')
+    if (!existsSync(mcpRoot)) continue
+    for (const file of listFiles(mcpRoot, (p) => p.endsWith('.php'))) {
+      abilities.push(...parseMcpDefinitions(file, cfg.id, toolsetBySourceClass))
+    }
+  }
+
+  abilities.sort((a, b) => a.name.localeCompare(b.name))
+  return abilities
+}
+
+/** The MCP endpoint, read from MCPInit rather than hard-coded here. */
+function parseMcpServerMeta(coreRoot) {
+  const file = join(coreRoot, 'app', 'Modules', 'MCP', 'MCPInit.php')
+  const meta = { namespace: 'fluent-booking', route: 'mcp', serverId: 'fluent-booking' }
+  if (!existsSync(file)) return meta
+  const content = read(file)
+  const ns = content.match(/function\s+serverNamespace\s*\([^)]*\)\s*\{[^}]*return\s+'([^']+)'/)
+  const route = content.match(/function\s+serverRoute\s*\([^)]*\)\s*\{[^}]*return\s+'([^']+)'/)
+  const serverId = content.match(/const\s+SERVER_ID\s*=\s*'([^']+)'/)
+  if (ns) meta.namespace = ns[1]
+  if (route) meta.route = route[1]
+  if (serverId) meta.serverId = serverId[1]
+  return meta
+}
+
+function renderMcpAnnotations(ability) {
+  const flags = []
+  if (ability.annotations.readonly === true) flags.push('read-only')
+  if (ability.annotations.destructive === true) flags.push('destructive')
+  if (ability.annotations.idempotent === true) flags.push('idempotent')
+  return flags.length ? flags.join(', ') : 'write'
+}
+
+function emitMcpIndex(abilities, meta) {
+  const tools = abilities.filter((a) => !a.isPrompt)
+  const prompts = abilities.filter((a) => a.isPrompt)
+  const lines = []
+  lines.push(frontmatter({
+    title: 'MCP Server',
+    description: 'Source-verified reference for the FluentBooking MCP server — abilities, toolsets, and permissions.',
+  }))
+  lines.push('# MCP Server\n')
+  lines.push('FluentBooking ships an MCP (Model Context Protocol) server so AI agents can read and write scheduling data through typed abilities instead of scraping the admin REST API. It is a parallel stack to the `fluent-booking/v2` controllers: abilities are registered with the WordPress Abilities API, they are not routes, and they carry no `Policy` — authorization is the MCP `PermissionGate` plus each tool\'s own ownership checks.\n')
+
+  lines.push('## Endpoint\n')
+  lines.push(`- **URL:** \`https://your-site.com/wp-json/${meta.namespace}/${meta.route}\``)
+  lines.push(`- **Server id:** \`${meta.serverId}\``)
+  lines.push('- **Transport:** HTTP (`\\WP\\MCP\\Transport\\HttpTransport`)')
+  lines.push('- **Authentication:** WordPress Application Passwords (Basic auth). The server sits outside the `fluent-booking/v2` policy stack deliberately, so the v2 nonce flow does not apply.')
+  lines.push('- **Requirements:** an MCP adapter and the Abilities API must be present, and MCP must be switched on in FluentBooking → Settings → MCP for AI Agents.')
+  lines.push('')
+
+  lines.push('## Toolsets\n')
+  lines.push('Abilities are grouped into toolsets an operator switches on individually — schemas an operator never uses should not cost context in every request.\n')
+  lines.push('| Toolset | Edition | Abilities | Description |')
+  lines.push('| --- | --- | --- | --- |')
+  for (const toolset of MCP_TOOLSETS) {
+    const count = abilities.filter((a) => a.toolset === toolset.slug).length
+    lines.push(`| \`${toolset.slug}\` | ${renderEditionLabel([toolset.edition])} | ${count} | ${escapeMd(toolset.summary)} |`)
+  }
+  lines.push('')
+
+  lines.push('## Tools\n')
+  lines.push('| Ability | Edition | Toolset | Mode | Description |')
+  lines.push('| --- | --- | --- | --- | --- |')
+  for (const ability of tools) {
+    lines.push(
+      `| [\`${ability.name}\`](/mcp/abilities/${ability.slug}) | ${renderEditionLabel([ability.sourceId])} | \`${ability.toolset}\` | ${renderMcpAnnotations(ability)} | ${escapeMd(truncate(ability.description || ability.label || '', 160))} |`,
+    )
+  }
+  lines.push('')
+
+  if (prompts.length) {
+    lines.push('## Prompts\n')
+    lines.push('Prompts are registered as a separate argument to the server, not as tools — listed as tools they would show up in `tools/list` carrying a body of instructions.\n')
+    lines.push('| Prompt | Edition | Description |')
+    lines.push('| --- | --- | --- |')
+    for (const prompt of prompts) {
+      lines.push(`| [\`${prompt.name}\`](/mcp/abilities/${prompt.slug}) | ${renderEditionLabel([prompt.sourceId])} | ${escapeMd(truncate(prompt.description || prompt.label || '', 160))} |`)
+    }
+    lines.push('')
+  }
+
+  lines.push('## Extending the server\n')
+  lines.push('Add-ons register into the same namespace and server through these hooks:\n')
+  lines.push('| Hook | Type | Purpose |')
+  lines.push('| --- | --- | --- |')
+  lines.push('| [`fluent_booking/mcp_loaded`](/hooks/actions/miscellaneous#fluentbookingmcploaded) | action | Fires after the core abilities register — the place to register your own. |')
+  lines.push('| [`fluent_booking/mcp_tool_classes`](/hooks/filters/miscellaneous#fluentbookingmcptoolclasses) | filter | Add a class to a toolset so it inherits that toolset\'s on/off switch and context budget. |')
+  lines.push('| [`fluent_booking/mcp_ability_names`](/hooks/filters/miscellaneous#fluentbookingmcpabilitynames) | filter | Ability names exposed as tools on the server. |')
+  lines.push('| [`fluent_booking/mcp_prompt_names`](/hooks/filters/miscellaneous#fluentbookingmcppromptnames) | filter | Ability names exposed as prompts. |')
+  lines.push('')
+  lines.push('A class added through `fluent_booking/mcp_tool_classes` must expose a static `definitions()` returning `ability name => definition`, in the same shape as the core tool classes.\n')
+
+  lines.push('## Calling an ability\n')
+  lines.push('```bash')
+  lines.push(`curl -X POST https://your-site.com/wp-json/${meta.namespace}/${meta.route} \\`)
+  lines.push('  --user "admin:xxxx xxxx xxxx xxxx xxxx xxxx" \\')
+  lines.push('  -H "Content-Type: application/json" \\')
+  lines.push("  -d '{\"jsonrpc\":\"2.0\",\"id\":1,\"method\":\"tools/list\",\"params\":{}}'")
+  lines.push('```\n')
+
+  return lines.join('\n')
+}
+
+function emitMcpAbilityPage(ability) {
+  const lines = []
+  lines.push(frontmatter({
+    title: ability.label || ability.name,
+    description: truncate(ability.description || `MCP ability ${ability.name}.`, 180),
+    outline: false,
+  }))
+  lines.push(`# \`${ability.name}\`\n`)
+  if (ability.description) lines.push(`${ability.description}\n`)
+
+  lines.push('## Ability\n')
+  lines.push(`- **Kind:** ${ability.isPrompt ? 'Prompt' : 'Tool'}`)
+  lines.push(`- **Toolset:** \`${ability.toolset}\``)
+  lines.push(`- **Edition:** ${renderEditionLabel([ability.sourceId])}`)
+  lines.push(`- **Mode:** ${renderMcpAnnotations(ability)}`)
+  if (ability.permission) {
+    lines.push(`- **Permission callback:** \`${ability.permission.class || ability.class}::${ability.permission.method}()\``)
+  }
+  if (ability.execute) {
+    lines.push(`- **Handler:** \`${ability.execute.class || ability.class}::${ability.execute.method}()\``)
+  }
+  lines.push(`- **Source:** \`${displaySourcePath(ability.file)}:${ability.line}\``)
+  lines.push('')
+
+  if (ability.schema.properties.length) {
+    lines.push('## Input schema\n')
+    lines.push('| Parameter | Type | Required | Description |')
+    lines.push('| --- | --- | --- | --- |')
+    for (const prop of ability.schema.properties) {
+      const type = prop.itemsType ? `${prop.type || 'array'}<${prop.itemsType}>` : prop.type || '—'
+      const enumNote = prop.enum && prop.enum.length ? ` One of: ${prop.enum.map((v) => `\`${v}\``).join(', ')}.` : ''
+      lines.push(`| \`${prop.name}\` | \`${type}\` | ${prop.required ? 'Yes' : 'No'} | ${escapeMd((prop.description || '') + enumNote)} |`)
+    }
+    lines.push('')
+  } else {
+    lines.push('## Input schema\n')
+    lines.push('This ability takes no parameters.\n')
+  }
+
+  lines.push('## Example call\n')
+  const exampleArgs = {}
+  for (const prop of ability.schema.properties.filter((p) => p.required)) {
+    exampleArgs[prop.name] = prop.type === 'integer' ? 1 : prop.type === 'boolean' ? true : prop.type === 'array' ? [] : 'value'
+  }
+  lines.push('```json')
+  lines.push(JSON.stringify({
+    jsonrpc: '2.0',
+    id: 1,
+    method: ability.isPrompt ? 'prompts/get' : 'tools/call',
+    params: ability.isPrompt ? { name: ability.name } : { name: ability.name, arguments: exampleArgs },
+  }, null, 2))
+  lines.push('```\n')
+
+  return lines.join('\n')
+}
+
+function truncate(value, max) {
+  const text = String(value || '').replace(/\s+/g, ' ').trim()
+  return text.length > max ? `${text.slice(0, max - 1).trimEnd()}…` : text
 }
 
 function emitMiscellaneousCategory(type) {
@@ -1876,10 +2508,33 @@ FluentBooking emits hundreds of action and filter hooks across the booking lifec
 
   writeFile(join(generatedRoot, 'restapi-module-order.json'), JSON.stringify(moduleOrderMap, null, 2) + '\n')
 
+  // MCP server — abilities live outside the route stack, so they are read from
+  // each tool class's definitions() array.
+  writeFile(join(docsRoot, 'helpers', 'service-api.md'), emitHelperApiIndex(parseHelperClasses()))
+
+  const mcpMeta = parseMcpServerMeta(SOURCE_CONFIGS.find((c) => c.id === 'core').root)
+  const abilities = parseMcpAbilities()
+  writeFile(join(docsRoot, 'mcp', 'index.md'), emitMcpIndex(abilities, mcpMeta))
+  for (const ability of abilities) {
+    writeFile(join(docsRoot, 'mcp', 'abilities', `${ability.slug}.md`), emitMcpAbilityPage(ability))
+  }
+  writeFile(
+    join(generatedRoot, 'mcp-abilities.json'),
+    JSON.stringify(abilities.map((a) => ({ name: a.name, slug: a.slug, toolset: a.toolset, source: a.sourceId, prompt: a.isPrompt })), null, 2) + '\n',
+  )
+
+  updateHomeStats({
+    models: models.length,
+    routes: routes.length,
+    hooks: summary.byNameAction.size + summary.byNameFilter.size,
+    openapiSpecs: Object.values(moduleOrderMap).reduce((total, list) => total + list.length, 0),
+    mcpAbilities: abilities.length,
+  })
+
   console.log(
     `Generated docs for ${models.length} models, ${
       summary.byNameAction.size + summary.byNameFilter.size
-    } unique hooks (${hookCalls.length} call sites), and ${routes.length} routes.`,
+    } unique hooks (${hookCalls.length} call sites), ${routes.length} routes, and ${abilities.length} MCP abilities.`,
   )
 }
 

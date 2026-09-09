@@ -16,7 +16,6 @@ These routes are registered with: `CalendarPolicy`.
 | Method | Path | Edition | Operation | Controller |
 | --- | --- | --- | --- | --- |
 | `GET` | `/calendars` | Core | [Get All Calendars](/rest-api/operations/calendars/get-all-calendars) | `CalendarController@getAllCalendars` |
-| `GET` | `/calendars/event-lists` | Core | [Get Calendar Event Lists](/rest-api/operations/calendars/get-calendar-event-lists) | `CalendarController@getCalendarEventLists` |
 | `POST` | `/calendars` | Core | [Create Calendar](/rest-api/operations/calendars/create-calendar) | `CalendarController@createCalendar` |
 | `POST` | `/calendars/check-slug` | Core | [Check Slug](/rest-api/operations/calendars/check-slug) | `CalendarController@checkSlug` |
 | `GET` | `/calendars/{id}` | Core | [Get Calendar](/rest-api/operations/calendars/get-calendar) | `CalendarController@getCalendar` |

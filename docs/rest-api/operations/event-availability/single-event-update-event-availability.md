@@ -1,6 +1,6 @@
 ---
-title: Update Event Availability
-description: Update Event Availability for the FluentBooking Event Availability API.
+title: Single Event Update Event Availability
+description: Single Event Update Event Availability for the FluentBooking Event Availability API.
 outline: false
 aside: false
 ---
@@ -14,4 +14,4 @@ aside: false
 - **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:79`
 - **Policy:** `CalendarPolicy`
 
-<OAOperation operationId="updateEventAvailability" specUrl="/openapi/public/event-availability/update-event-availability.json" />
+<OAOperation operationId="singleEventUpdateEventAvailability" specUrl="/openapi/public/event-availability/single-event-update-event-availability.json" />

@@ -57,7 +57,7 @@ Payment order created when a paid event is booked (Pro). Tracks total, currency,
 | `transaction()` | `hasOne` | `Transactions` |
 | `booking()` | `belongsTo` | `Booking` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |
