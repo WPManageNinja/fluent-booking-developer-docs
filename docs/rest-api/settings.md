@@ -25,6 +25,9 @@ These routes are registered with: `SettingsPolicy`, `SuperAdminPolicy`.
 | `GET` | `/settings/pages` | Core | [Get Pages](/rest-api/operations/settings/get-pages) | `SettingsController@getPages` |
 | `POST` | `/settings/addons-settings` | Core | [Save Addons Settings](/rest-api/operations/settings/save-addons-settings) | `SettingsController@saveAddonsSettings` |
 | `POST` | `/settings/install-plugin` | Core | [Install Plugin](/rest-api/operations/settings/install-plugin) | `SettingsController@installPlugin` |
+| `GET` | `/settings/mcp` | Core | [Get Settings](/rest-api/operations/settings/get-settings) | `McpController@getSettings` |
+| `POST` | `/settings/mcp` | Core | [Update Settings](/rest-api/operations/settings/update-settings) | `McpController@updateSettings` |
+| `POST` | `/settings/mcp/install-adapter` | Core | [Install Adapter](/rest-api/operations/settings/install-adapter) | `McpController@installAdapter` |
 | `GET` | `/settings/team` | <span class="pro-badge">PRO</span> | [Get Team Members](/rest-api/operations/settings/get-team-members) | `TeamController@getTeamMembers` |
 | `POST` | `/settings/team` | <span class="pro-badge">PRO</span> | [Update Member Permission](/rest-api/operations/settings/update-member-permission) | `TeamController@updateMemberPermission` |
 | `DELETE` | `/settings/team/{id}` | <span class="pro-badge">PRO</span> | [Delete Member](/rest-api/operations/settings/delete-member) | `TeamController@deleteMember` |

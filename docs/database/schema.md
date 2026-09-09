@@ -14,14 +14,14 @@ FluentBooking stores all data in custom WordPress tables prefixed with `fcal_`. 
 | `fcal_bookings` | [Booking](/database/models/booking) | 42 | 7 |
 | `fcal_calendars` | [Calendar](/database/models/calendar) | 19 | 6 |
 | `fcal_calendar_events` | [CalendarSlot](/database/models/calendar-slot) | 23 | 5 |
-| `fcal_meta` | [Availability](/database/models/availability) | 7 | 0 |
-| `fcal_booking_activity` | [BookingActivity](/database/models/booking-activity) | 10 | 0 |
+| `fcal_meta` | [Availability](/database/models/availability) | 7 | 3 |
+| `fcal_booking_activity` | [BookingActivity](/database/models/booking-activity) | 10 | 2 |
 | `fcal_booking_hosts` | [BookingHost](/database/models/booking-host) | 6 | 3 |
-| `fcal_booking_meta` | [BookingMeta](/database/models/booking-meta) | 6 | 0 |
-| `fcal_meta` | [Meta](/database/models/meta) | 7 | 0 |
-| `fcal_orders` | [Order](/database/models/order) | 27 | 0 |
+| `fcal_booking_meta` | [BookingMeta](/database/models/booking-meta) | 6 | 2 |
+| `fcal_meta` | [Meta](/database/models/meta) | 7 | 3 |
+| `fcal_orders` | [Order](/database/models/order) | 27 | 3 |
 | `fcal_order_items` | [OrderItems](/database/models/order-items) | 12 | 0 |
-| `fcal_transactions` | [Transactions](/database/models/transactions) | 17 | 0 |
+| `fcal_transactions` | [Transactions](/database/models/transactions) | 17 | 4 |
 
 ## Entity Relationship Diagram
 
@@ -285,6 +285,12 @@ erDiagram
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
 
+**Indexes**
+
+- `mt_idx` on (`object_type`)
+- `mto_id_idx` on (`object_id`)
+- `mto_id_key` on (`key`)
+
 ## `fcal_booking_activity` (BookingActivity)
 
 > Migration source: `fluent-booking/database/Migrations/BookingActivityMigrator.php`
@@ -301,6 +307,11 @@ erDiagram
 | `description` | `LONGTEXT` | Yes | `—` | Description text stored for the record. |
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
+
+**Indexes**
+
+- `mt_idx` on (`booking_id`)
+- `mto_type` on (`type`)
 
 ## `fcal_booking_hosts` (BookingHost)
 
@@ -334,6 +345,11 @@ erDiagram
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
 
+**Indexes**
+
+- `bmto_id_idx` on (`booking_id`)
+- `bmto_id_key` on (`meta_key`)
+
 ## `fcal_meta` (Meta)
 
 > Migration source: `fluent-booking/database/Migrations/MetaMigrator.php`
@@ -347,6 +363,12 @@ erDiagram
 | `value` | `LONGTEXT` | Yes | `—` | Meta value (often JSON-encoded). |
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
+
+**Indexes**
+
+- `mt_idx` on (`object_type`)
+- `mto_id_idx` on (`object_id`)
+- `mto_id_key` on (`key`)
 
 ## `fcal_orders` (Order)
 
@@ -381,6 +403,12 @@ erDiagram
 | `uuid` | `VARCHAR(100)` | No | `—` | Uuid stored for this record. |
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
+
+**Indexes**
+
+- `order_number` on (`order_number(191`)
+- `status_type` on (`type`)
+- `customer_id` on (`customer_id`)
 
 ## `fcal_order_items` (OrderItems)
 
@@ -424,3 +452,10 @@ erDiagram
 | `meta` | `json` | Yes | `—` | Serialized meta payload. |
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
+
+**Indexes**
+
+- `ven_charge_id` on (`vendor_charge_id(64`)
+- `payment_method_idx` on (`payment_method`)
+- `status_idx` on (`status`)
+- `object_id_idx` on (`object_id`)

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/check-slug`
 - **Edition:** Core
 - **Controller:** `CalendarController@checkSlug`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:16`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:14`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="checkSlug" specUrl="/openapi/public/calendars/check-slug.json" />

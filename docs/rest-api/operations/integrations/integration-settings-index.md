@@ -1,6 +1,6 @@
 ---
-title: Index
-description: Index for the FluentBooking Integrations API.
+title: Integration Settings Index
+description: Integration Settings Index for the FluentBooking Integrations API.
 outline: false
 aside: false
 ---
@@ -14,4 +14,4 @@ aside: false
 - **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:84`
 - **Policy:** `SettingsPolicy`
 
-<OAOperation operationId="index" specUrl="/openapi/public/integrations/index.json" />
+<OAOperation operationId="integrationSettingsIndex" specUrl="/openapi/public/integrations/integration-settings-index.json" />

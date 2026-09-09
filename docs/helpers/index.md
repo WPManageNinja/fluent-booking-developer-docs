@@ -97,4 +97,5 @@ The catalog of supported shortcodes is built by `Helper::getEditorShortCodes($ca
 
 ## Next
 
-- [Helper Class Reference](/helpers/helper-class)
+- [Helper Class Reference](/helpers/helper-class) — the most-used methods, grouped with notes.
+- [Service API Index](/helpers/service-api) — every public method on these classes, parsed from source.

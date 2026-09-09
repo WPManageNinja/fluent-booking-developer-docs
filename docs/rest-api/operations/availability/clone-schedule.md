@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/availability/{schedule_id}/clone`
 - **Edition:** Core
 - **Controller:** `AvailabilityController@cloneSchedule`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:118`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:121`
 - **Policy:** `AvailabilityPolicy`
 
 <OAOperation operationId="cloneSchedule" specUrl="/openapi/public/availability/clone-schedule.json" />

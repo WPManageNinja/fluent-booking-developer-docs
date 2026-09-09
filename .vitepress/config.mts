@@ -101,7 +101,36 @@ const filterHookPages = [
 const helperPages = [
   { text: 'Overview', link: '/helpers/' },
   { text: 'Helper Class', link: '/helpers/helper-class' },
+  { text: 'Service API Index', link: '/helpers/service-api' },
 ]
+
+// The MCP ability pages are generated, so the sidebar reads them off disk the
+// same way the REST operation pages do.
+function buildMcpSidebar() {
+  const abilitiesDir = join(projectRoot, 'docs', 'mcp', 'abilities')
+  const items: Array<{ text: string; link: string }> = []
+
+  if (existsSync(abilitiesDir)) {
+    for (const file of readdirSync(abilitiesDir).filter((f) => f.endsWith('.md')).sort()) {
+      const slug = file.replace(/\.md$/, '')
+      const raw = readFileSync(join(abilitiesDir, file), 'utf8')
+      const title = raw.match(/^title:\s*(.+)$/m)?.[1]?.replace(/^["']|["']$/g, '') ?? slug
+      items.push({ text: title, link: `/mcp/abilities/${slug}` })
+    }
+  }
+
+  return [
+    {
+      text: 'MCP Server',
+      items: [{ text: 'Overview', link: '/mcp/' }],
+    },
+    {
+      text: 'Abilities',
+      collapsed: false,
+      items,
+    },
+  ]
+}
 
 function buildHooksSidebar() {
   return [
@@ -400,6 +429,7 @@ export default defineConfig({
         ],
       },
       { text: 'REST API', link: '/rest-api/' },
+      { text: 'MCP', link: '/mcp/' },
       {
         text: 'Guides',
         items: guidePages.filter((page) => !page.text.includes('Overview')),
@@ -414,6 +444,7 @@ export default defineConfig({
       ],
       '/hooks/': buildHooksSidebar(),
       '/helpers/': buildHooksSidebar(),
+      '/mcp/': buildMcpSidebar(),
       '/rest-api/': buildRestApiSidebar(),
       '/guides/': [
         {

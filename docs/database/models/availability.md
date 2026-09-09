@@ -26,7 +26,7 @@ Availability schedule defining recurring weekly hours and date overrides. Stored
 | `created_at` | `TIMESTAMP` | Yes | `—` | Creation timestamp maintained by the ORM. |
 | `updated_at` | `TIMESTAMP` | Yes | `—` | Update timestamp maintained by the ORM. |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

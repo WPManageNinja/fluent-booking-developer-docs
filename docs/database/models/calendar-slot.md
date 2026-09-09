@@ -51,7 +51,7 @@ Bookable event type within a calendar (for example, a 15-minute consultation), w
 | `user()` | `belongsTo` | `User` |
 | `event_metas()` | `hasMany` | `Meta` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |
@@ -85,3 +85,65 @@ Bookable event type within a calendar (for example, a 15-minute consultation), w
 | `getRecurringConfig()` | `—` |
 | `isLocationFieldRequired()` | `—` |
 | `isPhoneRequired()` | `—` |
+| `isAddressRequired()` | `—` |
+| `isGuestFieldRequired()` | `—` |
+| `getEventDefaultData()` | `$calendar` |
+| `getEventSchema()` | `$calendar` |
+| `getSlotSettingsSchema()` | `$calendarId = null` |
+| `getNotifications()` | `$isEdit = false` |
+| `setNotifications()` | `$notifications` |
+| `getBookingFields()` | `—` |
+| `setBookingFields()` | `$bookingFields` |
+| `getScheduleTimezone()` | `$hostId = null` |
+| `isMultiDurationEnabled()` | `—` |
+| `getDuration()` | `$duration = null` |
+| `getDefaultDuration()` | `—` |
+| `getAvailableDurations()` | `—` |
+| `getDescription()` | `—` |
+| `getSlotInterval()` | `$duration = null` |
+| `isReserveTime()` | `—` |
+| `getAvailableTimes()` | `—` |
+| `getTotalBufferTime()` | `—` |
+| `getMaxBookableDateTime()` | `$startDate, $timeZone = 'UTC', $format = 'Y-m-d 23:59:59'` |
+| `getMinBookableDateTime()` | `$startDate = null, $timeZone = null` |
+| `getMaxLookUpDate()` | `—` |
+| `getMinLookUpDate()` | `$timeZone = 'UTC'` |
+| `getCutoutSeconds()` | `—` |
+| `getHostIds()` | `$hostId = null` |
+| `getMaxBookingPerSlot()` | `—` |
+| `getPublicUrl()` | `—` |
+| `getMeta()` | `$key, $default = null` |
+| `updateMeta()` | `$key, $value` |
+| `getLocationFields()` | `$calendarEvent = null` |
+| `isDisplaySpots()` | `—` |
+| `isAdditionalGuestEnabled()` | `—` |
+| `isConfirmationEnabled()` | `—` |
+| `isConfirmationRequired()` | `$bookingStartTime, $bookingCreatedTime = null` |
+| `getCanNotCancelSettings()` | `—` |
+| `getCanNotRescheduleSettings()` | `—` |
+| `defaultLocationHtml()` | `—` |
+| `defaultPaymentIcon()` | `$amount, $currencySettings = []` |
+| `isPaymentEnabled()` | `$duration = null` |
+| `isPaidEvent()` | `—` |
+| `isWooEnabled()` | `—` |
+| `isCartEnabled()` | `—` |
+| `getPaymentItems()` | `$duration = null` |
+| `getEventPrice()` | `$duration = null` |
+| `getPricingTotal()` | `$duration = null` |
+| `getWooProductPrice()` | `$duration = null` |
+| `getWooProductPriceByDuration()` | `$productIds = []` |
+| `getPaymentHtml()` | `—` |
+| `isTeamDefaultSchedule()` | `—` |
+| `isTeamCommonSchedule()` | `—` |
+| `isRoundRobinDefaultSchedule()` | `—` |
+| `isRoundRobinCommonSchedule()` | `—` |
+| `isCollectiveDefaultSchedule()` | `—` |
+| `getWeeklySlots()` | `$hostId = null` |
+| `getDateOverrides()` | `$hostId = null` |
+| `getHostIdsSortedByBookings()` | `$startDate, $hostId = null` |
+| `getPaymentSettings()` | `—` |
+| `getHostSchedule()` | `$hostId` |
+| `getHostsSchedules()` | `—` |
+| `getCalendarEventsMeta()` | `—` |
+| `getIntegrationsMeta()` | `—` |
+| `getDirty()` | `—` |

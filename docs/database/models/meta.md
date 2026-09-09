@@ -32,7 +32,7 @@ Polymorphic key/value metadata table used by FluentBooking entities (calendars, 
 | --- | --- | --- |
 | `calendar_event()` | `belongsTo` | `CalendarSlot` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

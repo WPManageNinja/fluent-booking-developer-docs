@@ -13,11 +13,11 @@ Filters affecting calendar / event creation, validation, options, and sharing se
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/auto_create_calendar`](#fluentbookingautocreatecalendar) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:478` |
-| [`fluent_booking/calendar_event_options`](#fluentbookingcalendareventoptions) | Core | 1 | `fluent-booking/app/Services/CalendarService.php:363` |
-| [`fluent_booking/calendar_event_setting_menu_items`](#fluentbookingcalendareventsettingmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:657` |
-| [`fluent_booking/calendar_options_by_title`](#fluentbookingcalendaroptionsbytitle) | Core | 1 | `fluent-booking/app/Services/CalendarService.php:447` |
-| [`fluent_booking/calendar_setting_menu_items`](#fluentbookingcalendarsettingmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:831` |
+| [`fluent_booking/auto_create_calendar`](#fluentbookingautocreatecalendar) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:485` |
+| [`fluent_booking/calendar_event_options`](#fluentbookingcalendareventoptions) | Core | 1 | `fluent-booking/app/Services/CalendarService.php:377` |
+| [`fluent_booking/calendar_event_setting_menu_items`](#fluentbookingcalendareventsettingmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:664` |
+| [`fluent_booking/calendar_options_by_title`](#fluentbookingcalendaroptionsbytitle) | Core | 1 | `fluent-booking/app/Services/CalendarService.php:461` |
+| [`fluent_booking/calendar_setting_menu_items`](#fluentbookingcalendarsettingmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:838` |
 | [`fluent_booking/calendar/sharing_settings`](#fluentbookingcalendarsharingsettings) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHelper.php:23` |
 | [`fluent_booking/create_calendar_event_data`](#fluentbookingcreatecalendareventdata) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:301` |
 | [`fluent_booking/create_calendar_event_validation_rule`](#fluentbookingcreatecalendareventvalidationrule) | Core | 1 | `fluent-booking/app/Http/Controllers/CalendarController.php:529` |
@@ -41,7 +41,7 @@ Filters affecting calendar / event creation, validation, options, and sharing se
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:478`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:485`
 
 **Example**
 
@@ -61,7 +61,7 @@ add_filter('fluent_booking/auto_create_calendar', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/CalendarService.php:363`
+- `fluent-booking/app/Services/CalendarService.php:377`
 
 **Example**
 
@@ -81,7 +81,7 @@ add_filter('fluent_booking/calendar_event_options', function ($value, ...$rest) 
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:657`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:664`
 
 **Example**
 
@@ -101,7 +101,7 @@ add_filter('fluent_booking/calendar_event_setting_menu_items', function ($value,
 
 **Source locations**
 
-- `fluent-booking/app/Services/CalendarService.php:447`
+- `fluent-booking/app/Services/CalendarService.php:461`
 
 **Example**
 
@@ -121,7 +121,7 @@ add_filter('fluent_booking/calendar_options_by_title', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:831`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:838`
 
 **Example**
 

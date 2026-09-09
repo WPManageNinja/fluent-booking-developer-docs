@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/global-modules`
 - **Edition:** Core
 - **Controller:** `SettingsController@getGlobalModules`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:102`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:100`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="getGlobalModules" specUrl="/openapi/public/settings/get-global-modules.json" />

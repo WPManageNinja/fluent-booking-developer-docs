@@ -19,7 +19,7 @@
         "tags": [
           "Schedules"
         ],
-        "description": "Handler: `SchedulesController@sendConfirmationEmail`. Source: `fluent-booking/app/Http/Routes/api.php:86`.",
+        "description": "Handler: `SchedulesController@sendConfirmationEmail`. Source: `fluent-booking/app/Http/Routes/api.php:84`.",
         "parameters": [
           {
             "name": "id",

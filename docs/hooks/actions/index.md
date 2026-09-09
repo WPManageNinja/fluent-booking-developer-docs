@@ -9,8 +9,8 @@ This page is generated from `do_action()` / `do_action_ref_array()` calls in the
 
 ## Overview
 
-- **Unique action hook names:** 108
-- **Action call sites:** 232
+- **Unique action hook names:** 112
+- **Action call sites:** 244
 - **Categories covered:** 8 (+ miscellaneous)
 
 ## Categories
@@ -23,4 +23,4 @@ This page is generated from `do_action()` / `do_action_ref_array()` calls in the
 - [Admin & Settings](/hooks/actions/admin-and-settings) — 5 hooks
 - [Payments & Orders](/hooks/actions/payments-and-orders) — 16 hooks
 - [Coupons](/hooks/actions/coupons) — 5 hooks
-- [Miscellaneous](/hooks/actions/miscellaneous) — 11 hooks
+- [Miscellaneous](/hooks/actions/miscellaneous) — 15 hooks

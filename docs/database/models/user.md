@@ -23,7 +23,7 @@ Extended WordPress user model exposing FluentBooking-specific relations such as 
 | `staff()` | `hasOne` | `Staff` |
 | `metas()` | `hasMany` | `Meta` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

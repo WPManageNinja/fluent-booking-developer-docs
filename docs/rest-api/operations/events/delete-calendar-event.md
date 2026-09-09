@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}`
 - **Edition:** Core
 - **Controller:** `CalendarController@deleteCalendarEvent`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:35`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:33`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="deleteCalendarEvent" specUrl="/openapi/public/events/delete-calendar-event.json" />

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/sharing-settings`
 - **Edition:** Core
 - **Controller:** `CalendarController@saveSharingSettings`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:27`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:25`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="saveSharingSettings" specUrl="/openapi/public/sharing-settings/save-sharing-settings.json" />

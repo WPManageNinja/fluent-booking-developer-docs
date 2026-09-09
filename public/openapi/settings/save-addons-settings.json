@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `SettingsController@saveAddonsSettings`. Source: `fluent-booking/app/Http/Routes/api.php:105`.",
+        "description": "Handler: `SettingsController@saveAddonsSettings`. Source: `fluent-booking/app/Http/Routes/api.php:103`.",
         "parameters": [],
         "security": [
           {

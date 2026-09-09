@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/crm-contact/tags`
 - **Edition:** Core
 - **Controller:** `SchedulesController@updateCrmTags`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:84`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:82`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="updateCrmTags" specUrl="/openapi/public/schedules/update-crm-tags.json" />

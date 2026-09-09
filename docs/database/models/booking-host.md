@@ -31,7 +31,7 @@ Pivot rows linking bookings to their host users in multi-host (team / collective
 | --- | --- | --- |
 | `booking()` | `belongsTo` | `Booking` |
 
-## Public Methods (sample)
+## Public Methods
 
 | Method | Signature |
 | --- | --- |

@@ -15,10 +15,10 @@ These routes are registered with: `SettingsPolicy`.
 
 | Method | Path | Edition | Operation | Controller |
 | --- | --- | --- | --- | --- |
-| `GET` | `/integrations` | Core | [Index](/rest-api/operations/integrations/index) | `IntegrationController@index` |
-| `POST` | `/integrations` | Core | [Update](/rest-api/operations/integrations/update) | `IntegrationController@update` |
-| `GET` | `/integrations/{host_id}/settings` | <span class="pro-badge">PRO</span> | [Index](/rest-api/operations/integrations/index) | `IntegrationSettingsController@index` |
-| `POST` | `/integrations/{host_id}/settings` | <span class="pro-badge">PRO</span> | [Update](/rest-api/operations/integrations/update) | `IntegrationSettingsController@update` |
+| `GET` | `/integrations` | Core | [Integration Index](/rest-api/operations/integrations/integration-index) | `IntegrationController@index` |
+| `POST` | `/integrations` | Core | [Integration Update](/rest-api/operations/integrations/integration-update) | `IntegrationController@update` |
+| `GET` | `/integrations/{host_id}/settings` | <span class="pro-badge">PRO</span> | [Integration Settings Index](/rest-api/operations/integrations/integration-settings-index) | `IntegrationSettingsController@index` |
+| `POST` | `/integrations/{host_id}/settings` | <span class="pro-badge">PRO</span> | [Integration Settings Update](/rest-api/operations/integrations/integration-settings-update) | `IntegrationSettingsController@update` |
 | `POST` | `/integrations/{host_id}/disconnect` | <span class="pro-badge">PRO</span> | [Revoke](/rest-api/operations/integrations/revoke) | `IntegrationSettingsController@revoke` |
 | `GET` | `/integrations/menu` | <span class="pro-badge">PRO</span> | [Get Integrations Menu](/rest-api/operations/integrations/get-integrations-menu) | `IntegrationSettingsController@getIntegrationsMenu` |
 | `GET` | `/integrations/zoom/connected-users` | <span class="pro-badge">PRO</span> | [Get](/rest-api/operations/integrations/get) | `ZoomController@get` |

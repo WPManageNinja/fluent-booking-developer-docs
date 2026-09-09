@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/email-notifications/clone`
 - **Edition:** Core
 - **Controller:** `CalendarController@cloneEventEmailNotification`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:44`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:42`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="cloneEventEmailNotification" specUrl="/openapi/public/event-notifications/clone-event-email-notification.json" />

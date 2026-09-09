@@ -7,7 +7,7 @@ description: Action hooks fired during the payment lifecycle (Pro) — order cre
 
 Action hooks fired during the payment lifecycle (Pro) — order creation, payment status transitions, refunds, and gateway IPN.
 
-16 unique action hooks currently map to this category, across 22 call sites.
+16 unique action hooks currently map to this category, across 24 call sites.
 
 ## Hook Inventory
 
@@ -22,13 +22,13 @@ Action hooks fired during the payment lifecycle (Pro) — order creation, paymen
 | [`fluent_booking/payment/pay_order_with_`](#fluentbookingpaymentpayorderwith) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:135` |
 | [`fluent_booking/payment/payment_settings_update_`](#fluentbookingpaymentpaymentsettingsupdate) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/PaymentMethodController.php:56` |
 | [`fluent_booking/payment/status_changed`](#fluentbookingpaymentstatuschanged) | Core + <span class="pro-badge">PRO</span> | 4 | `fluent-booking/app/Http/Controllers/SchedulesController.php:310` |
-| [`fluent_booking/payment/status_changed_`](#fluentbookingpaymentstatuschanged) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/TransactionController.php:40` |
-| [`fluent_booking/payment/update_payment_status_`](#fluentbookingpaymentupdatepaymentstatus) | <span class="pro-badge">PRO</span> | 2 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:446` |
-| [`fluent_booking/payment/update_payment_status_paid`](#fluentbookingpaymentupdatepaymentstatuspaid) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:255` |
-| [`fluent_booking/refund_payment_`](#fluentbookingrefundpayment) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:273` |
+| [`fluent_booking/payment/status_changed_`](#fluentbookingpaymentstatuschanged) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/TransactionController.php:42` |
+| [`fluent_booking/payment/update_payment_status_`](#fluentbookingpaymentupdatepaymentstatus) | <span class="pro-badge">PRO</span> | 2 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:512` |
+| [`fluent_booking/payment/update_payment_status_paid`](#fluentbookingpaymentupdatepaymentstatuspaid) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:255` |
+| [`fluent_booking/refund_payment_`](#fluentbookingrefundpayment) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:273` |
 | [`fluent_booking/register_payment_methods`](#fluentbookingregisterpaymentmethods) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:30` |
-| [`fluent_booking/transaction_updated`](#fluentbookingtransactionupdated) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/TransactionController.php:44` |
-| [`fluent-booking/before_render_payment_method_`](#fluentbookingbeforerenderpaymentmethod) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:222` |
+| [`fluent_booking/transaction_updated`](#fluentbookingtransactionupdated) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/TransactionController.php:46` |
+| [`fluent-booking/before_render_payment_method_`](#fluentbookingbeforerenderpaymentmethod) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:224` |
 
 <a id="fluentbookingafterdeleteorder"></a>
 
@@ -201,9 +201,9 @@ add_action('fluent_booking/payment/payment_settings_update_', function (...$args
 **Source locations**
 
 - `fluent-booking/app/Http/Controllers/SchedulesController.php:310`
-- `fluent-booking-pro/app/Http/Controllers/TransactionController.php:39`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:411`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:580`
+- `fluent-booking-pro/app/Http/Controllers/TransactionController.php:41`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:477`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:656`
 
 **Example**
 
@@ -223,7 +223,7 @@ add_action('fluent_booking/payment/status_changed', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/TransactionController.php:40`
+- `fluent-booking-pro/app/Http/Controllers/TransactionController.php:42`
 
 **Example**
 
@@ -243,8 +243,8 @@ add_action('fluent_booking/payment/status_changed_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:446`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:581`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:512`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:657`
 
 **Example**
 
@@ -260,11 +260,12 @@ add_action('fluent_booking/payment/update_payment_status_', function (...$args) 
 
 - **Type:** action
 - **Edition:** Core
-- **Call sites:** 1
+- **Call sites:** 2
 
 **Source locations**
 
 - `fluent-booking/app/Http/Controllers/SchedulesController.php:255`
+- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:754`
 
 **Example**
 
@@ -280,11 +281,12 @@ add_action('fluent_booking/payment/update_payment_status_paid', function (...$ar
 
 - **Type:** action
 - **Edition:** Core
-- **Call sites:** 1
+- **Call sites:** 2
 
 **Source locations**
 
 - `fluent-booking/app/Http/Controllers/SchedulesController.php:273`
+- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:907`
 
 **Example**
 
@@ -324,7 +326,7 @@ add_action('fluent_booking/register_payment_methods', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/TransactionController.php:44`
+- `fluent-booking-pro/app/Http/Controllers/TransactionController.php:46`
 
 **Example**
 
@@ -344,9 +346,9 @@ add_action('fluent_booking/transaction_updated', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:222`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/Paypal.php:421`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:671`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:224`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/Paypal.php:440`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:693`
 
 **Example**
 

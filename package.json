@@ -5,8 +5,9 @@
     "generate:manifest": "node generate-manifest.js",
     "generate:og": "node scripts/generate-og-images.js",
     "docs:dev": "npm run generate:docs && npm run generate:manifest && vitepress dev",
-    "docs:build": "npm run generate:docs && npm run generate:manifest && vitepress build",
-    "docs:preview": "vitepress preview"
+    "docs:build": "npm run generate:docs && npm run generate:manifest && npm run verify:docs && vitepress build",
+    "docs:preview": "vitepress preview",
+    "verify:docs": "node scripts/verify-docs.mjs"
   },
   "devDependencies": {
     "@types/node": "^22.7.5",

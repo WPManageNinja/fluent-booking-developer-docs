@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/availability`
 - **Edition:** Core
 - **Controller:** `AvailabilityController@createSchedule`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:111`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:114`
 - **Policy:** `AvailabilityPolicy`
 
 <OAOperation operationId="createSchedule" specUrl="/openapi/public/availability/create-schedule.json" />

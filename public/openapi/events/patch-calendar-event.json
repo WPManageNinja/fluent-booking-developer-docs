@@ -19,7 +19,7 @@
         "tags": [
           "Events"
         ],
-        "description": "Handler: `CalendarController@patchCalendarEvent`. Source: `fluent-booking/app/Http/Routes/api.php:34`.",
+        "description": "Handler: `CalendarController@patchCalendarEvent`. Source: `fluent-booking/app/Http/Routes/api.php:32`.",
         "parameters": [
           {
             "name": "id",

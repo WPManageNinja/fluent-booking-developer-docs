@@ -19,7 +19,7 @@
         "tags": [
           "Event Email Notifications"
         ],
-        "description": "Handler: `CalendarController@cloneEventEmailNotification`. Source: `fluent-booking/app/Http/Routes/api.php:44`.",
+        "description": "Handler: `CalendarController@cloneEventEmailNotification`. Source: `fluent-booking/app/Http/Routes/api.php:42`.",
         "parameters": [
           {
             "name": "id",

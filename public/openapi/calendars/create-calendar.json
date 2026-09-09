@@ -19,7 +19,7 @@
         "tags": [
           "Calendars"
         ],
-        "description": "Handler: `CalendarController@createCalendar`. Source: `fluent-booking/app/Http/Routes/api.php:15`.",
+        "description": "Handler: `CalendarController@createCalendar`. Source: `fluent-booking/app/Http/Routes/api.php:13`.",
         "parameters": [],
         "security": [
           {

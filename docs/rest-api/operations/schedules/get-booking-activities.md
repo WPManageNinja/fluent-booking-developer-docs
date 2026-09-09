@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/activities`
 - **Edition:** Core
 - **Controller:** `SchedulesController@getBookingActivities`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:80`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:78`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="getBookingActivities" specUrl="/openapi/public/schedules/get-booking-activities.json" />

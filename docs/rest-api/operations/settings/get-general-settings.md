@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/general`
 - **Edition:** Core
 - **Controller:** `SettingsController@getGeneralSettings`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:97`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:95`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="getGeneralSettings" specUrl="/openapi/public/settings/get-general-settings.json" />

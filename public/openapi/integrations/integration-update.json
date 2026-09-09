@@ -12,25 +12,15 @@
     }
   ],
   "paths": {
-    "/integrations/{host_id}/settings": {
+    "/integrations": {
       "post": {
-        "operationId": "update",
-        "summary": "Update",
+        "operationId": "integrationUpdate",
+        "summary": "Integration Update",
         "tags": [
           "Integrations"
         ],
-        "description": "Handler: `IntegrationSettingsController@update`. Source: `fluent-booking-pro/app/Http/Routes/api.php:85`.",
-        "parameters": [
-          {
-            "name": "host_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            },
-            "description": "Host Id path parameter."
-          }
-        ],
+        "description": "Handler: `IntegrationController@update`. Source: `fluent-booking/app/Http/Routes/api.php:91`.",
+        "parameters": [],
         "security": [
           {
             "ApplicationPasswords": []
@@ -128,39 +118,6 @@
                   "message": "Sorry, you are not allowed to do that.",
                   "data": {
                     "status": 403
-                  }
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Resource not found.",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "code": {
-                      "type": "string"
-                    },
-                    "message": {
-                      "type": "string"
-                    },
-                    "data": {
-                      "type": "object",
-                      "properties": {
-                        "status": {
-                          "type": "integer"
-                        }
-                      }
-                    }
-                  }
-                },
-                "example": {
-                  "code": "not_found",
-                  "message": "Resource not found.",
-                  "data": {
-                    "status": 404
                   }
                 }
               }
