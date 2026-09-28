@@ -11,7 +11,7 @@ FluentBooking stores all data in custom WordPress tables prefixed with `fcal_`. 
 
 | Table | Model | Columns | Indexes |
 | --- | --- | --- | --- |
-| `fcal_bookings` | [Booking](/database/models/booking) | 42 | 7 |
+| `fcal_bookings` | [Booking](/database/models/booking) | 42 | 8 |
 | `fcal_calendars` | [Calendar](/database/models/calendar) | 19 | 6 |
 | `fcal_calendar_events` | [CalendarSlot](/database/models/calendar-slot) | 23 | 5 |
 | `fcal_meta` | [Availability](/database/models/availability) | 7 | 3 |
@@ -197,6 +197,7 @@ erDiagram
 - `fcal_b_event_id` on (`event_id`)
 - `fcal_b_booking_type` on (`booking_type`)
 - `fcal_b_start_time` on (`start_time`)
+- `fcal_b_group_id` on (`group_id`)
 
 ## `fcal_calendars` (Calendar)
 

@@ -15,8 +15,9 @@ List bookable event types, or pass event_id for one event's full configuration: 
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `EventTypeTools::getEventTypes()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/EventTypeTools.php:30`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/EventTypeTools.php:26`
 
 ## Input schema
 

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/remote-calendars/disconnect-calendar`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@disconnectRemoteCalendar`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:45`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:50`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="disconnectRemoteCalendar" specUrl="/openapi/public/calendar-integrations/disconnect-remote-calendar.json" />

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/event-order`
 - **Edition:** Core
 - **Controller:** `CalendarController@saveCalendarEventOrder`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:27`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:28`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="saveCalendarEventOrder" specUrl="/openapi/public/calendars/save-calendar-event-order.json" />

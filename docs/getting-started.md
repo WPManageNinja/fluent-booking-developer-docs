@@ -12,6 +12,8 @@ FluentBooking is a WordPress appointment scheduling plugin built on the WPFluent
 - **Database layer:** ORM models mapped to the `fcal_*` tables (calendars, events, bookings, availability, metadata, plus Pro tables for orders, transactions, and webhooks).
 - **Hooks:** Action and filter hooks emitted across the booking lifecycle, calendars, availability, payments, and third-party integrations.
 - **REST API:** Every route registered under the `fluent-booking/v2` namespace, grouped by module with per-operation reference pages.
+- **MCP server:** The typed abilities the `fluent-booking/mcp` namespace exposes to AI agents, with input schemas and the permission each one needs.
+- **Platform:** The WordPress-level surface — shortcodes, AJAX endpoints, Gutenberg blocks, email smartcodes, permission sets, scheduled tasks, and the event-configuration vocabularies.
 - **Guides:** Practical recipes for common customizations — code snippets, theme compatibility, custom booking fields, and webhooks.
 
 ## Quick Links
@@ -41,6 +43,14 @@ FluentBooking is a WordPress appointment scheduling plugin built on the WPFluent
     <strong>Models Reference</strong>
     <span>Eloquent-style ORM models with relationships and scopes.</span>
   </a>
+  <a href="/mcp/" class="getting-started-card">
+    <strong>MCP Server</strong>
+    <span>Agent abilities, toolsets, and the gates that guard them.</span>
+  </a>
+  <a href="/platform/smartcodes" class="getting-started-card">
+    <strong>Smartcodes</strong>
+    <span>Template placeholders for emails and landing pages.</span>
+  </a>
 </div>
 
 ## Source of Truth
@@ -53,6 +63,10 @@ FluentBooking is a WordPress appointment scheduling plugin built on the WPFluent
 | Models | `fluent-booking/app/Models/`, `fluent-booking-pro/app/Models/` |
 | Migrations | `fluent-booking/database/Migrations/` |
 | Hooks | `do_action(...)` / `apply_filters(...)` calls across the core and Pro source trees |
+| MCP abilities | `fluent-booking/app/Modules/MCP/` (each tool class's `definitions()`), plus `fluent-booking-pro/app/Modules/MCP/` |
+| Shortcodes, blocks, AJAX | `add_shortcode()`, `register_block_type()`, and `wp_ajax_*` registrations in the hook handlers |
+| Smartcodes | `Helper::getEditorShortCodes()` |
+| Permissions | `fluent-booking/app/Services/PermissionManager.php`, `app/Http/Policies/`, MCP `PermissionGate` |
 
 ## Editions
 
@@ -81,9 +95,10 @@ Pro endpoints, hooks, and models are flagged with <span class="pro-badge">PRO</s
 
 ## Architecture at a Glance
 
-- **REST namespace:** `fluent-booking/v2`
+- **REST namespaces:** `fluent-booking/v2` (admin) and `fluent-booking/mcp` (the MCP server, deliberately outside the v2 policy stack)
 - **Custom tables:** all prefixed `fcal_` (e.g., `fcal_bookings`, `fcal_calendars`, `fcal_calendar_events`, `fcal_booking_meta`, `fcal_meta`)
 - **Request flow:** Route → Policy → Controller → Service → Model
+- **MCP flow:** Ability callback → `PermissionGate` → Service/Model — no route and no Policy; see [Permissions](/platform/permissions)
 - **Frontend conventions:** The admin app uses `X-HTTP-Method-Override` for PUT/PATCH/DELETE; browser clients rely on cookie auth + nonce. Server-to-server calls use WordPress Application Passwords.
 
 ## Development Commands
@@ -94,6 +109,7 @@ npm run docs:dev        # local dev server
 npm run docs:build      # production build
 npm run generate:docs   # regenerate model/hook/route docs from PHP source
 npm run generate:og     # regenerate OG images
+npm run verify:docs     # fail if the generated docs no longer match the PHP source
 ```
 
 ## Main Sections
@@ -104,4 +120,6 @@ npm run generate:og     # regenerate OG images
 - [Filter Hooks](/hooks/filters/)
 - [Helpers](/helpers/)
 - [REST API](/rest-api/)
+- [MCP Server](/mcp/)
+- [Platform](/platform/)
 - [Guides](/guides/)

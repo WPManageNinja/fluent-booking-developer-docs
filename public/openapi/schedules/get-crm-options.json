@@ -19,7 +19,7 @@
         "tags": [
           "Schedules"
         ],
-        "description": "Handler: `SchedulesController@getCrmOptions`. Source: `fluent-booking/app/Http/Routes/api.php:81`.",
+        "description": "Handler: `SchedulesController@getCrmOptions`. Source: `fluent-booking/app/Http/Routes/api.php:84`.",
         "parameters": [
           {
             "name": "id",

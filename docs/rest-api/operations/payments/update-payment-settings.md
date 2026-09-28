@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/payment-settings`
 - **Edition:** Pro
 - **Controller:** `PaymentMethodController@updatePaymentSettings`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:71`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:76`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="updatePaymentSettings" specUrl="/openapi/public/payments/update-payment-settings.json" />

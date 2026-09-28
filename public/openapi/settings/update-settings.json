@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `McpController@updateSettings`. Source: `fluent-booking/app/Http/Routes/api.php:108`.",
+        "description": "Handler: `McpController@updateSettings`. Source: `fluent-booking/app/Http/Routes/api.php:112`.",
         "parameters": [],
         "security": [
           {

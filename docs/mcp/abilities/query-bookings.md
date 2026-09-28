@@ -15,8 +15,9 @@ Aggregate bookings by one or two dimensions. Answers "how many bookings per host
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `ReportTools::queryBookings()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/ReportTools.php:30`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/ReportTools.php:25`
 
 ## Input schema
 

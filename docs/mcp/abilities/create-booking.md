@@ -15,8 +15,9 @@ Book a slot on an attendee's behalf. Availability is re-checked at execute time 
 - **Edition:** Core
 - **Mode:** destructive
 - **Permission callback:** `PermissionGate::bookingWriteGate()`
+- **Requires:** one of `manage_own_calendar`, `manage_all_bookings`, `manage_all_data` — see [Permissions](/platform/permissions)
 - **Handler:** `BookingWriteTools::createBooking()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingWriteTools.php:58`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingWriteTools.php:45`
 
 ## Input schema
 

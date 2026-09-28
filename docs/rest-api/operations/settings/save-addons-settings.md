@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/addons-settings`
 - **Edition:** Core
 - **Controller:** `SettingsController@saveAddonsSettings`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:103`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:106`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="saveAddonsSettings" specUrl="/openapi/public/settings/save-addons-settings.json" />

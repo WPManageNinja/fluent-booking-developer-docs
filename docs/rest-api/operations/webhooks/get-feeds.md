@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/webhooks`
 - **Edition:** Pro
 - **Controller:** `WebhookController@getFeeds`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:64`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:69`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getFeeds" specUrl="/openapi/public/webhooks/get-feeds.json" />

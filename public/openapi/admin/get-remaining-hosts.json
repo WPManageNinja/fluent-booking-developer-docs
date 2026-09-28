@@ -19,7 +19,7 @@
         "tags": [
           "Admin & Hosts"
         ],
-        "description": "Handler: `AdminController@getRemainingHosts`. Source: `fluent-booking/app/Http/Routes/api.php:54`.",
+        "description": "Handler: `AdminController@getRemainingHosts`. Source: `fluent-booking/app/Http/Routes/api.php:55`.",
         "parameters": [],
         "security": [
           {

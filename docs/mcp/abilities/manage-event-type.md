@@ -15,8 +15,9 @@ Create, edit, duplicate, activate, deactivate or delete an event type. dry_run p
 - **Edition:** Core
 - **Mode:** destructive
 - **Permission callback:** `PermissionGate::scheduleWriteGate()`
+- **Requires:** one of `manage_own_calendar`, `manage_other_calendars`, `manage_other_availabilities`, `manage_all_data` — see [Permissions](/platform/permissions)
 - **Handler:** `SchedulingTools::manageEventType()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:131`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:127`
 
 ## Input schema
 

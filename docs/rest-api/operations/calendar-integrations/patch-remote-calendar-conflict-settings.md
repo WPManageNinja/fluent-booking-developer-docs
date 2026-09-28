@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/remote-calendars/patch-conflicts`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@patchRemoteCalendarConflictSettings`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:42`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:47`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="patchRemoteCalendarConflictSettings" specUrl="/openapi/public/calendar-integrations/patch-remote-calendar-conflict-settings.json" />

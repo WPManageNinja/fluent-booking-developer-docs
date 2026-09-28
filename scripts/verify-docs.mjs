@@ -215,6 +215,204 @@ for (const src of sources) {
   }
 }
 
+// ── Platform surfaces ────────────────────────────────────────────────────────
+
+// Shortcodes: every add_shortcode tag, and every shortcode_atts default.
+const sourceShortcodes = new Map()
+for (const src of sources) {
+  for (const file of walk(join(src.root, 'app'), (p) => p.endsWith('.php'))) {
+    const content = read(file)
+    if (!content.includes('add_shortcode')) continue
+    for (const m of content.matchAll(/add_shortcode\(\s*['"]([^'"]+)['"]\s*,\s*\[\s*\$this\s*,\s*['"]([^'"]+)['"]/g)) {
+      const attsIndex = content.search(new RegExp(`function\\s+${m[2]}\\s*\\([\\s\\S]{0,400}?shortcode_atts\\(\\s*\\[`))
+      const attributes = []
+      if (attsIndex !== -1) {
+        const open = content.indexOf('[', content.indexOf('shortcode_atts', attsIndex))
+        let depth = 0
+        for (let i = open; i < content.length; i++) {
+          if (content[i] === '[') depth++
+          else if (content[i] === ']') {
+            depth--
+            if (depth === 0) {
+              for (const attr of content.slice(open + 1, i).matchAll(/^\s*'([a-z_]+)'\s*=>/gm)) attributes.push(attr[1])
+              break
+            }
+          }
+        }
+      }
+      sourceShortcodes.set(m[1], attributes)
+    }
+  }
+}
+
+const shortcodeDoc = read(join(docsRoot, 'platform', 'shortcodes.md'))
+check('shortcodes', sourceShortcodes.size, [...shortcodeDoc.matchAll(/^## `\[([^\]]+)\]`$/gm)].length)
+for (const [tag, attributes] of sourceShortcodes) {
+  if (!shortcodeDoc.includes(`## \`[${tag}]\``)) {
+    failures.push(`  FAIL shortcode [${tag}] is missing from docs`)
+    continue
+  }
+  const section = shortcodeDoc.slice(shortcodeDoc.indexOf(`## \`[${tag}]\``)).split(/\n<a id=/)[0]
+  const missing = attributes.filter((a) => !section.includes(`| \`${a}\` |`))
+  if (missing.length) failures.push(`  FAIL [${tag}] attributes missing from docs: ${missing.join(', ')}`)
+}
+
+// AJAX actions
+const sourceAjax = new Set()
+for (const src of sources) {
+  for (const file of walk(join(src.root, 'app'), (p) => p.endsWith('.php'))) {
+    const content = read(file)
+    for (const m of content.matchAll(/add_action\(\s*['"]wp_ajax_(?:nopriv_)?([a-z0-9_]+)['"]\s*,\s*\[\s*\$this\s*,/g)) {
+      sourceAjax.add(m[1])
+    }
+  }
+}
+const missingAjax = [...sourceAjax].filter((a) => !shortcodeDoc.includes(`| \`${a}\` |`))
+check('AJAX actions', sourceAjax.size, sourceAjax.size - missingAjax.length)
+if (missingAjax.length) failures.push(`  FAIL AJAX actions missing from docs: ${missingAjax.join(', ')}`)
+
+// Blocks and their attributes
+const blockDoc = read(join(docsRoot, 'platform', 'blocks.md'))
+const sourceBlocks = new Map()
+for (const src of sources) {
+  for (const file of walk(join(src.root, 'app'), (p) => p.endsWith('.php'))) {
+    const content = read(file)
+    if (!content.includes('register_block_type')) continue
+    const registrations = [...content.matchAll(/register_block_type\(\s*['"]([^'"]+)['"]/g)]
+    registrations.forEach((m, index) => {
+      const next = registrations[index + 1]
+      const segment = content.slice(m.index, next ? next.index : content.length)
+      const attributes = [...segment.matchAll(/'([a-zA-Z_]+)'\s*=>\s*(?:array\(|\[)\s*\n\s*'type'/g)].map((a) => a[1])
+      sourceBlocks.set(m[1], attributes)
+    })
+  }
+}
+check('blocks', sourceBlocks.size, [...blockDoc.matchAll(/^## `([^`]+)`$/gm)].length)
+for (const [name, attributes] of sourceBlocks) {
+  const heading = `## \`${name}\``
+  if (!blockDoc.includes(heading)) {
+    failures.push(`  FAIL block ${name} is missing from docs`)
+    continue
+  }
+  const section = blockDoc.slice(blockDoc.indexOf(heading)).split(/\n<a id=/)[0]
+  const missing = attributes.filter((a) => !section.includes(`| \`${a}\` |`))
+  if (missing.length) failures.push(`  FAIL ${name} attributes missing from docs: ${missing.join(', ')}`)
+  else notes.push(`  ok   ${name} attributes: ${attributes.length}`)
+}
+
+// Smartcodes
+const helperSource = read(join(pluginRoot, 'app', 'Services', 'Helper.php'))
+const smartcodeStart = helperSource.search(/function\s+getEditorShortCodes\s*\(/)
+const smartcodeEnd = helperSource.indexOf("apply_filters('fluent_booking/editor_shortcodes_groups'", smartcodeStart)
+const smartcodeBody = helperSource.slice(smartcodeStart, smartcodeEnd)
+const sourceSmartcodes = new Set([
+  ...[...smartcodeBody.matchAll(/'((?:\{\{|##)[^']+)'\s*=>/g)].map((m) => m[1]),
+  ...[...smartcodeBody.matchAll(/\['shortcodes'\]\['([^']+)'\]/g)].map((m) => m[1]),
+])
+const smartcodeDoc = read(join(docsRoot, 'platform', 'smartcodes.md'))
+// Smartcode cells are rendered as `<code v-pre>` so Vue leaves the braces alone.
+const missingSmartcodes = [...sourceSmartcodes].filter(
+  (code) => !smartcodeDoc.includes(`<code v-pre>${code.replace(/</g, '&lt;').replace(/>/g, '&gt;')}</code>`),
+)
+check('smartcodes', sourceSmartcodes.size, sourceSmartcodes.size - missingSmartcodes.length)
+if (missingSmartcodes.length) failures.push(`  FAIL smartcodes missing from docs: ${missingSmartcodes.join(', ')}`)
+
+// Permission sets and policies
+const permissionSource = read(join(pluginRoot, 'app', 'Services', 'PermissionManager.php'))
+const setsBody = permissionSource.slice(permissionSource.search(/function\s+allPermissionSets\s*\(/))
+const sourceSets = [...setsBody.slice(0, setsBody.indexOf('];')).matchAll(/'([a-z_]+)'\s*=>\s*__\(/g)].map((m) => m[1])
+const permissionDoc = read(join(docsRoot, 'platform', 'permissions.md'))
+const missingSets = sourceSets.filter((s) => !permissionDoc.includes(`| \`${s}\` |`))
+check('permission sets', sourceSets.length, sourceSets.length - missingSets.length)
+if (missingSets.length) failures.push(`  FAIL permission sets missing from docs: ${missingSets.join(', ')}`)
+
+const sourcePolicies = sources.flatMap((src) =>
+  walk(join(src.root, 'app', 'Http', 'Policies'), (p) => p.endsWith('.php')).map((f) => f.split('/').pop().replace('.php', '')),
+)
+const missingPolicies = sourcePolicies.filter((p) => !permissionDoc.includes(`| \`${p}\` |`))
+check('policies', sourcePolicies.length, sourcePolicies.length - missingPolicies.length)
+if (missingPolicies.length) failures.push(`  FAIL policies missing from docs: ${missingPolicies.join(', ')}`)
+
+// Scheduled tasks
+const sourceTasks = new Set()
+for (const src of sources) {
+  for (const file of walk(join(src.root, 'app'), (p) => p.endsWith('.php'))) {
+    for (const m of read(file).matchAll(/as_schedule_recurring_action\(\s*time\(\)\s*,[^,]*,\s*['"]([^'"]+)['"]/g)) {
+      sourceTasks.add(m[1])
+    }
+  }
+}
+const taskDoc = read(join(docsRoot, 'platform', 'scheduled-tasks.md'))
+const missingTasks = [...sourceTasks].filter((t) => !taskDoc.includes(`## \`${t}\``))
+check('scheduled tasks', sourceTasks.size, sourceTasks.size - missingTasks.length)
+if (missingTasks.length) failures.push(`  FAIL scheduled tasks missing from docs: ${missingTasks.join(', ')}`)
+
+// Event configuration vocabularies
+const eventConfigDoc = read(join(docsRoot, 'platform', 'event-configuration.md'))
+
+const slotSource = read(join(pluginRoot, 'app', 'Models', 'CalendarSlot.php'))
+const locationBody = slotSource.slice(slotSource.indexOf("apply_filters('fluent_booking/get_location_fields'"))
+const sourceLocationTypes = [...locationBody.slice(0, locationBody.indexOf('], $calendarEvent')).matchAll(/'([a-z_]+)'\s*=>\s*\[\s*\n\s*'title'/g)].map((m) => m[1])
+const missingLocations = sourceLocationTypes.filter((t) => !eventConfigDoc.includes(`| \`${t}\` |`))
+check('location types', sourceLocationTypes.length, sourceLocationTypes.length - missingLocations.length)
+if (missingLocations.length) failures.push(`  FAIL location types missing from docs: ${missingLocations.join(', ')}`)
+
+const fieldSource = read(join(pluginRoot, 'app', 'Services', 'BookingFieldService.php'))
+const defaultsBody = fieldSource.slice(fieldSource.search(/\$defaultFields\s*=\s*\[/))
+const sourceSystemFields = [...defaultsBody.slice(0, defaultsBody.indexOf('\n        ];')).matchAll(/^\s{12}'([a-z_]+)'\s*=>\s*\[/gm)].map((m) => m[1])
+const missingFields = sourceSystemFields.filter((f) => !eventConfigDoc.includes(`| \`${f}\` |`))
+check('system booking fields', sourceSystemFields.length, sourceSystemFields.length - missingFields.length)
+if (missingFields.length) failures.push(`  FAIL system booking fields missing from docs: ${missingFields.join(', ')}`)
+
+const typesBody = helperSource.slice(helperSource.indexOf("apply_filters('fluent_booking/custom_fields_types'"))
+const sourceFieldTypes = [...typesBody.slice(0, typesBody.indexOf(']);')).matchAll(/'value'\s*=>\s*'([^']+)'/g)].map((m) => m[1])
+const missingTypes = sourceFieldTypes.filter((t) => !eventConfigDoc.includes(`| \`${t}\` |`))
+check('custom field types', sourceFieldTypes.length, sourceFieldTypes.length - missingTypes.length)
+if (missingTypes.length) failures.push(`  FAIL custom field types missing from docs: ${missingTypes.join(', ')}`)
+
+// MCP gates must reach the ability pages.
+const gateSource = read(join(pluginRoot, 'app', 'Modules', 'MCP', 'Support', 'PermissionGate.php'))
+const gateConsts = new Map(
+  [...gateSource.matchAll(/const\s+([A-Z_]+)\s*=\s*\[([^\]]*)\]/g)].map((m) => [m[1], [...m[2].matchAll(/'([a-z_]+)'/g)].map((c) => c[1])]),
+)
+for (const m of gateSource.matchAll(/function\s+([a-zA-Z0-9_]+Gate)\s*\([^)]*\)\s*\{([\s\S]*?)\n    \}/g)) {
+  const constName = m[2].match(/self::([A-Z_]+)/)
+  if (!constName || !gateConsts.has(constName[1])) continue
+  const caps = gateConsts.get(constName[1])
+  const users = abilityPages.filter((p) => read(p).includes(`${m[1]}()`))
+  for (const page of users) {
+    const doc = read(page)
+    const missing = caps.filter((cap) => !doc.includes(`\`${cap}\``))
+    if (missing.length) failures.push(`  FAIL ${page.split('/').pop()} omits required sets: ${missing.join(', ')}`)
+  }
+  notes.push(`  ok   ${m[1]} required sets on ${users.length} ability page(s): ${caps.length}`)
+}
+
+// ── Curated pages that quote source lists ────────────────────────────────────
+
+// The outgoing-webhook guide lists the trigger slugs; they come from the Pro
+// WebhookIntegration status map.
+const webhookFile = join(proRoot, 'app', 'Services', 'Integrations', 'Webhook', 'WebhookIntegration.php')
+if (existsSync(webhookFile)) {
+  const webhookSource = read(webhookFile)
+  const mapBody = webhookSource.slice(webhookSource.search(/\$maps\s*=\s*\[/))
+  const triggers = [...mapBody.slice(0, mapBody.indexOf('];')).matchAll(/=>\s*'([a-z_]+)'/g)].map((m) => m[1])
+  const webhookDoc = read(join(docsRoot, 'guides', 'incoming-webhooks.md'))
+  const missingTriggers = triggers.filter((t) => !webhookDoc.includes(`\`${t}\``))
+  check('webhook triggers', triggers.length, triggers.length - missingTriggers.length)
+  if (missingTriggers.length) {
+    failures.push(`  FAIL webhook triggers missing from guides/incoming-webhooks.md: ${missingTriggers.join(', ')}`)
+  }
+}
+
+// The custom-booking-fields guide quotes the field-type catalog inline.
+const fieldGuide = read(join(docsRoot, 'guides', 'custom-booking-fields.md'))
+const missingGuideTypes = sourceFieldTypes.filter((t) => !fieldGuide.includes(`'${t}'`))
+check('field types in the custom-fields guide', sourceFieldTypes.length, sourceFieldTypes.length - missingGuideTypes.length)
+if (missingGuideTypes.length) {
+  failures.push(`  FAIL field types missing from guides/custom-booking-fields.md: ${missingGuideTypes.join(', ')}`)
+}
+
 // ── Models ───────────────────────────────────────────────────────────────────
 
 const modelFiles = sources.flatMap((src) => walk(join(src.root, 'app', 'Models'), (p) => p.endsWith('.php')))

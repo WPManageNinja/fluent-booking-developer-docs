@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `SettingsController@getPages`. Source: `fluent-booking/app/Http/Routes/api.php:102`.",
+        "description": "Handler: `SettingsController@getPages`. Source: `fluent-booking/app/Http/Routes/api.php:105`.",
         "parameters": [],
         "security": [
           {

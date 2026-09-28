@@ -19,7 +19,7 @@
         "tags": [
           "Webhooks & SMS"
         ],
-        "description": "Handler: `TwilioController@getSlotSmsNotifications`. Source: `fluent-booking-pro/app/Http/Routes/api.php:59`.",
+        "description": "Handler: `TwilioController@getSlotSmsNotifications`. Source: `fluent-booking-pro/app/Http/Routes/api.php:64`.",
         "parameters": [
           {
             "name": "id",

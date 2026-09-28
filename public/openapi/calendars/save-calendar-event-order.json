@@ -19,7 +19,7 @@
         "tags": [
           "Calendars"
         ],
-        "description": "Handler: `CalendarController@saveCalendarEventOrder`. Source: `fluent-booking/app/Http/Routes/api.php:27`.",
+        "description": "Handler: `CalendarController@saveCalendarEventOrder`. Source: `fluent-booking/app/Http/Routes/api.php:28`.",
         "parameters": [
           {
             "name": "id",

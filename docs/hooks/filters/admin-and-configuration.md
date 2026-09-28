@@ -13,27 +13,27 @@ Filters affecting admin UI, menu items, dashboard widgets, and global defaults.
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/admin_base_url`](#fluentbookingadminbaseurl) | Core | 1 | `fluent-booking/app/Services/Helper.php:689` |
-| [`fluent_booking/admin_menu_items`](#fluentbookingadminmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:191` |
-| [`fluent_booking/admin_portal_vars`](#fluentbookingadminportalvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:195` |
-| [`fluent_booking/admin_vars`](#fluentbookingadminvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:393` |
-| [`fluent_booking/asset_listed_slugs`](#fluentbookingassetlistedslugs) | Core | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:250` |
-| [`fluent_booking/backend_sanitized_values`](#fluentbookingbackendsanitizedvalues) | Core | 1 | `fluent-booking/app/Services/Helper.php:1245` |
-| [`fluent_booking/dashboard_notices`](#fluentbookingdashboardnotices) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:438` |
+| [`fluent_booking/admin_base_url`](#fluentbookingadminbaseurl) | Core | 1 | `fluent-booking/app/Services/Helper.php:690` |
+| [`fluent_booking/admin_menu_items`](#fluentbookingadminmenuitems) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:271` |
+| [`fluent_booking/admin_portal_vars`](#fluentbookingadminportalvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:275` |
+| [`fluent_booking/admin_vars`](#fluentbookingadminvars) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:479` |
+| [`fluent_booking/asset_listed_slugs`](#fluentbookingassetlistedslugs) | Core | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:331` |
+| [`fluent_booking/backend_sanitized_values`](#fluentbookingbackendsanitizedvalues) | Core | 1 | `fluent-booking/app/Services/Helper.php:1247` |
+| [`fluent_booking/dashboard_notices`](#fluentbookingdashboardnotices) | Core | 1 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:523` |
 | [`fluent_booking/dashboard_widgets`](#fluentbookingdashboardwidgets) | Core | 1 | `fluent-booking/app/Http/Controllers/ReportController.php:95` |
 | [`fluent_booking/data_export_limit`](#fluentbookingdataexportlimit) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:59` |
-| [`fluent_booking/default_booking_filters`](#fluentbookingdefaultbookingfilters) | Core | 1 | `fluent-booking/app/Services/Helper.php:2267` |
+| [`fluent_booking/default_booking_filters`](#fluentbookingdefaultbookingfilters) | Core | 1 | `fluent-booking/app/Services/Helper.php:2270` |
 | [`fluent_booking/default_coupon_data`](#fluentbookingdefaultcoupondata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/CouponService.php:11` |
 | [`fluent_booking/default_currency_settings`](#fluentbookingdefaultcurrencysettings) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:13` |
-| [`fluent_booking/default_email_notification_settings`](#fluentbookingdefaultemailnotificationsettings) | Core | 1 | `fluent-booking/app/Services/Helper.php:1741` |
-| [`fluent_booking/default_paginations`](#fluentbookingdefaultpaginations) | Core | 1 | `fluent-booking/app/Services/Helper.php:2277` |
+| [`fluent_booking/default_email_notification_settings`](#fluentbookingdefaultemailnotificationsettings) | Core | 1 | `fluent-booking/app/Services/Helper.php:1743` |
+| [`fluent_booking/default_paginations`](#fluentbookingdefaultpaginations) | Core | 1 | `fluent-booking/app/Services/Helper.php:2280` |
 | [`fluent_booking/default_sms_notification_settings`](#fluentbookingdefaultsmsnotificationsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Twilio/TwilioHelper.php:124` |
-| [`fluent_booking/default_terms_and_conditions`](#fluentbookingdefaulttermsandconditions) | Core | 1 | `fluent-booking/app/Services/Helper.php:1730` |
-| [`fluent_booking/editor_shortcodes_groups`](#fluentbookingeditorshortcodesgroups) | Core | 1 | `fluent-booking/app/Services/Helper.php:2074` |
-| [`fluent_booking/general_settings`](#fluentbookinggeneralsettings) | Core | 1 | `fluent-booking/app/Http/Controllers/SettingsController.php:92` |
-| [`fluent_booking/get_features`](#fluentbookinggetfeatures) | Core | 1 | `fluent-booking/app/Services/Helper.php:2402` |
-| [`fluent_booking/get_general_integration_feed_`](#fluentbookinggetgeneralintegrationfeed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:260` |
-| [`fluent_booking/integrations_menu_items`](#fluentbookingintegrationsmenuitems) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:47` |
+| [`fluent_booking/default_terms_and_conditions`](#fluentbookingdefaulttermsandconditions) | Core | 1 | `fluent-booking/app/Services/Helper.php:1732` |
+| [`fluent_booking/editor_shortcodes_groups`](#fluentbookingeditorshortcodesgroups) | Core | 1 | `fluent-booking/app/Services/Helper.php:2077` |
+| [`fluent_booking/general_settings`](#fluentbookinggeneralsettings) | Core | 1 | `fluent-booking/app/Http/Controllers/SettingsController.php:93` |
+| [`fluent_booking/get_features`](#fluentbookinggetfeatures) | Core | 1 | `fluent-booking/app/Services/Helper.php:2405` |
+| [`fluent_booking/get_general_integration_feed_`](#fluentbookinggetgeneralintegrationfeed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:274` |
+| [`fluent_booking/integrations_menu_items`](#fluentbookingintegrationsmenuitems) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:48` |
 | [`fluent_booking/no_permission_message`](#fluentbookingnopermissionmessage) | <span class="pro-badge">PRO</span> | 2 | `fluent-booking-pro/app/Hooks/Handlers/FrontendRenderer.php:96` |
 | [`fluent_cart/admin_base_url`](#fluentcartadminbaseurl) | Core | 1 | `fluent-booking/app/Services/Integrations/FluentCart/CustomerProfileService.php:69` |
 
@@ -47,7 +47,7 @@ Filters affecting admin UI, menu items, dashboard widgets, and global defaults.
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:689`
+- `fluent-booking/app/Services/Helper.php:690`
 
 **Example**
 
@@ -67,7 +67,7 @@ add_filter('fluent_booking/admin_base_url', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:191`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:271`
 
 **Example**
 
@@ -87,7 +87,7 @@ add_filter('fluent_booking/admin_menu_items', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:195`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:275`
 
 **Example**
 
@@ -107,7 +107,7 @@ add_filter('fluent_booking/admin_portal_vars', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:393`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:479`
 
 **Example**
 
@@ -127,8 +127,8 @@ add_filter('fluent_booking/admin_vars', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:250`
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:291`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:331`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:372`
 
 **Example**
 
@@ -148,7 +148,7 @@ add_filter('fluent_booking/asset_listed_slugs', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1245`
+- `fluent-booking/app/Services/Helper.php:1247`
 
 **Example**
 
@@ -168,7 +168,7 @@ add_filter('fluent_booking/backend_sanitized_values', function ($value, ...$rest
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:438`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:523`
 
 **Example**
 
@@ -228,7 +228,7 @@ add_filter('fluent_booking/data_export_limit', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:2267`
+- `fluent-booking/app/Services/Helper.php:2270`
 
 **Example**
 
@@ -288,7 +288,7 @@ add_filter('fluent_booking/default_currency_settings', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1741`
+- `fluent-booking/app/Services/Helper.php:1743`
 
 **Example**
 
@@ -308,7 +308,7 @@ add_filter('fluent_booking/default_email_notification_settings', function ($valu
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:2277`
+- `fluent-booking/app/Services/Helper.php:2280`
 
 **Example**
 
@@ -348,7 +348,7 @@ add_filter('fluent_booking/default_sms_notification_settings', function ($value,
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1730`
+- `fluent-booking/app/Services/Helper.php:1732`
 
 **Example**
 
@@ -368,7 +368,7 @@ add_filter('fluent_booking/default_terms_and_conditions', function ($value, ...$
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:2074`
+- `fluent-booking/app/Services/Helper.php:2077`
 
 **Example**
 
@@ -388,7 +388,7 @@ add_filter('fluent_booking/editor_shortcodes_groups', function ($value, ...$rest
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SettingsController.php:92`
+- `fluent-booking/app/Http/Controllers/SettingsController.php:93`
 
 **Example**
 
@@ -408,7 +408,7 @@ add_filter('fluent_booking/general_settings', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:2402`
+- `fluent-booking/app/Services/Helper.php:2405`
 
 **Example**
 
@@ -428,7 +428,7 @@ add_filter('fluent_booking/get_features', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:260`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:274`
 
 **Example**
 
@@ -448,7 +448,7 @@ add_filter('fluent_booking/get_general_integration_feed_', function ($value, ...
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:47`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:48`
 
 **Example**
 
@@ -469,7 +469,7 @@ add_filter('fluent_booking/integrations_menu_items', function ($value, ...$rest)
 **Source locations**
 
 - `fluent-booking-pro/app/Hooks/Handlers/FrontendRenderer.php:96`
-- `fluent-booking-pro/app/Hooks/Handlers/FrontendRenderer.php:130`
+- `fluent-booking-pro/app/Hooks/Handlers/FrontendRenderer.php:131`
 
 **Example**
 

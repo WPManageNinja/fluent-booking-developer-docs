@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations/{host_id}/settings`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@update`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:85`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:86`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="integrationSettingsUpdate" specUrl="/openapi/public/integrations/integration-settings-update.json" />

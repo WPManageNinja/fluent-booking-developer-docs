@@ -15,8 +15,9 @@ Work out why an event type is showing no slots, or the wrong ones, and say what 
 - **Edition:** Core
 - **Mode:** write
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `BookingPrompts::troubleshootEvent()`
-- **Source:** `fluent-booking/app/Modules/MCP/Prompts/BookingPrompts.php:57`
+- **Source:** `fluent-booking/app/Modules/MCP/Prompts/BookingPrompts.php:50`
 
 ## Input schema
 

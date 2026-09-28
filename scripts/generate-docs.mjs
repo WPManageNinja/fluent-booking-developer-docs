@@ -1327,6 +1327,7 @@ function emitRestApiIndex(routes, grouped) {
   lines.push('- **Portal routes:** browser clients use cookie authentication with an `X-WP-Nonce` header; server-to-server integrations can use Application Passwords.')
   lines.push('- **Method override:** the FluentBooking frontend sends PUT, PATCH, and DELETE requests as POST requests with an `X-HTTP-Method-Override` header.')
   lines.push('')
+  lines.push('::: tip A second namespace\nAgent traffic has its own stack at `fluent-booking/mcp`, outside this policy chain — see the [MCP server reference](/mcp/).\n:::\n')
 
   lines.push('## Modules\n')
   lines.push('| Module | Edition | Routes | Description |')
@@ -1837,6 +1838,7 @@ function cleanGeneratedDocs() {
     join(docsRoot, 'hooks', 'filters'),
     join(docsRoot, 'rest-api', 'operations'),
     join(docsRoot, 'mcp', 'abilities'),
+    join(docsRoot, 'platform'),
     openapiRoot,
   ]
   for (const d of dirsToClean) {
@@ -1861,6 +1863,811 @@ function updateHomeStats(stats) {
     `<DocsHome :stats="{ models: ${stats.models}, routes: ${stats.routes}, hooks: ${stats.hooks}, openapiSpecs: ${stats.openapiSpecs}, mcpAbilities: ${stats.mcpAbilities} }" />`,
   )
   if (next !== content) writeFile(file, next)
+}
+
+// ── Platform surfaces ────────────────────────────────────────────────────────
+
+/**
+ * Shortcodes, blocks, smartcodes, capabilities and the recurring task hooks are
+ * all public developer surface that neither the route parser nor the hook
+ * scanner can see: they are registered through WordPress APIs, not through this
+ * plugin's own router.
+ */
+function parseShortcodes() {
+  const shortcodes = []
+  for (const cfg of SOURCE_CONFIGS) {
+    for (const file of listFiles(join(cfg.root, 'app'), (p) => p.endsWith('.php'))) {
+      const content = read(file)
+      if (!content.includes('add_shortcode')) continue
+      for (const m of content.matchAll(/add_shortcode\(\s*['"]([^'"]+)['"]\s*,\s*(?:\[\s*\$this\s*,\s*['"]([^'"]+)['"]\s*\]|\[\s*([A-Za-z0-9_\\]+)::class\s*,\s*['"]([^'"]+)['"]\s*\])/g)) {
+        const method = m[2] || m[4]
+        shortcodes.push({
+          tag: m[1],
+          handler: method,
+          handlerClass: m[3] ? m[3].split('\\').pop() : (content.match(/^\s*class\s+([A-Za-z0-9_]+)/m) || [])[1],
+          file,
+          line: content.slice(0, m.index).split('\n').length,
+          sourceId: cfg.id,
+          attributes: parseShortcodeAtts(content, method),
+        })
+      }
+    }
+  }
+  shortcodes.sort((a, b) => a.tag.localeCompare(b.tag))
+  return shortcodes
+}
+
+/** The `shortcode_atts([...])` defaults inside one handler method. */
+function parseShortcodeAtts(content, method) {
+  if (!method) return []
+  const methodIndex = content.search(new RegExp(`function\\s+${method}\\s*\\(`))
+  if (methodIndex === -1) return []
+  const attsIndex = content.indexOf('shortcode_atts', methodIndex)
+  if (attsIndex === -1) return []
+  const open = content.indexOf('[', attsIndex)
+  const close = matchBracket(content, open)
+  if (open === -1 || close === -1) return []
+  const attributes = []
+  for (const { key, value } of phpArrayEntries(content.slice(open + 1, close))) {
+    if (!key) continue
+    const parsed = phpStringValue(value)
+    attributes.push({ name: key, default: parsed === null ? value.trim() : parsed })
+  }
+  return attributes
+}
+
+/** `wp_ajax_` / `wp_ajax_nopriv_` actions — the public front-end endpoints. */
+function parseAjaxActions() {
+  const byAction = new Map()
+  for (const cfg of SOURCE_CONFIGS) {
+    for (const file of listFiles(join(cfg.root, 'app'), (p) => p.endsWith('.php'))) {
+      const content = read(file)
+      if (!content.includes('wp_ajax')) continue
+      for (const m of content.matchAll(/add_action\(\s*['"]wp_ajax_(nopriv_)?([a-z0-9_]+)['"]\s*,\s*\[\s*\$this\s*,\s*['"]([^'"]+)['"]/g)) {
+        const action = m[2]
+        if (!byAction.has(action)) {
+          byAction.set(action, {
+            action,
+            handler: m[3],
+            handlerClass: (content.match(/^\s*class\s+([A-Za-z0-9_]+)/m) || [])[1],
+            file,
+            line: content.slice(0, m.index).split('\n').length,
+            sourceId: cfg.id,
+            guestAccess: false,
+          })
+        }
+        if (m[1]) byAction.get(action).guestAccess = true
+      }
+    }
+  }
+  return [...byAction.values()].sort((a, b) => a.action.localeCompare(b.action))
+}
+
+/**
+ * PHP's two array syntaxes are mixed freely in this codebase, and the block
+ * registrations in particular use `array(...)` inside `[...]`. Rewriting
+ * `array(` to `[` (with its matching paren) lets one parser read both; line
+ * numbers are taken from the original text, never from the rewritten copy.
+ */
+function normalizeArraySyntax(content) {
+  let result = content
+  let guard = 0
+  while (guard++ < 200) {
+    const match = result.match(/\barray\s*\(/)
+    if (!match) break
+    const start = match.index
+    const parenIndex = result.indexOf('(', start)
+    const close = matchBracket(result, parenIndex, '(', ')')
+    if (close === -1) break
+    result = `${result.slice(0, start)}[${result.slice(parenIndex + 1, close)}]${result.slice(close + 1)}`
+  }
+  return result
+}
+
+function parseBlocks() {
+  const blocks = []
+  for (const cfg of SOURCE_CONFIGS) {
+    for (const file of listFiles(join(cfg.root, 'app'), (p) => p.endsWith('.php'))) {
+      const original = read(file)
+      if (!original.includes('register_block_type')) continue
+      const content = normalizeArraySyntax(original)
+      for (const m of content.matchAll(/register_block_type\(\s*['"]([^'"]+)['"]\s*,\s*\[/g)) {
+        const attrsIndex = content.indexOf("'attributes'", m.index)
+        const renderMatch = content.slice(m.index, m.index + 600).match(/'render_callback'\s*=>\s*\[\s*\$this\s*,\s*['"]([^'"]+)['"]/)
+        const attributes = []
+        if (attrsIndex !== -1) {
+          const open = content.indexOf('[', attrsIndex)
+          const close = matchBracket(content, open)
+          if (open !== -1 && close !== -1) {
+            for (const { key, value } of phpArrayEntries(content.slice(open + 1, close))) {
+              if (!key) continue
+              const body = phpArrayBody(value)
+              const attr = { name: key, type: null, default: null }
+              if (body) {
+                for (const inner of phpArrayEntries(body)) {
+                  if (inner.key === 'type') attr.type = phpStringValue(inner.value)
+                  else if (inner.key === 'default') attr.default = phpStringValue(inner.value)
+                }
+              }
+              attributes.push(attr)
+            }
+          }
+        }
+        blocks.push({
+          name: m[1],
+          render: renderMatch ? renderMatch[1] : null,
+          file,
+          // From the original text: the normalized copy has different offsets.
+          line: original.slice(0, original.indexOf(`register_block_type('${m[1]}'`)).split('\n').length,
+          sourceId: cfg.id,
+          attributes,
+        })
+      }
+    }
+  }
+  blocks.sort((a, b) => a.name.localeCompare(b.name))
+  return blocks
+}
+
+/**
+ * Smartcodes (`{{booking.event_name}}`) available to email templates and
+ * landing pages, read from Helper::getEditorShortCodes(). That method builds two
+ * literal group maps — one for plain-text contexts, one for HTML — plus a
+ * payment group and codes derived at runtime from the event's own fields.
+ */
+function parseSmartcodes() {
+  const cfg = SOURCE_CONFIGS.find((c) => c.id === 'core')
+  const file = join(cfg.root, 'app', 'Services', 'Helper.php')
+  if (!existsSync(file)) return { groups: [], dynamic: [], file, filter: null }
+  const content = read(file)
+  const fnIndex = content.search(/function\s+getEditorShortCodes\s*\(/)
+  if (fnIndex === -1) return { groups: [], dynamic: [], file, filter: null }
+  const fnEnd = content.indexOf("apply_filters('fluent_booking/editor_shortcodes_groups'", fnIndex)
+  const body = content.slice(fnIndex, fnEnd === -1 ? content.length : fnEnd)
+
+  // Both `$groups = [...]` literals, plus the conditional payment group.
+  const groups = new Map()
+  const collect = (arrayBody, htmlOnly) => {
+    for (const { key, value } of phpArrayEntries(arrayBody)) {
+      if (!key) continue
+      const groupBody = phpArrayBody(value)
+      if (!groupBody) continue
+      let title = key
+      let codes = []
+      for (const entry of phpArrayEntries(groupBody)) {
+        if (entry.key === 'title') title = phpStringValue(entry.value) || key
+        else if (entry.key === 'shortcodes') {
+          const codesBody = phpArrayBody(entry.value)
+          if (codesBody) {
+            codes = phpArrayEntries(codesBody)
+              .filter((c) => c.key)
+              .map((c) => ({ code: c.key, label: phpStringValue(c.value) || '' }))
+          }
+        }
+      }
+      if (!groups.has(key)) groups.set(key, { key, title, codes: [] })
+      const group = groups.get(key)
+      group.title = title
+      for (const code of codes) {
+        const existing = group.codes.find((c) => c.code === code.code)
+        if (existing) {
+          existing.htmlOnly = existing.htmlOnly && htmlOnly
+          continue
+        }
+        group.codes.push({ ...code, htmlOnly })
+      }
+    }
+  }
+
+  for (const m of body.matchAll(/\$groups\s*=\s*\[/g)) {
+    const open = body.indexOf('[', m.index)
+    const close = matchBracket(body, open)
+    if (close === -1) continue
+    // The second literal is the HTML-supported branch; anything only in there
+    // is HTML-only.
+    const htmlOnly = /if\s*\(!\$isHtmlSupported\)[\s\S]*?\$groups\s*=\s*\[[\s\S]*?\$groups\s*=\s*\[/.test(body.slice(0, open + 1))
+    collect(body.slice(open + 1, close), htmlOnly)
+  }
+
+  for (const m of body.matchAll(/\$groups\['([a-z_]+)'\]\s*=\s*\[/g)) {
+    // The match ends on the opening bracket of the value, not on the `['key']`
+    // subscript that precedes it.
+    const open = m.index + m[0].length - 1
+    const close = matchBracket(body, open)
+    if (close === -1) continue
+    const wrapped = `'${m[1]}' => [${body.slice(open + 1, close)}],`
+    collect(wrapped, false)
+  }
+
+  // Single assignments: $groups['payment']['shortcodes']['{{…}}'] = __('…');
+  for (const m of body.matchAll(/\$groups\['([a-z_]+)'\]\['shortcodes'\]\['([^']+)'\]\s*=\s*([^;]+);/g)) {
+    const group = groups.get(m[1])
+    if (!group || group.codes.some((c) => c.code === m[2])) continue
+    group.codes.push({ code: m[2], label: phpStringValue(m[3]) || '', htmlOnly: /receipt_html|_html\}\}/.test(m[2]) })
+  }
+
+  const dynamic = []
+  if (/\{\{booking\.custom\./.test(body)) {
+    dynamic.push({
+      pattern: '{{booking.custom.<field_key>}}',
+      note: 'One per custom booking field on the event; date fields also get a `.format.Y-m-d` variant.',
+    })
+  }
+  if (/team_member\./.test(body)) {
+    dynamic.push({
+      pattern: '{{team_member.<n>.name}} / {{team_member.<n>.email}}',
+      note: 'One pair per extra host on a multi-host event, numbered from 1.',
+    })
+  }
+
+  return {
+    groups: [...groups.values()],
+    dynamic,
+    file,
+    line: content.slice(0, fnIndex).split('\n').length,
+    filter: 'fluent_booking/editor_shortcodes_groups',
+  }
+}
+
+function parsePermissionSets() {
+  const cfg = SOURCE_CONFIGS.find((c) => c.id === 'core')
+  const file = join(cfg.root, 'app', 'Services', 'PermissionManager.php')
+  if (!existsSync(file)) return { sets: [], file }
+  const content = read(file)
+  const fnIndex = content.search(/function\s+allPermissionSets\s*\(/)
+  if (fnIndex === -1) return { sets: [], file }
+  const open = content.indexOf('[', fnIndex)
+  const close = matchBracket(content, open)
+  const sets = []
+  for (const { key, value } of phpArrayEntries(content.slice(open + 1, close))) {
+    if (!key) continue
+    sets.push({ key, label: phpStringValue(value) || '' })
+  }
+  return { sets, file, line: content.slice(0, fnIndex).split('\n').length }
+}
+
+/** Each Policy class with the checks it actually calls, plus its route count. */
+function parsePolicies(routes) {
+  const policies = []
+  const routeCounts = new Map()
+  for (const route of routes) {
+    if (!route.policy) continue
+    routeCounts.set(route.policy, (routeCounts.get(route.policy) || 0) + 1)
+  }
+
+  for (const cfg of SOURCE_CONFIGS) {
+    const dir = join(cfg.root, 'app', 'Http', 'Policies')
+    if (!existsSync(dir)) continue
+    for (const file of listFiles(dir, (p) => p.endsWith('.php'))) {
+      const content = read(file)
+      const name = (content.match(/^\s*class\s+([A-Za-z0-9_]+)/m) || [])[1] || basename(file, '.php')
+      const methods = [...content.matchAll(/public\s+function\s+([a-zA-Z0-9_]+)\s*\(/g)].map((m) => m[1])
+      const permissionSets = new Set()
+      for (const m of content.matchAll(/userCan\(\s*\[?([^)]*?)\]?\s*\)/g)) {
+        for (const set of m[1].matchAll(/'([a-z_]+)'/g)) permissionSets.add(set[1])
+      }
+      const wpCaps = new Set([...content.matchAll(/current_user_can\(\s*['"]([a-z_]+)['"]/g)].map((m) => m[1]))
+      const checks = new Set([...content.matchAll(/PermissionManager::([a-zA-Z0-9_]+)\(/g)].map((m) => m[1]))
+      policies.push({
+        name,
+        file,
+        sourceId: cfg.id,
+        methods,
+        routes: routeCounts.get(name) || 0,
+        permissionSets: [...permissionSets].sort(),
+        wpCaps: [...wpCaps].sort(),
+        checks: [...checks].filter((c) => c !== 'userCan').sort(),
+      })
+    }
+  }
+  policies.sort((a, b) => a.name.localeCompare(b.name))
+  return policies
+}
+
+/** MCP permission gate → the permission sets its capability list names. */
+function parseMcpGates() {
+  const cfg = SOURCE_CONFIGS.find((c) => c.id === 'core')
+  const file = join(cfg.root, 'app', 'Modules', 'MCP', 'Support', 'PermissionGate.php')
+  const gates = new Map()
+  if (!existsSync(file)) return gates
+  const content = read(file)
+
+  const constants = new Map()
+  for (const m of content.matchAll(/const\s+([A-Z_]+)\s*=\s*\[([^\]]*)\]/g)) {
+    constants.set(m[1], [...m[2].matchAll(/'([a-z_]+)'/g)].map((c) => c[1]))
+  }
+
+  for (const m of content.matchAll(/function\s+([a-zA-Z0-9_]+Gate)\s*\([^)]*\)\s*\{([\s\S]*?)\n    \}/g)) {
+    const caps = m[2].match(/self::([A-Z_]+)/)
+    gates.set(m[1], caps && constants.has(caps[1]) ? constants.get(caps[1]) : [])
+  }
+  return gates
+}
+
+/** The recurring Action Scheduler hooks and what each run does. */
+function parseScheduledTasks() {
+  const tasks = new Map()
+  for (const cfg of SOURCE_CONFIGS) {
+    for (const file of listFiles(join(cfg.root, 'app'), (p) => p.endsWith('.php'))) {
+      const content = read(file)
+      for (const m of content.matchAll(/as_schedule_recurring_action\(\s*time\(\)\s*,\s*\(?([^,)]*)\)?\s*,\s*['"]([^'"]+)['"]/g)) {
+        const interval = m[1].trim()
+        tasks.set(m[2], {
+          hook: m[2],
+          interval,
+          seconds: /^[\d\s*()]+$/.test(interval) ? Number(eval(interval)) : null, // eslint-disable-line no-eval
+          sourceId: cfg.id,
+          steps: [],
+          handler: null,
+          file: null,
+          line: null,
+        })
+      }
+    }
+  }
+
+  // Match each hook to the Scheduler class that listens for it, and list the
+  // steps that class runs — the "what happens every five minutes" answer.
+  for (const cfg of SOURCE_CONFIGS) {
+    const dir = join(cfg.root, 'app', 'Hooks', 'Scheduler')
+    if (!existsSync(dir)) continue
+    for (const file of listFiles(dir, (p) => p.endsWith('.php'))) {
+      const content = read(file)
+      for (const m of content.matchAll(/add_action\(\s*['"]([^'"]+)['"]\s*,\s*\[\s*\$this\s*,\s*['"]([^'"]+)['"]/g)) {
+        const task = tasks.get(m[1])
+        if (!task) continue
+        task.handler = `${(content.match(/^\s*class\s+([A-Za-z0-9_]+)/m) || [])[1]}::${m[2]}()`
+        task.file = file
+        task.line = content.slice(0, m.index).split('\n').length
+        const handlerIndex = content.search(new RegExp(`function\\s+${m[2]}\\s*\\(`))
+        if (handlerIndex !== -1) {
+          const handlerBody = content.slice(handlerIndex, content.indexOf('\n    }', handlerIndex))
+          for (const call of handlerBody.matchAll(/\$this->([a-zA-Z0-9_]+)\(/g)) {
+            if (!task.steps.includes(call[1])) task.steps.push(call[1])
+          }
+          for (const call of handlerBody.matchAll(/([A-Z][A-Za-z0-9_]+)::([a-zA-Z0-9_]+)\(/g)) {
+            const step = `${call[1]}::${call[2]}`
+            if (!task.steps.includes(step)) task.steps.push(step)
+          }
+        }
+      }
+    }
+  }
+
+  return [...tasks.values()].sort((a, b) => (a.seconds ?? 0) - (b.seconds ?? 0))
+}
+
+/**
+ * Event configuration vocabularies: the location types an event can offer, the
+ * booking-form fields every event starts with, and the field types an operator
+ * can add. All three show up in REST payloads and MCP arguments as bare string
+ * keys, so they are worth a table of their own.
+ */
+function parseEventConfiguration() {
+  const cfg = SOURCE_CONFIGS.find((c) => c.id === 'core')
+
+  const locationGroups = []
+  const slotFile = join(cfg.root, 'app', 'Models', 'CalendarSlot.php')
+  if (existsSync(slotFile)) {
+    const content = read(slotFile)
+    const hookIndex = content.indexOf("apply_filters('fluent_booking/get_location_fields'")
+    if (hookIndex !== -1) {
+      const open = content.indexOf('[', hookIndex)
+      const close = matchBracket(content, open)
+      for (const { key, value } of phpArrayEntries(content.slice(open + 1, close))) {
+        if (!key) continue
+        const groupBody = phpArrayBody(value)
+        if (!groupBody) continue
+        const group = { key, label: key, types: [] }
+        for (const entry of phpArrayEntries(groupBody)) {
+          if (entry.key === 'label') group.label = phpStringValue(entry.value) || key
+          else if (entry.key === 'options') {
+            const optionsBody = phpArrayBody(entry.value)
+            if (!optionsBody) continue
+            for (const option of phpArrayEntries(optionsBody)) {
+              if (!option.key) continue
+              const optionBody = phpArrayBody(option.value)
+              const type = { key: option.key, title: option.key, proOnly: false }
+              if (optionBody) {
+                for (const field of phpArrayEntries(optionBody)) {
+                  if (field.key === 'title') type.title = phpStringValue(field.value) || option.key
+                  else if (field.key === 'disabled') type.proOnly = phpStringValue(field.value) === true
+                }
+              }
+              group.types.push(type)
+            }
+          }
+        }
+        locationGroups.push(group)
+      }
+    }
+  }
+
+  const systemFields = []
+  const fieldFile = join(cfg.root, 'app', 'Services', 'BookingFieldService.php')
+  if (existsSync(fieldFile)) {
+    const content = read(fieldFile)
+    const defaultsIndex = content.search(/\$defaultFields\s*=\s*\[/)
+    if (defaultsIndex !== -1) {
+      const open = content.indexOf('[', defaultsIndex)
+      const close = matchBracket(content, open)
+      for (const { key, value } of phpArrayEntries(content.slice(open + 1, close))) {
+        if (!key) continue
+        const body = phpArrayBody(value)
+        const field = { key, type: null, label: null, required: false, alterable: true }
+        if (body) {
+          for (const entry of phpArrayEntries(body)) {
+            if (entry.key === 'type') field.type = phpStringValue(entry.value)
+            else if (entry.key === 'label') field.label = phpStringValue(entry.value)
+            else if (entry.key === 'required') field.required = phpStringValue(entry.value) === true
+            else if (entry.key === 'disable_alter') field.alterable = phpStringValue(entry.value) !== true
+          }
+        }
+        systemFields.push(field)
+      }
+    }
+  }
+
+  const customFieldTypes = []
+  const helperFile = join(cfg.root, 'app', 'Services', 'Helper.php')
+  if (existsSync(helperFile)) {
+    const content = read(helperFile)
+    const hookIndex = content.indexOf("apply_filters('fluent_booking/custom_fields_types'")
+    if (hookIndex !== -1) {
+      const open = content.indexOf('[', hookIndex)
+      const close = matchBracket(content, open)
+      for (const entry of phpArrayEntries(content.slice(open + 1, close))) {
+        const body = phpArrayBody(entry.value)
+        if (!body) continue
+        const type = { value: null, label: null }
+        for (const field of phpArrayEntries(body)) {
+          if (field.key === 'value') type.value = phpStringValue(field.value)
+          else if (field.key === 'label') type.label = phpStringValue(field.value)
+        }
+        if (type.value) customFieldTypes.push(type)
+      }
+    }
+  }
+
+  return { locationGroups, systemFields, customFieldTypes }
+}
+
+function emitEventConfigurationPage({ locationGroups, systemFields, customFieldTypes }) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Event Configuration',
+    description: 'Source-verified location types, system booking fields, and custom field types for FluentBooking events.',
+  }))
+  lines.push('# Event Configuration\n')
+  lines.push('The vocabularies an event type is configured with. These keys travel as plain strings through the [REST API](/rest-api/), the [MCP abilities](/mcp/), and the `location_settings` / booking-field columns, so this is the list to check a value against.\n')
+
+  lines.push('## Location types\n')
+  lines.push('`location_type` on an event\'s `location_settings`. Conferencing types are declared by the free plugin but disabled there — FluentBooking Pro enables them through `fluent_booking/get_location_fields`.\n')
+  lines.push('| Group | Type | Label | Requires Pro |')
+  lines.push('| --- | --- | --- | --- |')
+  for (const group of locationGroups) {
+    for (const type of group.types) {
+      lines.push(`| ${escapeMd(group.label)} | \`${type.key}\` | ${escapeMd(type.title)} | ${type.proOnly ? 'Yes' : 'No'} |`)
+    }
+  }
+  lines.push('')
+
+  lines.push('## System booking fields\n')
+  lines.push('Every event starts with these fields on its booking form. They cannot be deleted; a field marked not editable cannot be relabelled or made optional either.\n')
+  lines.push('| Field | Type | Label | Required | Editable |')
+  lines.push('| --- | --- | --- | --- | --- |')
+  for (const field of systemFields) {
+    lines.push(`| \`${field.key}\` | \`${field.type || '—'}\` | ${escapeMd(field.label || '')} | ${field.required ? 'Yes' : 'No'} | ${field.alterable ? 'Yes' : 'No'} |`)
+  }
+  lines.push('')
+
+  lines.push('## Custom field types\n')
+  lines.push('The types an operator can add to a booking form, filterable through `fluent_booking/custom_fields_types`. See the [custom booking fields guide](/guides/custom-booking-fields) for the shape of a field entry and how to read submitted values.\n')
+  lines.push('| Type | Label |')
+  lines.push('| --- | --- |')
+  for (const type of customFieldTypes) {
+    lines.push(`| \`${type.value}\` | ${escapeMd(type.label || '')} |`)
+  }
+  lines.push('')
+  return lines.join('\n')
+}
+
+// ── Platform doc emitters ────────────────────────────────────────────────────
+
+function emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, policies, tasks, eventConfig }) {
+  const smartcodeCount = smartcodes.groups.reduce((total, g) => total + g.codes.length, 0)
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Platform',
+    description: 'Shortcodes, blocks, smartcodes, capabilities, and scheduled tasks — the WordPress-level surface of FluentBooking.',
+  }))
+  lines.push('# Platform\n')
+  lines.push('The surface FluentBooking exposes through WordPress itself rather than through its own router: shortcodes and AJAX endpoints on the front end, Gutenberg blocks in the editor, smartcodes in email and landing-page templates, the permission sets the REST policies enforce, and the recurring background tasks.\n')
+  lines.push('| Reference | Entries | What it covers |')
+  lines.push('| --- | --- | --- |')
+  lines.push(`| [Shortcodes & AJAX](/platform/shortcodes) | ${shortcodes.length} shortcodes, ${ajax.length} AJAX actions | Front-end embedding and the endpoints the public booking form posts to. |`)
+  lines.push(`| [Blocks](/platform/blocks) | ${blocks.length} | Gutenberg blocks and their attributes. |`)
+  lines.push(`| [Smartcodes](/platform/smartcodes) | ${smartcodeCount} | Template placeholders for emails, landing pages, and notifications. |`)
+  lines.push(`| [Permissions](/platform/permissions) | ${permissions.sets.length} permission sets, ${policies.length} policies | What each REST policy and MCP gate requires. |`)
+  lines.push(`| [Scheduled Tasks](/platform/scheduled-tasks) | ${tasks.length} | Recurring Action Scheduler hooks and what each run does. |`)
+  lines.push(
+    `| [Event Configuration](/platform/event-configuration) | ${
+      eventConfig.locationGroups.reduce((total, g) => total + g.types.length, 0)
+    } location types, ${eventConfig.systemFields.length} system fields, ${eventConfig.customFieldTypes.length} field types | The keys an event's locations and booking form are configured with. |`,
+  )
+  lines.push('')
+  return lines.join('\n')
+}
+
+function emitShortcodesPage(shortcodes, ajax) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Shortcodes & AJAX',
+    description: 'Source-verified shortcode and AJAX endpoint reference for FluentBooking.',
+  }))
+  lines.push('# Shortcodes & AJAX\n')
+  lines.push('Shortcodes are registered in the front-end handlers with `add_shortcode()`; the attribute defaults below are the ones `shortcode_atts()` applies, so an attribute missing from a shortcode falls back to the value shown.\n')
+
+  lines.push('## Shortcodes\n')
+  lines.push('| Shortcode | Edition | Attributes | Handler |')
+  lines.push('| --- | --- | --- | --- |')
+  for (const sc of shortcodes) {
+    const attrs = sc.attributes.length ? sc.attributes.map((a) => `\`${a.name}\``).join(', ') : '—'
+    lines.push(`| [\`[${sc.tag}]\`](#${sc.tag.replace(/_/g, '')}) | ${renderEditionLabel([sc.sourceId])} | ${attrs} | \`${sc.handlerClass}@${sc.handler}\` |`)
+  }
+  lines.push('')
+
+  for (const sc of shortcodes) {
+    lines.push(`<a id="${sc.tag.replace(/_/g, '')}"></a>\n`)
+    lines.push(`## \`[${sc.tag}]\`\n`)
+    lines.push(`- **Edition:** ${renderEditionLabel([sc.sourceId])}`)
+    lines.push(`- **Handler:** \`${sc.handlerClass}@${sc.handler}\``)
+    lines.push(`- **Source:** \`${displaySourcePath(sc.file)}:${sc.line}\``)
+    lines.push('')
+    if (sc.attributes.length) {
+      lines.push('| Attribute | Default |')
+      lines.push('| --- | --- |')
+      for (const attr of sc.attributes) {
+        const value = attr.default === '' ? '`""`' : `\`${attr.default}\``
+        lines.push(`| \`${attr.name}\` | ${value} |`)
+      }
+      lines.push('')
+      const example = sc.attributes
+        .slice(0, 2)
+        .map((a) => `${a.name}="${a.default === '' || a.default === 0 ? (a.name.includes('id') ? '12' : 'value') : a.default}"`)
+        .join(' ')
+      lines.push('```text')
+      lines.push(`[${sc.tag}${example ? ' ' + example : ''}]`)
+      lines.push('```\n')
+    } else {
+      lines.push('This shortcode takes no attributes.\n')
+    }
+  }
+
+  lines.push('## AJAX actions\n')
+  lines.push('The public booking form posts to `admin-ajax.php`. An action listed as reachable by guests is registered for `wp_ajax_nopriv_` as well — it is how an unauthenticated visitor books.\n')
+  lines.push('| Action | Guests | Edition | Handler | Source |')
+  lines.push('| --- | --- | --- | --- | --- |')
+  for (const action of ajax) {
+    lines.push(
+      `| \`${action.action}\` | ${action.guestAccess ? 'Yes' : 'No'} | ${renderEditionLabel([action.sourceId])} | \`${action.handlerClass}@${action.handler}\` | \`${displaySourcePath(action.file)}:${action.line}\` |`,
+    )
+  }
+  lines.push('')
+  return lines.join('\n')
+}
+
+function emitBlocksPage(blocks) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Blocks',
+    description: 'Source-verified Gutenberg block reference for FluentBooking.',
+  }))
+  lines.push('# Blocks\n')
+  lines.push('FluentBooking registers its editor blocks with `register_block_type()` and renders them server-side, so the attributes below are the block\'s stored data and the render callback is what turns them into markup.\n')
+  lines.push('| Block | Edition | Attributes | Render callback |')
+  lines.push('| --- | --- | --- | --- |')
+  for (const block of blocks) {
+    lines.push(`| [\`${block.name}\`](#${block.name.replace(/[^a-z0-9]/gi, '')}) | ${renderEditionLabel([block.sourceId])} | ${block.attributes.length} | ${block.render ? `\`${block.render}()\`` : '—'} |`)
+  }
+  lines.push('')
+
+  for (const block of blocks) {
+    lines.push(`<a id="${block.name.replace(/[^a-z0-9]/gi, '')}"></a>\n`)
+    lines.push(`## \`${block.name}\`\n`)
+    lines.push(`- **Edition:** ${renderEditionLabel([block.sourceId])}`)
+    if (block.render) lines.push(`- **Render callback:** \`${block.render}()\``)
+    lines.push(`- **Source:** \`${displaySourcePath(block.file)}:${block.line}\``)
+    lines.push('')
+    if (block.attributes.length) {
+      lines.push('| Attribute | Type | Default |')
+      lines.push('| --- | --- | --- |')
+      for (const attr of block.attributes) {
+        const value = attr.default === null || attr.default === undefined ? '`—`' : attr.default === '' ? '`""`' : `\`${attr.default}\``
+        lines.push(`| \`${attr.name}\` | \`${attr.type || '—'}\` | ${value} |`)
+      }
+      lines.push('')
+    } else {
+      lines.push('This block declares no attributes.\n')
+    }
+  }
+  return lines.join('\n')
+}
+
+/**
+ * Smartcodes are written `{{group.key}}`, which Vue reads as an interpolation —
+ * even inside a Markdown code span. `v-pre` on the element is the documented way
+ * to keep the braces literal.
+ */
+function renderSmartcode(code) {
+  // Placeholder patterns carry angle brackets (`{{team_member.<n>.name}}`),
+  // which the HTML parser would read as a tag.
+  const escaped = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return `<code v-pre>${escaped}</code>`
+}
+
+function emitSmartcodesPage(smartcodes) {
+  const total = smartcodes.groups.reduce((sum, g) => sum + g.codes.length, 0)
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Smartcodes',
+    description: 'Source-verified smartcode reference for FluentBooking email and template contexts.',
+  }))
+  lines.push('# Smartcodes\n')
+  lines.push(`Smartcodes are the ${renderSmartcode('{{group.key}}')} placeholders email templates, landing pages, and notification bodies are written with. ${total} are declared in \`Helper::getEditorShortCodes()\`; a few more are derived per event at runtime.\n`)
+  lines.push('Codes marked **HTML only** are offered exclusively in contexts that accept markup — a plain-text email body does not get them. The `##code##` form is used where a value has to survive being placed in an `href`.\n')
+
+  lines.push('## Groups\n')
+  lines.push('| Group | Key | Codes |')
+  lines.push('| --- | --- | --- |')
+  for (const group of smartcodes.groups) {
+    lines.push(`| [${group.title}](#${group.key.replace(/[^a-z0-9]/gi, '')}) | \`${group.key}\` | ${group.codes.length} |`)
+  }
+  lines.push('')
+
+  for (const group of smartcodes.groups) {
+    lines.push(`<a id="${group.key.replace(/[^a-z0-9]/gi, '')}"></a>\n`)
+    lines.push(`## ${group.title}\n`)
+    lines.push('| Smartcode | Description | HTML only |')
+    lines.push('| --- | --- | --- |')
+    for (const code of group.codes) {
+      lines.push(`| ${renderSmartcode(code.code)} | ${escapeMd(code.label)} | ${code.htmlOnly ? 'Yes' : 'No'} |`)
+    }
+    lines.push('')
+  }
+
+  if (smartcodes.dynamic.length) {
+    lines.push('## Per-event codes\n')
+    lines.push('These are added to the list when an event is in context, so they depend on that event\'s configuration:\n')
+    lines.push('| Pattern | Notes |')
+    lines.push('| --- | --- |')
+    for (const item of smartcodes.dynamic) {
+      lines.push(`| ${renderSmartcode(item.pattern)} | ${escapeMd(item.note)} |`)
+    }
+    lines.push('')
+  }
+
+  lines.push('## Adding your own\n')
+  lines.push(`The whole group map passes through [\`${smartcodes.filter}\`](/hooks/filters/miscellaneous#${smartcodes.filter.replace(/[^a-z0-9]/gi, '')}), so an add-on can append a group or extra codes:\n`)
+  lines.push('::: v-pre')
+  lines.push('```php')
+  lines.push(`add_filter('${smartcodes.filter}', function ($groups, $calendarEvent, $isHtmlSupported) {`)
+  lines.push("    $groups['my_addon'] = [")
+  lines.push("        'title'      => 'My Add-on',")
+  lines.push("        'key'        => 'my_addon',")
+  lines.push("        'shortcodes' => [")
+  lines.push("            '{{my_addon.reference}}' => 'Internal reference',")
+  lines.push('        ],')
+  lines.push('    ];')
+  lines.push('')
+  lines.push('    return $groups;')
+  lines.push('}, 10, 3);')
+  lines.push('```')
+  lines.push(':::\n')
+  lines.push(`Parsed from \`${displaySourcePath(smartcodes.file)}:${smartcodes.line}\`.\n`)
+  return lines.join('\n')
+}
+
+function emitPermissionsPage(permissions, policies, gates, abilities) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Permissions',
+    description: 'Source-verified permission sets, REST policies, and MCP gates for FluentBooking.',
+  }))
+  lines.push('# Permissions\n')
+  lines.push('FluentBooking does not use WordPress roles for its own authorization. It stores a list of permission sets per user (in `fcal_meta` under `_access_permissions`) and checks those; a user with `manage_options` is treated as having all of them.\n')
+
+  lines.push('## Permission sets\n')
+  lines.push('| Set | Grants |')
+  lines.push('| --- | --- |')
+  for (const set of permissions.sets) {
+    lines.push(`| \`${set.key}\` | ${escapeMd(set.label)} |`)
+  }
+  lines.push('')
+  lines.push('```php')
+  lines.push('use FluentBooking\\App\\Services\\PermissionManager;')
+  lines.push('')
+  lines.push("if (PermissionManager::userCan(['manage_all_bookings', 'manage_all_data'])) {")
+  lines.push('    // Any one of the listed sets is enough.')
+  lines.push('}')
+  lines.push('```\n')
+
+  lines.push('## REST policies\n')
+  lines.push('Every route group declares a policy; the policy\'s `verifyRequest()` runs before any of its per-method checks. The sets and capabilities below are the ones each policy class actually references.\n')
+  lines.push('A policy with no routes is not attached to any route group — it exists for a surface that does not use it (yet). A set marked with * is referenced by a policy but is not one of the sets above, so nothing ever grants it.\n')
+  lines.push('| Policy | Edition | Routes | Permission sets | WordPress caps | Checks used |')
+  lines.push('| --- | --- | --- | --- | --- | --- |')
+  const knownSets = new Set(permissions.sets.map((set) => set.key))
+  for (const policy of policies) {
+    const sets = policy.permissionSets.map((set) => `\`${set}\`${knownSets.has(set) ? '' : '*'}`).join(', ')
+    lines.push(
+      `| \`${policy.name}\` | ${renderEditionLabel([policy.sourceId])} | ${policy.routes} | ${sets || '—'} | ${policy.wpCaps.map((c) => `\`${c}\``).join(', ') || '—'} | ${policy.checks.map((c) => `\`${c}()\``).join(', ') || '—'} |`,
+    )
+  }
+  lines.push('')
+
+  if (gates.size) {
+    lines.push('## MCP gates\n')
+    lines.push('The [MCP server](/mcp/) authorizes through `PermissionGate` instead of a policy. Read abilities need only a working transport (MCP enabled, application-password auth); write abilities additionally need one of the listed sets.\n')
+    lines.push('| Gate | Requires one of | Abilities |')
+    lines.push('| --- | --- | --- |')
+    for (const [gate, caps] of [...gates.entries()].sort()) {
+      const users = abilities.filter((a) => a.permission?.method === gate)
+      if (!users.length && !caps.length) continue
+      lines.push(
+        `| \`${gate}()\` | ${caps.length ? caps.map((c) => `\`${c}\``).join(', ') : 'transport only'} | ${users.map((a) => `[\`${a.slug}\`](/mcp/abilities/${a.slug})`).join(', ') || '—'} |`,
+      )
+    }
+    lines.push('')
+  }
+
+  lines.push(`Parsed from \`${displaySourcePath(permissions.file)}\` and \`app/Http/Policies/\`.\n`)
+  return lines.join('\n')
+}
+
+function emitScheduledTasksPage(tasks) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Scheduled Tasks',
+    description: 'Source-verified reference for the FluentBooking recurring background tasks.',
+  }))
+  lines.push('# Scheduled Tasks\n')
+  lines.push('FluentBooking schedules its recurring work with Action Scheduler under the `fluent-booking` group. Both hooks are plain WordPress actions, so you can hook them to run your own work on the same cadence, or fire one manually to test.\n')
+  lines.push('| Hook | Interval | Handler |')
+  lines.push('| --- | --- | --- |')
+  for (const task of tasks) {
+    lines.push(`| [\`${task.hook}\`](#${task.hook.replace(/[^a-z0-9]/gi, '')}) | ${describeInterval(task)} | ${task.handler ? `\`${task.handler}\`` : '—'} |`)
+  }
+  lines.push('')
+
+  for (const task of tasks) {
+    lines.push(`<a id="${task.hook.replace(/[^a-z0-9]/gi, '')}"></a>\n`)
+    lines.push(`## \`${task.hook}\`\n`)
+    lines.push(`- **Interval:** ${describeInterval(task)} (\`${task.interval}\` seconds)`)
+    if (task.handler) lines.push(`- **Handler:** \`${task.handler}\``)
+    if (task.file) lines.push(`- **Source:** \`${displaySourcePath(task.file)}:${task.line}\``)
+    lines.push('')
+    if (task.steps.length) {
+      lines.push('**Each run**\n')
+      for (const step of task.steps) {
+        lines.push(`- \`${step}${step.includes('::') ? '()' : '()'}\``)
+      }
+      lines.push('')
+    }
+    lines.push('```php')
+    lines.push(`add_action('${task.hook}', function () {`)
+    lines.push('    // Runs on the same schedule, after FluentBooking\'s own handler.')
+    lines.push('}, 20);')
+    lines.push('```\n')
+  }
+  return lines.join('\n')
+}
+
+function describeInterval(task) {
+  if (!task.seconds) return task.interval
+  if (task.seconds % 86400 === 0) return task.seconds === 86400 ? 'Daily' : `Every ${task.seconds / 86400} days`
+  if (task.seconds % 3600 === 0) return task.seconds === 3600 ? 'Hourly' : `Every ${task.seconds / 3600} hours`
+  return `Every ${task.seconds / 60} minutes`
 }
 
 // ── Helper / service classes ─────────────────────────────────────────────────
@@ -2371,6 +3178,13 @@ function emitMcpAbilityPage(ability) {
   lines.push(`- **Mode:** ${renderMcpAnnotations(ability)}`)
   if (ability.permission) {
     lines.push(`- **Permission callback:** \`${ability.permission.class || ability.class}::${ability.permission.method}()\``)
+    lines.push(
+      `- **Requires:** ${
+        ability.requiredSets && ability.requiredSets.length
+          ? `one of ${ability.requiredSets.map((set) => `\`${set}\``).join(', ')} — see [Permissions](/platform/permissions)`
+          : 'MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see'
+      }`,
+    )
   }
   if (ability.execute) {
     lines.push(`- **Handler:** \`${ability.execute.class || ability.class}::${ability.execute.method}()\``)
@@ -2514,10 +3328,33 @@ FluentBooking emits hundreds of action and filter hooks across the booking lifec
 
   const mcpMeta = parseMcpServerMeta(SOURCE_CONFIGS.find((c) => c.id === 'core').root)
   const abilities = parseMcpAbilities()
+  const abilityGates = parseMcpGates()
+  for (const ability of abilities) {
+    ability.requiredSets = ability.permission ? abilityGates.get(ability.permission.method) || [] : []
+  }
   writeFile(join(docsRoot, 'mcp', 'index.md'), emitMcpIndex(abilities, mcpMeta))
   for (const ability of abilities) {
     writeFile(join(docsRoot, 'mcp', 'abilities', `${ability.slug}.md`), emitMcpAbilityPage(ability))
   }
+  // Platform surfaces: registered through WordPress APIs, so invisible to both
+  // the route parser and the hook scanner.
+  const shortcodes = parseShortcodes()
+  const ajax = parseAjaxActions()
+  const blocks = parseBlocks()
+  const smartcodes = parseSmartcodes()
+  const permissions = parsePermissionSets()
+  const policies = parsePolicies(routes)
+  const tasks = parseScheduledTasks()
+  const eventConfig = parseEventConfiguration()
+
+  writeFile(join(docsRoot, 'platform', 'index.md'), emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, policies, tasks, eventConfig }))
+  writeFile(join(docsRoot, 'platform', 'shortcodes.md'), emitShortcodesPage(shortcodes, ajax))
+  writeFile(join(docsRoot, 'platform', 'blocks.md'), emitBlocksPage(blocks))
+  writeFile(join(docsRoot, 'platform', 'smartcodes.md'), emitSmartcodesPage(smartcodes))
+  writeFile(join(docsRoot, 'platform', 'permissions.md'), emitPermissionsPage(permissions, policies, abilityGates, abilities))
+  writeFile(join(docsRoot, 'platform', 'scheduled-tasks.md'), emitScheduledTasksPage(tasks))
+  writeFile(join(docsRoot, 'platform', 'event-configuration.md'), emitEventConfigurationPage(eventConfig))
+
   writeFile(
     join(generatedRoot, 'mcp-abilities.json'),
     JSON.stringify(abilities.map((a) => ({ name: a.name, slug: a.slug, toolset: a.toolset, source: a.sourceId, prompt: a.isPrompt })), null, 2) + '\n',
@@ -2534,7 +3371,9 @@ FluentBooking emits hundreds of action and filter hooks across the booking lifec
   console.log(
     `Generated docs for ${models.length} models, ${
       summary.byNameAction.size + summary.byNameFilter.size
-    } unique hooks (${hookCalls.length} call sites), ${routes.length} routes, and ${abilities.length} MCP abilities.`,
+    } unique hooks (${hookCalls.length} call sites), ${routes.length} routes, ${abilities.length} MCP abilities, ${
+      shortcodes.length
+    } shortcodes, ${blocks.length} blocks, and ${smartcodes.groups.reduce((total, g) => total + g.codes.length, 0)} smartcodes.`,
   )
 }
 

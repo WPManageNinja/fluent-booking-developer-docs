@@ -6,7 +6,7 @@ outline: false
 
 # `fluent-booking/get-booking`
 
-Full detail for one booking by id or hash, including attendee contact details, location, status history and cancellation reason. Use include to add form answers, guests, hosts or the activity timeline.
+Full detail for one booking by id or hash, including attendee contact details, location, status history and cancellation reason. Use include to add form answers, guests, hosts or the activity timeline. include notes is a Pro section: host notes, oldest first.
 
 ## Ability
 
@@ -15,8 +15,9 @@ Full detail for one booking by id or hash, including attendee contact details, l
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `BookingTools::getBooking()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingTools.php:115`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingTools.php:106`
 
 ## Input schema
 

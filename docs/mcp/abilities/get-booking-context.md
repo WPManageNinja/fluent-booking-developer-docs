@@ -15,8 +15,9 @@ Call this first. Returns who you are, what you may do, the site timezone and cur
 - **Edition:** Core
 - **Mode:** read-only, idempotent
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `ContextTools::getContext()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/ContextTools.php:155`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/ContextTools.php:118`
 
 ## Input schema
 

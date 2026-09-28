@@ -101,6 +101,13 @@ export default {
           linkText: 'View abilities',
         },
         {
+          href: '/platform/',
+          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>',
+          title: 'Platform',
+          description: 'Shortcodes, Gutenberg blocks, email smartcodes, permission sets, and the recurring background tasks.',
+          linkText: 'Browse platform',
+        },
+        {
           href: '/guides/',
           icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/><path d="m9 9.5 2 2 4-4"/></svg>',
           title: 'Guides',
@@ -128,6 +135,11 @@ export default {
           href: '/database/models/booking',
           title: 'Work with bookings',
           desc: 'Query bookings, attendees, hosts, and booking activity.',
+        },
+        {
+          href: '/platform/smartcodes',
+          title: 'Use smartcodes in emails',
+          desc: 'Every {{booking.*}} placeholder templates can carry.',
         },
         {
           href: '/guides/code-snippets',

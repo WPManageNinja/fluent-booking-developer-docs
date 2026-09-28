@@ -19,7 +19,7 @@
         "tags": [
           "Webhooks & SMS"
         ],
-        "description": "Handler: `WebhookController@getFeeds`. Source: `fluent-booking-pro/app/Http/Routes/api.php:64`.",
+        "description": "Handler: `WebhookController@getFeeds`. Source: `fluent-booking-pro/app/Http/Routes/api.php:69`.",
         "parameters": [
           {
             "name": "id",

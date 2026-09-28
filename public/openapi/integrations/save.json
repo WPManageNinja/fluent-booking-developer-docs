@@ -19,7 +19,7 @@
         "tags": [
           "Integrations"
         ],
-        "description": "Handler: `ZoomController@save`. Source: `fluent-booking-pro/app/Http/Routes/api.php:91`.",
+        "description": "Handler: `ZoomController@save`. Source: `fluent-booking-pro/app/Http/Routes/api.php:92`.",
         "parameters": [],
         "security": [
           {

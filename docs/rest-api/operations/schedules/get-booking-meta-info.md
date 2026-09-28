@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/meta-info`
 - **Edition:** Core
 - **Controller:** `SchedulesController@getBookingMetaInfo`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:79`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:82`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="getBookingMetaInfo" specUrl="/openapi/public/schedules/get-booking-meta-info.json" />

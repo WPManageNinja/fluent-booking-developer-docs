@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations`
 - **Edition:** Core
 - **Controller:** `IntegrationController@index`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:90`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:93`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="integrationIndex" specUrl="/openapi/public/integrations/integration-index.json" />

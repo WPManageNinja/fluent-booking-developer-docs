@@ -19,8 +19,8 @@ Action hooks fired around landing page rendering, booking confirmation pages, an
 | [`fluent_booking/before_calendar_event_landing_page`](#fluentbookingbeforecalendareventlandingpage) | Core | 1 | `fluent-booking/app/Views/landing/booking.php:63` |
 | [`fluent_booking/booking_confirmation_footer`](#fluentbookingbookingconfirmationfooter) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:118` |
 | [`fluent_booking/booking_details_header`](#fluentbookingbookingdetailsheader) | Core | 1 | `fluent-booking/app/Views/public/booking_confirmation.php:21` |
-| [`fluent_booking/front_footer`](#fluentbookingfrontfooter) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:136` |
-| [`fluent_booking/front_head`](#fluentbookingfronthead) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:125` |
+| [`fluent_booking/front_footer`](#fluentbookingfrontfooter) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:141` |
+| [`fluent_booking/front_head`](#fluentbookingfronthead) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Views/front-app.php:130` |
 | [`fluent_booking/landing_page_route_`](#fluentbookinglandingpageroute) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:67` |
 | [`fluent_booking/main_landing`](#fluentbookingmainlanding) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:84` |
 | [`fluent_booking/main_landing_footer`](#fluentbookingmainlandingfooter) | Core | 1 | `fluent-booking/app/Views/landing/author_landing.php:106` |
@@ -156,7 +156,7 @@ add_action('fluent_booking/booking_details_header', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Views/front-app.php:136`
+- `fluent-booking-pro/app/Views/front-app.php:141`
 
 **Example**
 
@@ -176,7 +176,7 @@ add_action('fluent_booking/front_footer', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Views/front-app.php:125`
+- `fluent-booking-pro/app/Views/front-app.php:130`
 
 **Example**
 

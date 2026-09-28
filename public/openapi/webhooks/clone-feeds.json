@@ -19,7 +19,7 @@
         "tags": [
           "Webhooks & SMS"
         ],
-        "description": "Handler: `WebhookController@cloneFeeds`. Source: `fluent-booking-pro/app/Http/Routes/api.php:66`.",
+        "description": "Handler: `WebhookController@cloneFeeds`. Source: `fluent-booking-pro/app/Http/Routes/api.php:71`.",
         "parameters": [
           {
             "name": "id",

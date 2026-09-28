@@ -19,7 +19,7 @@
         "tags": [
           "Calendar Integrations"
         ],
-        "description": "Handler: `IntegrationSettingsController@patchRemoteCalendarAdditionalSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:43`.",
+        "description": "Handler: `IntegrationSettingsController@patchRemoteCalendarAdditionalSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:48`.",
         "parameters": [
           {
             "name": "id",

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/webhooks`
 - **Edition:** Pro
 - **Controller:** `WebhookController@saveFeed`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:65`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:70`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="saveFeed" specUrl="/openapi/public/webhooks/save-feed.json" />

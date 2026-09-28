@@ -15,8 +15,9 @@ Booking orders and their transactions. Lists orders with filters, or returns one
 - **Edition:** <span class="pro-badge">PRO</span>
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `PaymentTools::getPayments()`
-- **Source:** `fluent-booking-pro/app/Modules/MCP/PaymentTools.php:72`
+- **Source:** `fluent-booking-pro/app/Modules/MCP/PaymentTools.php:60`
 
 ## Input schema
 

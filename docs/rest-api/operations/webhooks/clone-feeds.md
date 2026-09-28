@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/webhooks/clone`
 - **Edition:** Pro
 - **Controller:** `WebhookController@cloneFeeds`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:66`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:71`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="cloneFeeds" specUrl="/openapi/public/webhooks/clone-feeds.json" />

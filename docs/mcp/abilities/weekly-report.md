@@ -15,8 +15,9 @@ A week's booking numbers, with the comparison and the caveats that make them tru
 - **Edition:** Core
 - **Mode:** write
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `BookingPrompts::weeklyReport()`
-- **Source:** `fluent-booking/app/Modules/MCP/Prompts/BookingPrompts.php:81`
+- **Source:** `fluent-booking/app/Modules/MCP/Prompts/BookingPrompts.php:74`
 
 ## Input schema
 

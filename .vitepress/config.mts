@@ -104,6 +104,16 @@ const helperPages = [
   { text: 'Service API Index', link: '/helpers/service-api' },
 ]
 
+const platformPages = [
+  { text: 'Overview', link: '/platform/' },
+  { text: 'Shortcodes & AJAX', link: '/platform/shortcodes' },
+  { text: 'Blocks', link: '/platform/blocks' },
+  { text: 'Smartcodes', link: '/platform/smartcodes' },
+  { text: 'Permissions', link: '/platform/permissions' },
+  { text: 'Scheduled Tasks', link: '/platform/scheduled-tasks' },
+  { text: 'Event Configuration', link: '/platform/event-configuration' },
+]
+
 // The MCP ability pages are generated, so the sidebar reads them off disk the
 // same way the REST operation pages do.
 function buildMcpSidebar() {
@@ -431,6 +441,17 @@ export default defineConfig({
       { text: 'REST API', link: '/rest-api/' },
       { text: 'MCP', link: '/mcp/' },
       {
+        text: 'Platform',
+        items: [
+          { text: 'Shortcodes & AJAX', link: '/platform/shortcodes' },
+          { text: 'Blocks', link: '/platform/blocks' },
+          { text: 'Smartcodes', link: '/platform/smartcodes' },
+          { text: 'Permissions', link: '/platform/permissions' },
+          { text: 'Scheduled Tasks', link: '/platform/scheduled-tasks' },
+          { text: 'Event Configuration', link: '/platform/event-configuration' },
+        ],
+      },
+      {
         text: 'Guides',
         items: guidePages.filter((page) => !page.text.includes('Overview')),
       },
@@ -445,6 +466,7 @@ export default defineConfig({
       '/hooks/': buildHooksSidebar(),
       '/helpers/': buildHooksSidebar(),
       '/mcp/': buildMcpSidebar(),
+      '/platform/': [{ text: 'Platform', items: platformPages }],
       '/rest-api/': buildRestApiSidebar(),
       '/guides/': [
         {

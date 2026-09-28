@@ -15,8 +15,9 @@ Availability schedules — the weekly hours and date overrides an event type dra
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `SchedulingTools::getAvailability()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:49`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:45`
 
 ## Input schema
 

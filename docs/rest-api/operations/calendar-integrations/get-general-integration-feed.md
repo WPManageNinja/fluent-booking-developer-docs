@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/general_integration_feed`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@getGeneralIntegrationFeed`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:74`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:79`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getGeneralIntegrationFeed" specUrl="/openapi/public/calendar-integrations/get-general-integration-feed.json" />

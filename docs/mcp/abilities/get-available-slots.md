@@ -15,8 +15,9 @@ Bookable times for an event type, keyed by date in the requested timezone. Pass 
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `SlotTools::getSlots()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/SlotTools.php:28`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/SlotTools.php:24`
 
 ## Input schema
 

@@ -19,7 +19,7 @@
         "tags": [
           "Calendar Integrations"
         ],
-        "description": "Handler: `IntegrationSettingsController@disconnectGeneralIntegrationFeed`. Source: `fluent-booking-pro/app/Http/Routes/api.php:75`.",
+        "description": "Handler: `IntegrationSettingsController@disconnectGeneralIntegrationFeed`. Source: `fluent-booking-pro/app/Http/Routes/api.php:80`.",
         "parameters": [
           {
             "name": "id",

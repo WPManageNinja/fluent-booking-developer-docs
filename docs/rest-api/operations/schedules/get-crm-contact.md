@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/crm-contact`
 - **Edition:** Core
 - **Controller:** `SchedulesController@getCrmContact`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:80`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:83`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="getCrmContact" specUrl="/openapi/public/schedules/get-crm-contact.json" />
