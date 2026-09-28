@@ -13,14 +13,14 @@ Action hooks for availability-schedule creation, updates, cloning, and deletion.
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/after_creating_schedule`](#fluentbookingaftercreatingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:253` |
-| [`fluent_booking/after_delete_availability_schedule`](#fluentbookingafterdeleteavailabilityschedule) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:86` |
+| [`fluent_booking/after_creating_schedule`](#fluentbookingaftercreatingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:254` |
+| [`fluent_booking/after_delete_availability_schedule`](#fluentbookingafterdeleteavailabilityschedule) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:108` |
 | [`fluent_booking/avaibility_schedule_updated`](#fluentbookingavaibilityscheduleupdated) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:192` |
 | [`fluent_booking/availability_schedule_cloned`](#fluentbookingavailabilityschedulecloned) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:164` |
 | [`fluent_booking/availability_schedule_created`](#fluentbookingavailabilityschedulecreated) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:138` |
 | [`fluent_booking/availability_schedules`](#fluentbookingavailabilityschedules) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:42` |
-| [`fluent_booking/before_creating_schedule`](#fluentbookingbeforecreatingschedule) | Core | 2 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:878` |
-| [`fluent_booking/before_delete_availability_schedule`](#fluentbookingbeforedeleteavailabilityschedule) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:84` |
+| [`fluent_booking/before_creating_schedule`](#fluentbookingbeforecreatingschedule) | Core | 2 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:801` |
+| [`fluent_booking/before_delete_availability_schedule`](#fluentbookingbeforedeleteavailabilityschedule) | Core | 2 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:106` |
 
 <a id="fluentbookingaftercreatingschedule"></a>
 
@@ -32,7 +32,7 @@ Action hooks for availability-schedule creation, updates, cloning, and deletion.
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/BookingController.php:253`
+- `fluent-booking/app/Http/Controllers/BookingController.php:254`
 
 **Example**
 
@@ -52,7 +52,7 @@ add_action('fluent_booking/after_creating_schedule', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:86`
+- `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:108`
 - `fluent-booking/app/Http/Controllers/AvailabilityController.php:279`
 
 **Example**
@@ -153,8 +153,8 @@ add_action('fluent_booking/availability_schedules', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:878`
-- `fluent-booking/app/Http/Controllers/BookingController.php:248`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:801`
+- `fluent-booking/app/Http/Controllers/BookingController.php:249`
 
 **Example**
 
@@ -174,7 +174,7 @@ add_action('fluent_booking/before_creating_schedule', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:84`
+- `fluent-booking/app/Hooks/Handlers/CleanupHandlers/CalenderCleaner.php:106`
 - `fluent-booking/app/Http/Controllers/AvailabilityController.php:275`
 
 **Example**

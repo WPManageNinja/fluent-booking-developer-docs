@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/general_integration_feed/disconnect`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@disconnectGeneralIntegrationFeed`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:75`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:80`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="disconnectGeneralIntegrationFeed" specUrl="/openapi/public/calendar-integrations/disconnect-general-integration-feed.json" />

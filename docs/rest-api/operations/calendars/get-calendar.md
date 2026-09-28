@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}`
 - **Edition:** Core
 - **Controller:** `CalendarController@getCalendar`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:16`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:17`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getCalendar" specUrl="/openapi/public/calendars/get-calendar.json" />

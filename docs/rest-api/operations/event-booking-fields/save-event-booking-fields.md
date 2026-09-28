@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/booking-fields`
 - **Edition:** Core
 - **Controller:** `CalendarController@saveEventBookingFields`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:45`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:46`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="saveEventBookingFields" specUrl="/openapi/public/event-booking-fields/save-event-booking-fields.json" />

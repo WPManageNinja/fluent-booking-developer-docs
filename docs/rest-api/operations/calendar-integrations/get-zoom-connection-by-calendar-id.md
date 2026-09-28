@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/zoom-connection`
 - **Edition:** Pro
 - **Controller:** `ZoomController@getZoomConnectionByCalendarId`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:49`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:54`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="getZoomConnectionByCalendarId" specUrl="/openapi/public/calendar-integrations/get-zoom-connection-by-calendar-id.json" />

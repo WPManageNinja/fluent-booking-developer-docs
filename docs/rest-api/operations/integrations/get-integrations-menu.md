@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/integrations/menu`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@getIntegrationsMenu`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:87`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:88`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="getIntegrationsMenu" specUrl="/openapi/public/integrations/get-integrations-menu.json" />

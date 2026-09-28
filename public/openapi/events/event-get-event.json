@@ -19,7 +19,7 @@
         "tags": [
           "Events"
         ],
-        "description": "Handler: `EventController@getEvent`. Source: `fluent-booking/app/Http/Routes/api.php:60`.",
+        "description": "Handler: `EventController@getEvent`. Source: `fluent-booking/app/Http/Routes/api.php:61`.",
         "parameters": [
           {
             "name": "event_id",

@@ -19,7 +19,7 @@
         "tags": [
           "Event Integrations"
         ],
-        "description": "Handler: `CalendarIntegrationController@integrationListComponent`. Source: `fluent-booking/app/Http/Routes/api.php:141`.",
+        "description": "Handler: `CalendarIntegrationController@integrationListComponent`. Source: `fluent-booking/app/Http/Routes/api.php:145`.",
         "parameters": [
           {
             "name": "id",

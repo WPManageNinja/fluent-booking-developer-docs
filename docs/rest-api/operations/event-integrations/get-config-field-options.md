@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/integrations/{integration_id}/config-field-options`
 - **Edition:** Core
 - **Controller:** `CalendarIntegrationController@getConfigFieldOptions`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:142`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:146`
 
 <OAOperation operationId="getConfigFieldOptions" specUrl="/openapi/public/event-integrations/get-config-field-options.json" />

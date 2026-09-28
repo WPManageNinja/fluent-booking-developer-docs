@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/integrations/clone`
 - **Edition:** Core
 - **Controller:** `CalendarIntegrationController@cloneIntegrations`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:135`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:139`
 
 <OAOperation operationId="cloneIntegrations" specUrl="/openapi/public/event-integrations/clone-integrations.json" />

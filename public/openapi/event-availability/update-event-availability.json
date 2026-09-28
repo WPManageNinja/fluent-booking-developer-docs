@@ -14,12 +14,12 @@
   "paths": {
     "/calendars/{id}/events/{event_id}/availability": {
       "post": {
-        "operationId": "calendarUpdateEventAvailability",
-        "summary": "Calendar Update Event Availability",
+        "operationId": "updateEventAvailability",
+        "summary": "Update Event Availability",
         "tags": [
           "Event Availability"
         ],
-        "description": "Handler: `CalendarController@updateEventAvailability`. Source: `fluent-booking/app/Http/Routes/api.php:37`.",
+        "description": "Handler: `CalendarController@updateEventAvailability`. Source: `fluent-booking/app/Http/Routes/api.php:38`.",
         "parameters": [
           {
             "name": "id",

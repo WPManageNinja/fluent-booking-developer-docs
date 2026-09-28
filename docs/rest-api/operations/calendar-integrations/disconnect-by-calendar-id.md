@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/zoom-connection/disconnect`
 - **Edition:** Pro
 - **Controller:** `ZoomController@disconnectByCalendarId`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:51`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:56`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="disconnectByCalendarId" specUrl="/openapi/public/calendar-integrations/disconnect-by-calendar-id.json" />

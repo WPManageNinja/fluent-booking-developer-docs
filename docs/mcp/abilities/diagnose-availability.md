@@ -15,8 +15,9 @@ Explain why an event type is or is not offering slots. Returns every rule that c
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `SlotTools::diagnose()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/SlotTools.php:73`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/SlotTools.php:69`
 
 ## Input schema
 

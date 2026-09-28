@@ -11,10 +11,10 @@ Every public method on the helper and service classes integrators call directly,
 
 | Class | Methods | Purpose |
 | --- | --- | --- |
-| [`Helper`](#helper) | 66 | Catch-all static service: meta access, URL builders, settings, encryption, sanitization, and lookups. |
+| [`Helper`](#helper) | 68 | Catch-all static service: meta access, URL builders, settings, encryption, sanitization, and lookups. |
 | [`DateTimeHelper`](#datetimehelper) | 25 | Timezone-aware datetime conversion, formatting, and slot math. |
-| [`LocationService`](#locationservice) | 5 | Meeting location types, their settings shape, and their rendered output. |
-| [`PermissionManager`](#permissionmanager) | 12 | Capability checks for hosts, admins, and the REST policies. |
+| [`LocationService`](#locationservice) | 6 | Meeting location types, their settings shape, and their rendered output. |
+| [`PermissionManager`](#permissionmanager) | 14 | Capability checks for hosts, admins, and the REST policies. |
 | [`BookingFieldService`](#bookingfieldservice) | 12 | Booking-form field definitions, validation, and stored answers. |
 | [`EditorShortCodeParser`](#editorshortcodeparser) | 1 | Smartcode parsing used by email templates and landing pages. |
 
@@ -24,72 +24,74 @@ Every public method on the helper and service classes integrators call directly,
 
 | Method | Signature | Line |
 | --- | --- | --- |
-| `isCalendarSlugAvailable` | `static isCalendarSlugAvailable($slug, $checkDb = true, $exceptId = false)` | 619 |
-| `isEventSlugAvailable` | `static isEventSlugAvailable($slug, $checkDb = true, $calendarId = null, $exceptId = null)` | 651 |
-| `getAppBaseUrl` | `static getAppBaseUrl($extension = '')` | 687 |
-| `getAdminBookingUrl` | `static getAdminBookingUrl($bookingId)` | 692 |
-| `getUpgradeUrl` | `static getUpgradeUrl($content = 'upgrade_page', $overrides = [])` | 712 |
-| `getNextBookingGroup` | `static getNextBookingGroup()` | 735 |
-| `getNextIndex` | `static getNextIndex()` | 746 |
-| `getGlobalPaymentSettings` | `static getGlobalPaymentSettings()` | 755 |
-| `isPaymentEnabled` | `static isPaymentEnabled($calendarEvent = null)` | 768 |
-| `isPaymentConfigured` | `static isPaymentConfigured($method = 'stripe')` | 791 |
-| `fluentbookingSanitizer` | `static fluentbookingSanitizer($input, $attribute = null, $fields = [])` | 805 |
-| `getMeta` | `static getMeta($group, $objectId, $key, $withModel = false)` | 834 |
-| `updateMeta` | `static updateMeta($group, $objectId, $key, $value)` | 852 |
-| `deleteMeta` | `static deleteMeta($group, $objectId, $key)` | 870 |
-| `getBookingMeta` | `static getBookingMeta($eventId, $metaKey, $withModel = false)` | 878 |
-| `updateBookingMeta` | `static updateBookingMeta($eventId, $metaKey, $value)` | 891 |
-| `getUserDisplayName` | `static getUserDisplayName($userId = null)` | 908 |
-| `getDisplayNameFromUser` | `static getDisplayNameFromUser($user)` | 923 |
-| `getUserEmail` | `static getUserEmail($userId = null)` | 943 |
-| `excerpt` | `static excerpt($text, $max_length = 160)` | 956 |
-| `generateSlotSlug` | `static generateSlotSlug($default, $calendar)` | 972 |
-| `getIp` | `static getIp($defalt = '127.0.0.1')` | 989 |
-| `isValidPhoneNumber` | `static isValidPhoneNumber($phone)` | 1047 |
-| `fcal_sanitize_html` | `static fcal_sanitize_html($html)` | 1156 |
-| `fcal_backend_sanitizer` | `static fcal_backend_sanitizer($inputs, $sanitizeMap = [])` | 1226 |
-| `fcalImplodeRecursive` | `static fcalImplodeRecursive($glue, array $array)` | 1256 |
-| `getEventColors` | `static getEventColors()` | 1274 |
-| `getMeetingDurations` | `static getMeetingDurations()` | 1312 |
-| `getMeetingMultiDurations` | `static getMeetingMultiDurations()` | 1338 |
-| `getDurationLookup` | `static getDurationLookup($multiDuration = false)` | 1396 |
-| `formatDuration` | `static formatDuration($totalMinutes)` | 1408 |
-| `getBufferTimes` | `static getBufferTimes()` | 1433 |
-| `getSlotIntervals` | `static getSlotIntervals()` | 1479 |
-| `getBookingStatusChangingTimes` | `static getBookingStatusChangingTimes()` | 1533 |
-| `getBookingPeriodOptions` | `static getBookingPeriodOptions()` | 1591 |
-| `getWeekSelectTimes` | `static getWeekSelectTimes()` | 1602 |
-| `getOverrideSelectTimes` | `static getOverrideSelectTimes()` | 1611 |
-| `getWeeklyScheduleSchema` | `static getWeeklyScheduleSchema()` | 1620 |
-| `getCustomFieldTypes` | `static getCustomFieldTypes()` | 1664 |
-| `getDefaultTermsAndConditions` | `static getDefaultTermsAndConditions()` | 1726 |
-| `getDefaultEmailNotificationSettings` | `static getDefaultEmailNotificationSettings()` | 1733 |
-| `getAddToCalendarHtml` | `static getAddToCalendarHtml($assetUrl = '')` | 1855 |
-| `getConfirmAndRejectButton` | `static getConfirmAndRejectButton($assetUrl = '')` | 1864 |
-| `getIframeHtml` | `static getIframeHtml()` | 1873 |
-| `getEditorShortCodes` | `static getEditorShortCodes($calendarEvent = null, $isHtmlSupported = false, $iframeHtml = '')` | 1880 |
-| `encryptKey` | `static encryptKey($value)` | 2077 |
-| `decryptKey` | `static decryptKey($raw_value)` | 2107 |
-| `debugLog` | `static debugLog($data)` | 2148 |
-| `getGlobalSettings` | `static getGlobalSettings($settingsKey = null)` | 2155 |
-| `getGlobalAdminSetting` | `static getGlobalAdminSetting($key = null, $default = null)` | 2230 |
-| `getDefaultTimeFormat` | `static getDefaultTimeFormat()` | 2252 |
-| `getDefaultBookingFilters` | `static getDefaultBookingFilters()` | 2265 |
-| `getDefaultPaginations` | `static getDefaultPaginations()` | 2275 |
-| `getVerifiedSenders` | `static getVerifiedSenders()` | 2285 |
-| `getBookingReceiptLandingBaseUrl` | `static getBookingReceiptLandingBaseUrl()` | 2301 |
-| `getGlobalModuleSettings` | `static getGlobalModuleSettings($cached = true)` | 2306 |
-| `updateGlobalModuleSettings` | `static updateGlobalModuleSettings($settings = [])` | 2323 |
-| `isModuleEnabled` | `static isModuleEnabled($module)` | 2334 |
-| `fluentbooking_is_rtl` | `static fluentbooking_is_rtl()` | 2344 |
-| `fluentBookingUserAvatar` | `static fluentBookingUserAvatar($id_or_email, $args)` | 2354 |
-| `getPrefSettings` | `static getPrefSettings($cached = true)` | 2362 |
-| `getPrefSettins` | `static getPrefSettins($cached = true)` | 2395 |
-| `getFeatures` | `static getFeatures()` | 2400 |
-| `getActiveThemeName` | `static getActiveThemeName()` | 2411 |
-| `checkRateLimit` | `static checkRateLimit($action, $limit, $window = 60)` | 2431 |
-| `dbTransaction` | `static dbTransaction($callback)` | 2469 |
+| `isCalendarSlugAvailable` | `static isCalendarSlugAvailable($slug, $checkDb = true, $exceptId = false)` | 620 |
+| `isEventSlugAvailable` | `static isEventSlugAvailable($slug, $checkDb = true, $calendarId = null, $exceptId = null)` | 652 |
+| `getAppBaseUrl` | `static getAppBaseUrl($extension = '')` | 688 |
+| `getAdminBookingUrl` | `static getAdminBookingUrl($bookingId)` | 693 |
+| `getUpgradeUrl` | `static getUpgradeUrl($content = 'upgrade_page', $overrides = [])` | 713 |
+| `getNextBookingGroup` | `static getNextBookingGroup()` | 736 |
+| `getNextIndex` | `static getNextIndex()` | 747 |
+| `getGlobalPaymentSettings` | `static getGlobalPaymentSettings()` | 756 |
+| `isPaymentEnabled` | `static isPaymentEnabled($calendarEvent = null)` | 769 |
+| `isPaymentConfigured` | `static isPaymentConfigured($method = 'stripe')` | 792 |
+| `fluentbookingSanitizer` | `static fluentbookingSanitizer($input, $attribute = null, $fields = [])` | 806 |
+| `getMeta` | `static getMeta($group, $objectId, $key, $withModel = false)` | 835 |
+| `updateMeta` | `static updateMeta($group, $objectId, $key, $value)` | 853 |
+| `deleteMeta` | `static deleteMeta($group, $objectId, $key)` | 871 |
+| `getBookingMeta` | `static getBookingMeta($eventId, $metaKey, $withModel = false)` | 879 |
+| `updateBookingMeta` | `static updateBookingMeta($eventId, $metaKey, $value)` | 892 |
+| `getUserDisplayName` | `static getUserDisplayName($userId = null)` | 909 |
+| `getDisplayNameFromUser` | `static getDisplayNameFromUser($user)` | 924 |
+| `getUserEmail` | `static getUserEmail($userId = null)` | 944 |
+| `excerpt` | `static excerpt($text, $max_length = 160)` | 957 |
+| `generateSlotSlug` | `static generateSlotSlug($default, $calendar)` | 973 |
+| `getIp` | `static getIp($defalt = '127.0.0.1')` | 990 |
+| `resolveClientIp` | `static resolveClientIp($serverData)` | 1021 |
+| `isValidPhoneNumber` | `static isValidPhoneNumber($phone)` | 1049 |
+| `fcal_sanitize_html` | `static fcal_sanitize_html($html)` | 1158 |
+| `fcal_backend_sanitizer` | `static fcal_backend_sanitizer($inputs, $sanitizeMap = [])` | 1228 |
+| `fcalImplodeRecursive` | `static fcalImplodeRecursive($glue, array $array)` | 1258 |
+| `getEventColors` | `static getEventColors()` | 1276 |
+| `getMeetingDurations` | `static getMeetingDurations()` | 1314 |
+| `getMeetingMultiDurations` | `static getMeetingMultiDurations()` | 1340 |
+| `getDurationLookup` | `static getDurationLookup($multiDuration = false)` | 1398 |
+| `formatDuration` | `static formatDuration($totalMinutes)` | 1410 |
+| `getBufferTimes` | `static getBufferTimes()` | 1435 |
+| `getSlotIntervals` | `static getSlotIntervals()` | 1481 |
+| `getBookingStatusChangingTimes` | `static getBookingStatusChangingTimes()` | 1535 |
+| `getBookingPeriodOptions` | `static getBookingPeriodOptions()` | 1593 |
+| `getWeekSelectTimes` | `static getWeekSelectTimes()` | 1604 |
+| `getOverrideSelectTimes` | `static getOverrideSelectTimes()` | 1613 |
+| `getWeeklyScheduleSchema` | `static getWeeklyScheduleSchema()` | 1622 |
+| `getCustomFieldTypes` | `static getCustomFieldTypes()` | 1666 |
+| `getDefaultTermsAndConditions` | `static getDefaultTermsAndConditions()` | 1728 |
+| `getDefaultEmailNotificationSettings` | `static getDefaultEmailNotificationSettings()` | 1735 |
+| `getAddToCalendarHtml` | `static getAddToCalendarHtml($assetUrl = '')` | 1857 |
+| `getConfirmAndRejectButton` | `static getConfirmAndRejectButton($assetUrl = '')` | 1866 |
+| `getIframeHtml` | `static getIframeHtml()` | 1875 |
+| `getEditorShortCodes` | `static getEditorShortCodes($calendarEvent = null, $isHtmlSupported = false, $iframeHtml = '')` | 1882 |
+| `encryptKey` | `static encryptKey($value)` | 2080 |
+| `decryptKey` | `static decryptKey($raw_value)` | 2110 |
+| `debugLog` | `static debugLog($data)` | 2151 |
+| `getGlobalSettings` | `static getGlobalSettings($settingsKey = null)` | 2158 |
+| `getGlobalAdminSetting` | `static getGlobalAdminSetting($key = null, $default = null)` | 2233 |
+| `getDefaultTimeFormat` | `static getDefaultTimeFormat()` | 2255 |
+| `getDefaultBookingFilters` | `static getDefaultBookingFilters()` | 2268 |
+| `getDefaultPaginations` | `static getDefaultPaginations()` | 2278 |
+| `getVerifiedSenders` | `static getVerifiedSenders()` | 2288 |
+| `getBookingReceiptLandingBaseUrl` | `static getBookingReceiptLandingBaseUrl()` | 2304 |
+| `getGlobalModuleSettings` | `static getGlobalModuleSettings($cached = true)` | 2309 |
+| `updateGlobalModuleSettings` | `static updateGlobalModuleSettings($settings = [])` | 2326 |
+| `isModuleEnabled` | `static isModuleEnabled($module)` | 2337 |
+| `fluentbooking_is_rtl` | `static fluentbooking_is_rtl()` | 2347 |
+| `fluentBookingUserAvatar` | `static fluentBookingUserAvatar($id_or_email, $args)` | 2357 |
+| `getPrefSettings` | `static getPrefSettings($cached = true)` | 2365 |
+| `getPrefSettins` | `static getPrefSettins($cached = true)` | 2398 |
+| `getFeatures` | `static getFeatures()` | 2403 |
+| `getActiveThemeName` | `static getActiveThemeName()` | 2414 |
+| `lockRoundRobinSlot` | `static lockRoundRobinSlot($event, $startTimeUtc, $endTimeUtc)` | 2438 |
+| `checkRateLimit` | `static checkRateLimit($action, $limit, $window = 60, $perIp = true)` | 2463 |
+| `dbTransaction` | `static dbTransaction($callback)` | 2501 |
 
 ## DateTimeHelper
 
@@ -134,6 +136,7 @@ Every public method on the helper and service classes integrators call directly,
 | `getLocationDetails` | `static getLocationDetails($calendarEvent, $userInput = [], $allInput = [])` | 92 |
 | `getLocationsConfig` | `static getLocationsConfig()` | 184 |
 | `getLocationOptions` | `static getLocationOptions($calendarEvent, $keyed = false)` | 189 |
+| `sanitizePublicLocationSettings` | `static sanitizePublicLocationSettings($locationSettings)` | 230 |
 
 ## PermissionManager
 
@@ -146,13 +149,15 @@ Every public method on the helper and service classes integrators call directly,
 | `canReadCalendar` | `static canReadCalendar($calendarId)` | 37 |
 | `canUpdateCalendarEvent` | `static canUpdateCalendarEvent($slotId)` | 60 |
 | `canWriteCalendar` | `static canWriteCalendar($calendarId)` | 79 |
-| `hasCalendarAccess` | `static hasCalendarAccess($calendar)` | 98 |
-| `currentUserHasAnyPermission` | `static currentUserHasAnyPermission()` | 105 |
-| `userCan` | `static userCan($permissions)` | 114 |
-| `getUserPermissions` | `static getUserPermissions($user = null, $formatted = false)` | 141 |
-| `getMetaPermissions` | `static getMetaPermissions($userId = null)` | 204 |
-| `getMenuPermission` | `static getMenuPermission()` | 226 |
-| `userCanSeeAllBookings` | `static userCanSeeAllBookings()` | 256 |
+| `canAssignHosts` | `static canAssignHosts($memberIds, $allowedIds)` | 107 |
+| `hasCalendarAccess` | `static hasCalendarAccess($calendar)` | 119 |
+| `currentUserHasAnyPermission` | `static currentUserHasAnyPermission()` | 126 |
+| `userCan` | `static userCan($permissions)` | 135 |
+| `canManageOtherHosts` | `static canManageOtherHosts()` | 167 |
+| `getUserPermissions` | `static getUserPermissions($user = null, $formatted = false)` | 172 |
+| `getMetaPermissions` | `static getMetaPermissions($userId = null)` | 235 |
+| `getMenuPermission` | `static getMenuPermission()` | 257 |
+| `userCanSeeAllBookings` | `static userCanSeeAllBookings()` | 287 |
 
 ## BookingFieldService
 
@@ -160,18 +165,18 @@ Every public method on the helper and service classes integrators call directly,
 
 | Method | Signature | Line |
 | --- | --- | --- |
-| `getCustomFieldsData` | `static getCustomFieldsData($postedData, CalendarSlot $slot)` | 12 |
-| `getBookingFields` | `static getBookingFields(CalendarSlot $calendarSlot, $cached = false)` | 67 |
-| `getBookingFieldLabels` | `static getBookingFieldLabels(CalendarSlot $calendarSlot, $enabledOnly = false)` | 251 |
-| `generateFieldName` | `static generateFieldName($calendarEvent, $fieldLabel)` | 267 |
-| `maybeGenerateFieldName` | `static maybeGenerateFieldName($calendarEvent, $fieldValue)` | 286 |
-| `getFormattedCustomBookingData` | `static getFormattedCustomBookingData(Booking $booking, $htmlSupport = true, $isPublic = false)` | 299 |
-| `getCustomFields` | `static getCustomFields($calendarEvent, $withConfig = false)` | 338 |
-| `getBookingFieldByName` | `static getBookingFieldByName($calendarEvent, $name)` | 362 |
-| `hasPhoneNumberField` | `static hasPhoneNumberField($fields)` | 375 |
-| `getUploadedFiles` | `static getUploadedFiles($fieldValue, $htmlSupport = true)` | 397 |
-| `validateDateFields` | `static validateDateFields($customFieldsData, $calendarEvent)` | 415 |
-| `sanitizeBookingFields` | `static sanitizeBookingFields($bookingFields, $calendarEvent = null)` | 445 |
+| `getCustomFieldsData` | `static getCustomFieldsData($postedData, CalendarSlot $slot, $mappedKeys = null)` | 16 |
+| `getBookingFields` | `static getBookingFields(CalendarSlot $calendarSlot, $cached = false)` | 82 |
+| `getBookingFieldLabels` | `static getBookingFieldLabels(CalendarSlot $calendarSlot, $enabledOnly = false)` | 264 |
+| `generateFieldName` | `static generateFieldName($calendarEvent, $fieldLabel)` | 280 |
+| `maybeGenerateFieldName` | `static maybeGenerateFieldName($calendarEvent, $fieldValue)` | 299 |
+| `getFormattedCustomBookingData` | `static getFormattedCustomBookingData(Booking $booking, $htmlSupport = true, $isPublic = false)` | 312 |
+| `getCustomFields` | `static getCustomFields($calendarEvent, $withConfig = false)` | 356 |
+| `getBookingFieldByName` | `static getBookingFieldByName($calendarEvent, $name)` | 380 |
+| `hasPhoneNumberField` | `static hasPhoneNumberField($fields)` | 393 |
+| `getUploadedFiles` | `static getUploadedFiles($fieldValue, $htmlSupport = true)` | 415 |
+| `validateDateFields` | `static validateDateFields($customFieldsData, $calendarEvent)` | 433 |
+| `sanitizeBookingFields` | `static sanitizeBookingFields($bookingFields, $calendarEvent = null)` | 463 |
 
 ## EditorShortCodeParser
 

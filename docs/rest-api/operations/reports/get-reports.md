@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/reports`
 - **Edition:** Core
 - **Controller:** `ReportController@getReports`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:127`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:131`
 - **Policy:** `UserPolicy`
 
 <OAOperation operationId="getReports" specUrl="/openapi/public/reports/get-reports.json" />

@@ -18,6 +18,7 @@ These routes are registered with: `CalendarPolicy`.
 | `GET` | `/calendars` | Core | [Get All Calendars](/rest-api/operations/calendars/get-all-calendars) | `CalendarController@getAllCalendars` |
 | `POST` | `/calendars` | Core | [Create Calendar](/rest-api/operations/calendars/create-calendar) | `CalendarController@createCalendar` |
 | `POST` | `/calendars/check-slug` | Core | [Check Slug](/rest-api/operations/calendars/check-slug) | `CalendarController@checkSlug` |
+| `GET` | `/calendars/location-fields` | Core | [Get New Event Location Fields](/rest-api/operations/calendars/get-new-event-location-fields) | `CalendarController@getNewEventLocationFields` |
 | `GET` | `/calendars/{id}` | Core | [Get Calendar](/rest-api/operations/calendars/get-calendar) | `CalendarController@getCalendar` |
 | `POST` | `/calendars/{id}` | Core | [Update Calendar](/rest-api/operations/calendars/update-calendar) | `CalendarController@updateCalendar` |
 | `DELETE` | `/calendars/{id}` | Core | [Delete Calendar](/rest-api/operations/calendars/delete-calendar) | `CalendarController@deleteCalendar` |

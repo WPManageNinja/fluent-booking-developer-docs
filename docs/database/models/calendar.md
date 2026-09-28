@@ -57,6 +57,7 @@ Top-level scheduling container that owns event types, availability, and bookings
 | `getSettingsAttribute()` | `$settings` |
 | `slots()` | `—` |
 | `events()` | `—` |
+| `getMemberIds()` | `—` |
 | `user()` | `—` |
 | `bookings()` | `—` |
 | `availabilities()` | `—` |

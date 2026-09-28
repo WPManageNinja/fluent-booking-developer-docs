@@ -19,7 +19,7 @@
         "tags": [
           "Payments"
         ],
-        "description": "Handler: `CalendarController@getEventPaymentSettings`. Source: `fluent-booking/app/Http/Routes/api.php:49`.",
+        "description": "Handler: `CalendarController@getEventPaymentSettings`. Source: `fluent-booking/app/Http/Routes/api.php:50`.",
         "parameters": [
           {
             "name": "id",

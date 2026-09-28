@@ -30,3 +30,7 @@ These routes are registered with: `MeetingPolicy`.
 | `POST` | `/schedules/{id}/crm-contact/lists` | Core | [Update Crm Lists](/rest-api/operations/schedules/update-crm-lists) | `SchedulesController@updateCrmLists` |
 | `POST` | `/schedules/{id}/send-confirmation-email` | Core | [Send Confirmation Email](/rest-api/operations/schedules/send-confirmation-email) | `SchedulesController@sendConfirmationEmail` |
 | `GET` | `/schedules/group-bookings/{group_id}/attendees` | Core | [Get Group Attendees](/rest-api/operations/schedules/get-group-attendees) | `SchedulesController@getGroupAttendees` |
+| `GET` | `/schedules/{id}/notes` | <span class="pro-badge">PRO</span> | [Get Notes](/rest-api/operations/schedules/get-notes) | `BookingNoteController@getNotes` |
+| `POST` | `/schedules/{id}/notes` | <span class="pro-badge">PRO</span> | [Add Note](/rest-api/operations/schedules/add-note) | `BookingNoteController@addNote` |
+| `PUT` | `/schedules/{id}/notes/{note_id}` | <span class="pro-badge">PRO</span> | [Update Note](/rest-api/operations/schedules/update-note) | `BookingNoteController@updateNote` |
+| `DELETE` | `/schedules/{id}/notes/{note_id}` | <span class="pro-badge">PRO</span> | [Delete Note](/rest-api/operations/schedules/delete-note) | `BookingNoteController@deleteNote` |

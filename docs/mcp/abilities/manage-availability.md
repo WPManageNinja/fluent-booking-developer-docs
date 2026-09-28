@@ -15,8 +15,9 @@ Create, rename, edit, clone, set as default or delete an availability schedule. 
 - **Edition:** Core
 - **Mode:** destructive
 - **Permission callback:** `PermissionGate::scheduleWriteGate()`
+- **Requires:** one of `manage_own_calendar`, `manage_other_calendars`, `manage_other_availabilities`, `manage_all_data` — see [Permissions](/platform/permissions)
 - **Handler:** `SchedulingTools::manageAvailability()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:77`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:73`
 
 ## Input schema
 

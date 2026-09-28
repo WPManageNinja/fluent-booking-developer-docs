@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/integrations/{integration_id}`
 - **Edition:** Core
 - **Controller:** `CalendarIntegrationController@delete`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:140`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:144`
 
 <OAOperation operationId="delete" specUrl="/openapi/public/event-integrations/delete.json" />

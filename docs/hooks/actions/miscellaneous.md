@@ -7,27 +7,28 @@ description: Hooks that did not match a more specific action category.
 
 Hooks that did not match a more specific action category.
 
-15 unique action hooks currently map to this category, across 22 call sites.
+16 unique action hooks currently map to this category, across 24 call sites.
 
 ## Hook Inventory
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/after_disconnect_remote_calendar`](#fluentbookingafterdisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:205` |
+| [`fluent_booking/after_disconnect_remote_calendar`](#fluentbookingafterdisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:213` |
 | [`fluent_booking/availability_schedules_query`](#fluentbookingavailabilityschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:38` |
-| [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:381` |
+| [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:382` |
 | [`fluent_booking/calendar`](#fluentbookingcalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:88` |
 | [`fluent_booking/calendar_slot`](#fluentbookingcalendarslot) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:80` |
-| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:732` |
+| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:749` |
 | [`fluent_booking/landing_page_event`](#fluentbookinglandingpageevent) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:155` |
-| [`fluent_booking/mcp_ability_registration_failed`](#fluentbookingmcpabilityregistrationfailed) | Core | 1 | `fluent-booking/app/Modules/MCP/AbilitiesRegistrar.php:223` |
-| [`fluent_booking/mcp_loaded`](#fluentbookingmcploaded) | Core | 1 | `fluent-booking/app/Modules/MCP/MCPInit.php:105` |
-| [`fluent_booking/mcp_write_exception`](#fluentbookingmcpwriteexception) | Core | 1 | `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:1250` |
-| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 6 | `fluent-booking/app/Http/Controllers/SchedulesController.php:321` |
+| [`fluent_booking/mcp_ability_registration_failed`](#fluentbookingmcpabilityregistrationfailed) | Core | 1 | `fluent-booking/app/Modules/MCP/AbilitiesRegistrar.php:194` |
+| [`fluent_booking/mcp_loaded`](#fluentbookingmcploaded) | Core | 1 | `fluent-booking/app/Modules/MCP/MCPInit.php:86` |
+| [`fluent_booking/mcp_write_exception`](#fluentbookingmcpwriteexception) | Core | 1 | `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:1141` |
+| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 7 | `fluent-booking/app/Http/Controllers/SchedulesController.php:336` |
 | [`fluent_booking/processed_event`](#fluentbookingprocessedevent) | Core | 1 | `fluent-booking/app/Services/CalendarEventService.php:22` |
 | [`fluent_booking/schedules_query`](#fluentbookingschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:166` |
 | [`fluent_booking/update_verification_failed`](#fluentbookingupdateverificationfailed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/PluginManager/UpdateVerifier.php:443` |
-| [`fluent_toolkit/do_auto_install`](#fluenttoolkitdoautoinstall) | Core | 1 | `fluent-booking/app/Http/Controllers/McpController.php:126` |
+| [`fluent_toolkit/do_auto_install`](#fluenttoolkitdoautoinstall) | Core | 1 | `fluent-booking/app/Http/Controllers/McpController.php:110` |
+| [`fluent_toolkit/toolkit_installing`](#fluenttoolkittoolkitinstalling) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/MCP/ToolkitInstaller.php:33` |
 
 <a id="fluentbookingafterdisconnectremotecalendar"></a>
 
@@ -39,7 +40,7 @@ Hooks that did not match a more specific action category.
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:205`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:213`
 
 **Example**
 
@@ -79,7 +80,7 @@ add_action('fluent_booking/availability_schedules_query', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/BookingController.php:381`
+- `fluent-booking/app/Http/Controllers/BookingController.php:382`
 
 **Example**
 
@@ -100,7 +101,7 @@ add_action('fluent_booking/bookings_query', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Http/Controllers/CalendarController.php:88`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:420`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:482`
 
 **Example**
 
@@ -121,7 +122,7 @@ add_action('fluent_booking/calendar', function (...$args) {
 **Source locations**
 
 - `fluent-booking/app/Http/Controllers/CalendarController.php:80`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:339`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:385`
 
 **Example**
 
@@ -141,7 +142,7 @@ add_action('fluent_booking/calendar_slot', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:732`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:749`
 
 **Example**
 
@@ -181,7 +182,7 @@ add_action('fluent_booking/landing_page_event', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Modules/MCP/AbilitiesRegistrar.php:223`
+- `fluent-booking/app/Modules/MCP/AbilitiesRegistrar.php:194`
 
 **Example**
 
@@ -201,7 +202,7 @@ add_action('fluent_booking/mcp_ability_registration_failed', function (...$args)
 
 **Source locations**
 
-- `fluent-booking/app/Modules/MCP/MCPInit.php:105`
+- `fluent-booking/app/Modules/MCP/MCPInit.php:86`
 
 **Example**
 
@@ -221,7 +222,7 @@ add_action('fluent_booking/mcp_loaded', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:1250`
+- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:1141`
 
 **Example**
 
@@ -237,14 +238,15 @@ add_action('fluent_booking/mcp_write_exception', function (...$args) {
 
 - **Type:** action
 - **Edition:** Core + <span class="pro-badge">PRO</span>
-- **Call sites:** 6
+- **Call sites:** 7
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:321`
-- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:762`
-- `fluent-booking/app/Services/BookingService.php:73`
-- `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:346`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:336`
+- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:689`
+- `fluent-booking/app/Services/BookingService.php:75`
+- `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:382`
+- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:665`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:519`
 - `fluent-booking-pro/app/Services/Integrations/Woo/Bootstrap.php:255`
 
@@ -326,12 +328,32 @@ add_action('fluent_booking/update_verification_failed', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/McpController.php:126`
+- `fluent-booking/app/Http/Controllers/McpController.php:110`
 
 **Example**
 
 ```php
 add_action('fluent_toolkit/do_auto_install', function (...$args) {
+    // Your custom logic here.
+}, 10, count($args ?? []));
+```
+
+<a id="fluenttoolkittoolkitinstalling"></a>
+
+## `fluent_toolkit/toolkit_installing`
+
+- **Type:** action
+- **Edition:** <span class="pro-badge">PRO</span>
+- **Call sites:** 1
+
+**Source locations**
+
+- `fluent-booking-pro/app/Modules/MCP/ToolkitInstaller.php:33`
+
+**Example**
+
+```php
+add_action('fluent_toolkit/toolkit_installing', function (...$args) {
     // Your custom logic here.
 }, 10, count($args ?? []));
 ```

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/availability/{schedule_id}/usages`
 - **Edition:** Core
 - **Controller:** `AvailabilityController@getAvailabilityUsages`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:117`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:121`
 - **Policy:** `AvailabilityPolicy`
 
 <OAOperation operationId="getAvailabilityUsages" specUrl="/openapi/public/availability/get-availability-usages.json" />

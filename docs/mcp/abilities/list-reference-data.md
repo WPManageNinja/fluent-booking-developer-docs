@@ -15,8 +15,9 @@ The lookup lists get-booking-context leaves out on larger sites, plus the ones o
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `SchedulingTools::listReferenceData()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:186`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/SchedulingTools.php:182`
 
 ## Input schema
 

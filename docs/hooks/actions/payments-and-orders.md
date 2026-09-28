@@ -18,15 +18,15 @@ Action hooks fired during the payment lifecycle (Pro) — order creation, paymen
 | [`fluent_booking/after_order_items_created`](#fluentbookingafterorderitemscreated) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/OrderHelper.php:65` |
 | [`fluent_booking/before_delete_order`](#fluentbookingbeforedeleteorder) | Core | 1 | `fluent-booking/app/Hooks/Handlers/CleanupHandlers/BookingCleaner.php:43` |
 | [`fluent_booking/ipn_paypal_action_web_accept`](#fluentbookingipnpaypalactionwebaccept) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/API/IPN.php:135` |
-| [`fluent_booking/payment/ipn_endpoint_`](#fluentbookingpaymentipnendpoint) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:64` |
+| [`fluent_booking/payment/ipn_endpoint_`](#fluentbookingpaymentipnendpoint) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:65` |
 | [`fluent_booking/payment/pay_order_with_`](#fluentbookingpaymentpayorderwith) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:135` |
 | [`fluent_booking/payment/payment_settings_update_`](#fluentbookingpaymentpaymentsettingsupdate) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/PaymentMethodController.php:56` |
-| [`fluent_booking/payment/status_changed`](#fluentbookingpaymentstatuschanged) | Core + <span class="pro-badge">PRO</span> | 4 | `fluent-booking/app/Http/Controllers/SchedulesController.php:310` |
+| [`fluent_booking/payment/status_changed`](#fluentbookingpaymentstatuschanged) | Core + <span class="pro-badge">PRO</span> | 4 | `fluent-booking/app/Http/Controllers/SchedulesController.php:325` |
 | [`fluent_booking/payment/status_changed_`](#fluentbookingpaymentstatuschanged) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/TransactionController.php:42` |
 | [`fluent_booking/payment/update_payment_status_`](#fluentbookingpaymentupdatepaymentstatus) | <span class="pro-badge">PRO</span> | 2 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:512` |
-| [`fluent_booking/payment/update_payment_status_paid`](#fluentbookingpaymentupdatepaymentstatuspaid) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:255` |
-| [`fluent_booking/refund_payment_`](#fluentbookingrefundpayment) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:273` |
-| [`fluent_booking/register_payment_methods`](#fluentbookingregisterpaymentmethods) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:30` |
+| [`fluent_booking/payment/update_payment_status_paid`](#fluentbookingpaymentupdatepaymentstatuspaid) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:264` |
+| [`fluent_booking/refund_payment_`](#fluentbookingrefundpayment) | Core | 2 | `fluent-booking/app/Http/Controllers/SchedulesController.php:288` |
+| [`fluent_booking/register_payment_methods`](#fluentbookingregisterpaymentmethods) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:31` |
 | [`fluent_booking/transaction_updated`](#fluentbookingtransactionupdated) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/TransactionController.php:46` |
 | [`fluent-booking/before_render_payment_method_`](#fluentbookingbeforerenderpaymentmethod) | <span class="pro-badge">PRO</span> | 3 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:224` |
 
@@ -140,7 +140,7 @@ add_action('fluent_booking/ipn_paypal_action_web_accept', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:64`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:65`
 
 **Example**
 
@@ -200,7 +200,7 @@ add_action('fluent_booking/payment/payment_settings_update_', function (...$args
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:310`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:325`
 - `fluent-booking-pro/app/Http/Controllers/TransactionController.php:41`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:477`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:656`
@@ -264,8 +264,8 @@ add_action('fluent_booking/payment/update_payment_status_', function (...$args) 
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:255`
-- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:754`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:264`
+- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:681`
 
 **Example**
 
@@ -285,8 +285,8 @@ add_action('fluent_booking/payment/update_payment_status_paid', function (...$ar
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:273`
-- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:907`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:288`
+- `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:822`
 
 **Example**
 
@@ -306,7 +306,7 @@ add_action('fluent_booking/refund_payment_', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:30`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:31`
 
 **Example**
 
@@ -348,7 +348,7 @@ add_action('fluent_booking/transaction_updated', function (...$args) {
 
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Offline/Offline.php:224`
 - `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Paypal/Paypal.php:440`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:693`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:699`
 
 **Example**
 

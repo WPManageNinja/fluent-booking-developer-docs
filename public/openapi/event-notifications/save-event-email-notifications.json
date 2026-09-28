@@ -19,7 +19,7 @@
         "tags": [
           "Event Email Notifications"
         ],
-        "description": "Handler: `CalendarController@saveEventEmailNotifications`. Source: `fluent-booking/app/Http/Routes/api.php:41`.",
+        "description": "Handler: `CalendarController@saveEventEmailNotifications`. Source: `fluent-booking/app/Http/Routes/api.php:42`.",
         "parameters": [
           {
             "name": "id",

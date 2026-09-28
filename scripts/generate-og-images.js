@@ -17,12 +17,14 @@ const ACCENTS = {
   database: '#1a41a8',
   hooks: '#455689',
   mcp: '#2653C7',
+  platform: '#1a41a8',
   'getting-started': '#2653C7',
 };
 
 // Section labels for subtitle line
 const SECTION_LABELS = {
   mcp: 'MCP Server',
+  platform: 'Platform',
   'rest-api': 'REST API',
   'rest-api/calendars': 'REST API / Calendars',
   'rest-api/events': 'REST API / Events',
@@ -123,6 +125,14 @@ const pages = [
   { path: 'helpers/service-api', title: 'Service API Index', description: 'Every Public Method on the Helper Services' },
   // MCP
   { path: 'mcp/index', title: 'MCP Server', description: 'AI Agent Abilities, Toolsets & Permissions' },
+  // Platform
+  { path: 'platform/index', title: 'Platform', description: 'Shortcodes, Blocks, Smartcodes, Permissions & Tasks' },
+  { path: 'platform/shortcodes', title: 'Shortcodes & AJAX', description: 'Front-End Embedding & AJAX Endpoints' },
+  { path: 'platform/blocks', title: 'Blocks', description: 'Gutenberg Blocks & Their Attributes' },
+  { path: 'platform/smartcodes', title: 'Smartcodes', description: 'Template Placeholders for Emails & Pages' },
+  { path: 'platform/permissions', title: 'Permissions', description: 'Permission Sets, REST Policies & MCP Gates' },
+  { path: 'platform/scheduled-tasks', title: 'Scheduled Tasks', description: 'Recurring Background Work & Its Hooks' },
+  { path: 'platform/event-configuration', title: 'Event Configuration', description: 'Location Types, Booking Fields & Field Types' },
   // Guides
   { path: 'guides/index', title: 'Guides', description: 'Practical Recipes for Extending FluentBooking' },
   { path: 'guides/code-snippets', title: 'Code Snippets', description: 'Drop-in Examples for Common Customizations' },

@@ -15,8 +15,9 @@ List bookings with filters. Returns a compact row per booking; attendee emails a
 - **Edition:** Core
 - **Mode:** read-only
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `BookingTools::listBookings()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingTools.php:41`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingTools.php:32`
 
 ## Input schema
 

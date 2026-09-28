@@ -11,6 +11,6 @@ aside: false
 - **Path:** `/integrations/settings/payment-methods/all`
 - **Edition:** Pro
 - **Controller:** `PaymentMethodController@index`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:95`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:96`
 
 <OAOperation operationId="index" specUrl="/openapi/public/payments/index.json" />

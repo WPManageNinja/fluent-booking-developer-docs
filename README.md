@@ -76,6 +76,14 @@ fluent-booking-developer-docs/
 │       ├── transactions.md
 │       ├── order-items.md
 │       └── webhook.md
+├── platform/
+│   ├── index.md                  # Platform overview (generated)
+│   ├── shortcodes.md             # Shortcodes + AJAX endpoints (generated)
+│   ├── blocks.md                 # Gutenberg blocks (generated)
+│   ├── smartcodes.md             # Template smartcodes (generated)
+│   ├── permissions.md            # Permission sets, policies, MCP gates (generated)
+│   ├── scheduled-tasks.md        # Recurring task hooks (generated)
+│   └── event-configuration.md    # Location types, booking fields (generated)
 ├── mcp/
 │   ├── index.md                  # MCP server overview, toolsets, extension hooks
 │   └── abilities/                # One page per MCP ability (generated)

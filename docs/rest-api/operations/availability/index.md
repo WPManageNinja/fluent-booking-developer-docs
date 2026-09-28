@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/availability`
 - **Edition:** Core
 - **Controller:** `AvailabilityController@index`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:113`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:117`
 - **Policy:** `AvailabilityPolicy`
 
 <OAOperation operationId="index" specUrl="/openapi/public/availability/index.json" />

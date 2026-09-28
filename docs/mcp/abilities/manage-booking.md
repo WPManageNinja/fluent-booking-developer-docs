@@ -15,8 +15,9 @@ Act on an existing booking: reschedule, cancel, confirm, reject, complete, mark 
 - **Edition:** Core
 - **Mode:** destructive
 - **Permission callback:** `PermissionGate::bookingWriteGate()`
+- **Requires:** one of `manage_own_calendar`, `manage_all_bookings`, `manage_all_data` — see [Permissions](/platform/permissions)
 - **Handler:** `BookingWriteTools::manageBooking()`
-- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingWriteTools.php:152`
+- **Source:** `fluent-booking/app/Modules/MCP/Tools/BookingWriteTools.php:139`
 
 ## Input schema
 

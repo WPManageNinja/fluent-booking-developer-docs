@@ -15,8 +15,9 @@ Summarise a day's schedule: what is booked, what needs a decision, and what chan
 - **Edition:** Core
 - **Mode:** write
 - **Permission callback:** `PermissionGate::readGate()`
+- **Requires:** MCP enabled and an authenticated application password; each tool scopes its own query to what the caller may see
 - **Handler:** `BookingPrompts::dailyBriefing()`
-- **Source:** `fluent-booking/app/Modules/MCP/Prompts/BookingPrompts.php:32`
+- **Source:** `fluent-booking/app/Modules/MCP/Prompts/BookingPrompts.php:25`
 
 ## Input schema
 

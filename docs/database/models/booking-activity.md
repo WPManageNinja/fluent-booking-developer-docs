@@ -35,6 +35,12 @@ Activity stream entries tied to a booking — status changes, notes, and audit l
 | --- | --- | --- |
 | `booking()` | `belongsTo` | `Booking` |
 
+## Query Scopes
+
+| Scope | Parameters |
+| --- | --- |
+| `Notes` | `$query` |
+
 ## Public Methods
 
 | Method | Signature |

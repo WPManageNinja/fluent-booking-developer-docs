@@ -68,6 +68,7 @@ Bookable event type within a calendar (for example, a 15-minute consultation), w
 | `isGroup()` | `—` |
 | `isSingleEvent()` | `—` |
 | `isGroupEvent()` | `—` |
+| `getEventTypes()` | `—` |
 | `isRoundRobin()` | `—` |
 | `isCollective()` | `—` |
 | `isTeamEvent()` | `—` |

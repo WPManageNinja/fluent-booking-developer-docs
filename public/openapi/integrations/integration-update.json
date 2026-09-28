@@ -19,7 +19,7 @@
         "tags": [
           "Integrations"
         ],
-        "description": "Handler: `IntegrationController@update`. Source: `fluent-booking/app/Http/Routes/api.php:91`.",
+        "description": "Handler: `IntegrationController@update`. Source: `fluent-booking/app/Http/Routes/api.php:94`.",
         "parameters": [],
         "security": [
           {

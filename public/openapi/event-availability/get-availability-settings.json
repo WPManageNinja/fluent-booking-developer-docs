@@ -19,7 +19,7 @@
         "tags": [
           "Event Availability"
         ],
-        "description": "Handler: `CalendarController@getAvailabilitySettings`. Source: `fluent-booking/app/Http/Routes/api.php:35`.",
+        "description": "Handler: `CalendarController@getAvailabilitySettings`. Source: `fluent-booking/app/Http/Routes/api.php:36`.",
         "parameters": [
           {
             "name": "id",

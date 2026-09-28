@@ -19,7 +19,7 @@
         "tags": [
           "Event Settings"
         ],
-        "description": "Handler: `CalendarController@updateEventLimits`. Source: `fluent-booking/app/Http/Routes/api.php:38`.",
+        "description": "Handler: `CalendarController@updateEventLimits`. Source: `fluent-booking/app/Http/Routes/api.php:39`.",
         "parameters": [
           {
             "name": "id",

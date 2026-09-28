@@ -19,7 +19,7 @@
         "tags": [
           "Event Integrations"
         ],
-        "description": "Handler: `CalendarIntegrationController@createCrmTaxonomy`. Source: `fluent-booking/app/Http/Routes/api.php:143`.",
+        "description": "Handler: `CalendarIntegrationController@createCrmTaxonomy`. Source: `fluent-booking/app/Http/Routes/api.php:147`.",
         "parameters": [
           {
             "name": "id",
