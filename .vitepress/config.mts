@@ -316,6 +316,16 @@ export default defineConfig({
       `FluentBotChatWidget.injectWidget("019ba1e2-2c1b-7168-a6fc-216112b67978");`,
     ],
   ],
+  // Cloudflare Email Address Obfuscation rewrites every email-looking string in
+  // the served HTML into a /cdn-cgi/l/email-protection link, which link crawlers
+  // report as a 404. Our sample addresses are plain text inside code blocks, so
+  // opt every page out with Cloudflare's documented markers. Vue strips HTML
+  // comments out of compiled markdown, so this must run on the rendered HTML.
+  transformHtml(code) {
+    return code
+      .replace(/<body([^>]*)>/, '<body$1><!--email_off-->')
+      .replace(/<\/body>/, '<!--/email_off--></body>')
+  },
   transformPageData(pageData) {
     const hostname = 'https://developers.fluentbooking.com'
     const pageKey = pageData.relativePath.replace(/index\.md$/, 'index').replace(/\.md$/, '')
@@ -484,7 +494,8 @@ export default defineConfig({
       label: 'On this page',
     },
     editLink: {
-      pattern: 'https://github.com/WPManageNinja/fluent-booking-developer-docs/edit/main/:path',
+      // :path is relative to srcDir ('docs'), so the repo path needs the prefix back.
+      pattern: 'https://github.com/WPManageNinja/fluent-booking-developer-docs/edit/main/docs/:path',
     },
     footer: {
       message:

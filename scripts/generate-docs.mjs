@@ -773,6 +773,13 @@ function categorizeHook(name, type) {
   return 'miscellaneous'
 }
 
+// A hook's reference page is whichever category page categorizeHook() puts it on,
+// so the link has to be derived, never hardcoded to one category.
+function hookDocLink(name, type) {
+  const dir = type === 'action' ? 'actions' : 'filters'
+  return `/hooks/${dir}/${categorizeHook(name, type)}#${name.replace(/[^a-z0-9]/gi, '')}`
+}
+
 function summarizeHooks(calls) {
   const byNameAction = new Map()
   const byNameFilter = new Map()
@@ -2548,7 +2555,7 @@ function emitSmartcodesPage(smartcodes) {
   }
 
   lines.push('## Adding your own\n')
-  lines.push(`The whole group map passes through [\`${smartcodes.filter}\`](/hooks/filters/miscellaneous#${smartcodes.filter.replace(/[^a-z0-9]/gi, '')}), so an add-on can append a group or extra codes:\n`)
+  lines.push(`The whole group map passes through [\`${smartcodes.filter}\`](${hookDocLink(smartcodes.filter, 'filter')}), so an add-on can append a group or extra codes:\n`)
   lines.push('::: v-pre')
   lines.push('```php')
   lines.push(`add_filter('${smartcodes.filter}', function ($groups, $calendarEvent, $isHtmlSupported) {`)
@@ -3143,10 +3150,10 @@ function emitMcpIndex(abilities, meta) {
   lines.push('Add-ons register into the same namespace and server through these hooks:\n')
   lines.push('| Hook | Type | Purpose |')
   lines.push('| --- | --- | --- |')
-  lines.push('| [`fluent_booking/mcp_loaded`](/hooks/actions/miscellaneous#fluentbookingmcploaded) | action | Fires after the core abilities register — the place to register your own. |')
-  lines.push('| [`fluent_booking/mcp_tool_classes`](/hooks/filters/miscellaneous#fluentbookingmcptoolclasses) | filter | Add a class to a toolset so it inherits that toolset\'s on/off switch and context budget. |')
-  lines.push('| [`fluent_booking/mcp_ability_names`](/hooks/filters/miscellaneous#fluentbookingmcpabilitynames) | filter | Ability names exposed as tools on the server. |')
-  lines.push('| [`fluent_booking/mcp_prompt_names`](/hooks/filters/miscellaneous#fluentbookingmcppromptnames) | filter | Ability names exposed as prompts. |')
+  lines.push(`| [\`fluent_booking/mcp_loaded\`](${hookDocLink('fluent_booking/mcp_loaded', 'action')}) | action | Fires after the core abilities register — the place to register your own. |`)
+  lines.push(`| [\`fluent_booking/mcp_tool_classes\`](${hookDocLink('fluent_booking/mcp_tool_classes', 'filter')}) | filter | Add a class to a toolset so it inherits that toolset's on/off switch and context budget. |`)
+  lines.push(`| [\`fluent_booking/mcp_ability_names\`](${hookDocLink('fluent_booking/mcp_ability_names', 'filter')}) | filter | Ability names exposed as tools on the server. |`)
+  lines.push(`| [\`fluent_booking/mcp_prompt_names\`](${hookDocLink('fluent_booking/mcp_prompt_names', 'filter')}) | filter | Ability names exposed as prompts. |`)
   lines.push('')
   lines.push('A class added through `fluent_booking/mcp_tool_classes` must expose a static `definitions()` returning `ability name => definition`, in the same shape as the core tool classes.\n')
 

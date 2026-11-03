@@ -124,7 +124,7 @@ These are added to the list when an event is in context, so they depend on that 
 
 ## Adding your own
 
-The whole group map passes through [`fluent_booking/editor_shortcodes_groups`](/hooks/filters/miscellaneous#fluentbookingeditorshortcodesgroups), so an add-on can append a group or extra codes:
+The whole group map passes through [`fluent_booking/editor_shortcodes_groups`](/hooks/filters/admin-and-configuration#fluentbookingeditorshortcodesgroups), so an add-on can append a group or extra codes:
 
 ::: v-pre
 ```php

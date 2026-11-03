@@ -139,5 +139,5 @@ This documentation is licensed under the MIT License.
 
 ## Support
 
-- Documentation Issues: [GitHub Issues](https://github.com/WPManageNinja/fluent-booking/issues)
+- Documentation Issues: [GitHub Issues](https://github.com/WPManageNinja/fluent-booking-developer-docs/issues)
 - Plugin Support: [Support Forum](https://wpmanageninja.com/support-tickets/)
