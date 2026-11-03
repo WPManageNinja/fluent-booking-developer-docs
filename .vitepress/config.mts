@@ -494,7 +494,8 @@ export default defineConfig({
       label: 'On this page',
     },
     editLink: {
-      pattern: 'https://github.com/WPManageNinja/fluent-booking-developer-docs/edit/main/:path',
+      // :path is relative to srcDir ('docs'), so the repo path needs the prefix back.
+      pattern: 'https://github.com/WPManageNinja/fluent-booking-developer-docs/edit/main/docs/:path',
     },
     footer: {
       message:
