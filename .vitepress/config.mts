@@ -488,7 +488,7 @@ export default defineConfig({
     },
     footer: {
       message:
-        '<a href="https://fluentbooking.com/">FluentBooking</a> · <a href="https://fluentbooking.com/docs/">User Docs</a> · <a href="https://fluentbooking.com/blog/">Blog</a> · <a href="https://wpmanageninja.com/support-tickets/">Support</a> · <a href="https://github.com/WPManageNinja/fluent-booking-developer-docs">GitHub</a>',
+        '<a href="https://fluentbooking.com/">FluentBooking</a> · <a href="https://fluentbooking.com/docs/">User Docs</a> · <a href="https://fluentbooking.com/articles/">Articles</a> · <a href="https://wpmanageninja.com/support-tickets/">Support</a> · <a href="https://github.com/WPManageNinja/fluent-booking-developer-docs">GitHub</a>',
       copyright: 'Copyright © 2026 FluentBooking',
     },
   },
