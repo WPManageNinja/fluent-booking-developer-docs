@@ -83,7 +83,8 @@ fluent-booking-developer-docs/
 │   ├── smartcodes.md             # Template smartcodes (generated)
 │   ├── permissions.md            # Permission sets, policies, MCP gates (generated)
 │   ├── scheduled-tasks.md        # Recurring task hooks (generated)
-│   └── event-configuration.md    # Location types, booking fields (generated)
+│   ├── event-configuration.md    # Location types, booking fields (generated)
+│   └── spam-protection.md        # Captcha providers & the provider contract (generated)
 ├── mcp/
 │   ├── index.md                  # MCP server overview, toolsets, extension hooks
 │   └── abilities/                # One page per MCP ability (generated)

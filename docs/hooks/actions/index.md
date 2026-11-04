@@ -10,7 +10,7 @@ This page is generated from `do_action()` / `do_action_ref_array()` calls in the
 ## Overview
 
 - **Unique action hook names:** 114
-- **Action call sites:** 253
+- **Action call sites:** 255
 - **Categories covered:** 8 (+ miscellaneous)
 
 ## Categories

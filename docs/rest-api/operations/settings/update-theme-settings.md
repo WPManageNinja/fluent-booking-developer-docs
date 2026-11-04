@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/theme`
 - **Edition:** Core
 - **Controller:** `SettingsController@updateThemeSettings`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:101`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:105`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="updateThemeSettings" specUrl="/openapi/public/settings/update-theme-settings.json" />

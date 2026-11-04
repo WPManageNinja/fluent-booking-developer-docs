@@ -254,8 +254,33 @@ const FILTER_CATEGORIES = [
       /\/(integrations|calendar_event_setting)_menu_items/,
       /\/booking_per_page_options/,
       /\/editor_shortcodes_groups/,
-      /\/no_permission_message/,
       /\/get_general_integration_feed_/,
+    ],
+  },
+  {
+    slug: 'permissions-and-access',
+    title: 'Permissions & Access',
+    description: 'Filters over permission sets, capability checks, team membership, and access messages.',
+    matchers: [
+      /\/(pre_)?user_permissions/,
+      /\/menu_capability/,
+      /\/can_manage_platform/,
+      /\/is_super_user/,
+      /\/team_member_user_ids/,
+      /\/has_(all_)?calendar_access/,
+      /\/no_permission_message/,
+    ],
+  },
+  {
+    slug: 'spam-protection',
+    title: 'Spam Protection & Captcha',
+    description: 'Filters over the captcha providers, their verification requests, and the rules that skip a check.',
+    matchers: [
+      /\/captcha_providers/,
+      /\/skip_captcha/,
+      /\/(re)?captcha_/,
+      /\/turnstile_/,
+      /\/hcaptcha_/,
     ],
   },
   {
@@ -2137,10 +2162,31 @@ function parsePermissionSets() {
 function parsePolicies(routes) {
   const policies = []
   const routeCounts = new Map()
+  const routeCountsByEdition = new Map()
   for (const route of routes) {
     if (!route.policy) continue
     routeCounts.set(route.policy, (routeCounts.get(route.policy) || 0) + 1)
+    const key = `${route.sourceId}:${route.policy}`
+    routeCountsByEdition.set(key, (routeCountsByEdition.get(key) || 0) + 1)
   }
+
+  // A pro route can name a core policy by string, so the total per name is the
+  // right count — except where both editions define a class of the same name
+  // (PlatformPolicy), where the total would be reported twice.
+  const classNameSources = new Map()
+  for (const cfg of SOURCE_CONFIGS) {
+    const dir = join(cfg.root, 'app', 'Http', 'Policies')
+    if (!existsSync(dir)) continue
+    for (const file of listFiles(dir, (p) => p.endsWith('.php'))) {
+      const name = (read(file).match(/^\s*class\s+([A-Za-z0-9_]+)/m) || [])[1] || basename(file, '.php')
+      if (!classNameSources.has(name)) classNameSources.set(name, new Set())
+      classNameSources.get(name).add(cfg.id)
+    }
+  }
+  const policyRouteCount = (name, sourceId) =>
+    (classNameSources.get(name)?.size || 0) > 1
+      ? routeCountsByEdition.get(`${sourceId}:${name}`) || 0
+      : routeCounts.get(name) || 0
 
   for (const cfg of SOURCE_CONFIGS) {
     const dir = join(cfg.root, 'app', 'Http', 'Policies')
@@ -2160,7 +2206,7 @@ function parsePolicies(routes) {
         file,
         sourceId: cfg.id,
         methods,
-        routes: routeCounts.get(name) || 0,
+        routes: policyRouteCount(name, cfg.id),
         permissionSets: [...permissionSets].sort(),
         wpCaps: [...wpCaps].sort(),
         checks: [...checks].filter((c) => c !== 'userCan').sort(),
@@ -2381,7 +2427,144 @@ function emitEventConfigurationPage({ locationGroups, systemFields, customFieldT
 
 // ── Platform doc emitters ────────────────────────────────────────────────────
 
-function emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, policies, tasks, eventConfig }) {
+/** The captcha providers, the settings each one stores, and the contract a custom provider implements. */
+function parseCaptcha() {
+  let dir = null
+  let sourceId = null
+  for (const cfg of SOURCE_CONFIGS) {
+    const candidate = join(cfg.root, 'app', 'Services', 'Captcha')
+    if (existsSync(candidate)) {
+      dir = candidate
+      sourceId = cfg.id
+      break
+    }
+  }
+  if (!dir) return null
+
+  const managerFile = join(dir, 'CaptchaManager.php')
+  if (!existsSync(managerFile)) return null
+  const manager = read(managerFile)
+
+  const filter = (manager.match(/apply_filters\(\s*'([^']+)'/) || [])[1] || null
+  const optionKey = (manager.match(/const\s+OPTION_KEY\s*=\s*'([^']+)'/) || [])[1] || null
+  const builtInOrder = [...manager.matchAll(/'([a-z0-9_]+)'\s*=>\s*new\s+([A-Za-z0-9_]+)\(\)/g)].map((m) => m[1])
+
+  const contract = []
+  const abstractFile = join(dir, 'AbstractCaptchaProvider.php')
+  if (existsSync(abstractFile)) {
+    const content = read(abstractFile)
+    for (const m of content.matchAll(/abstract\s+public\s+function\s+([A-Za-z0-9_]+)\s*\(([^)]*)\)/g)) {
+      contract.push({ name: m[1], args: m[2].trim() })
+    }
+  }
+
+  const providers = []
+  for (const file of listFiles(dir, (f) => f.endsWith('.php'))) {
+    const content = read(file)
+    const className = (content.match(/^\s*class\s+([A-Za-z0-9_]+)/m) || [])[1]
+    if (!className || !/extends\s+AbstractCaptchaProvider/.test(content)) continue
+    const key = (content.match(/function\s+getKey\(\)\s*\{\s*return\s*'([^']+)'/) || [])[1]
+    if (!key) continue
+    const title = (content.match(/function\s+getTitle\(\)\s*\{\s*return\s*__\(\s*'([^']+)'/) || [])[1] || className
+
+    const settings = []
+    const defaultsStart = content.indexOf('function getDefaults()')
+    if (defaultsStart !== -1) {
+      const open = content.indexOf('[', defaultsStart)
+      if (open !== -1) {
+        const body = content.slice(open + 1, matchBracket(content, open))
+        for (const m of body.matchAll(/'([a-z0-9_]+)'\s*=>\s*([^,\n]+)/g)) {
+          settings.push({ name: m[1], default: m[2].trim().replace(/,$/, '') })
+        }
+      }
+    }
+
+    const secretsMatch = content.match(/function\s+secretFields\(\)\s*\{\s*return\s*\[([^\]]*)\]/)
+    const secrets = secretsMatch ? [...secretsMatch[1].matchAll(/'([a-z0-9_]+)'/g)].map((m) => m[1]) : []
+    const verifyUrl = (content.match(/const\s+VERIFY_URL\s*=\s*'([^']+)'/) || [])[1] || null
+    const tokenField = (content.match(/const\s+TOKEN_FIELD\s*=\s*'([^']+)'/) || [])[1] || null
+
+    providers.push({ key, title, className, file, settings, secrets, verifyUrl, tokenField, sourceId })
+  }
+
+  providers.sort((a, b) => builtInOrder.indexOf(a.key) - builtInOrder.indexOf(b.key))
+  return { filter, optionKey, providers, contract, managerFile, sourceId }
+}
+
+function emitSpamProtectionPage(captcha) {
+  const lines = []
+  lines.push(frontmatter({
+    title: 'Spam Protection',
+    description: 'Source-verified reference for the FluentBooking captcha providers and the contract a custom provider implements.',
+  }))
+  lines.push('# Spam Protection\n')
+  lines.push(`A captcha provider guards the public booking form. ${renderEditionLabel([captcha.sourceId])} ships ${captcha.providers.length} provider${captcha.providers.length === 1 ? '' : 's'}, and an add-on can register its own. Each provider owns its settings, its verification call, and the data the public app needs to render the widget.\n`)
+  if (captcha.optionKey) lines.push(`Settings are stored in the \`${captcha.optionKey}\` option. Secret keys are encrypted at rest and masked before they reach the browser.\n`)
+
+  lines.push('## Providers\n')
+  lines.push('| Key | Name | Class | Secret fields |')
+  lines.push('| --- | --- | --- | --- |')
+  for (const p of captcha.providers) {
+    lines.push(`| \`${p.key}\` | ${escapeMd(p.title)} | \`${p.className}\` | ${p.secrets.length ? p.secrets.map((f) => `\`${f}\``).join(', ') : '—'} |`)
+  }
+  lines.push('')
+
+  for (const p of captcha.providers) {
+    lines.push(`## ${escapeMd(p.title)}\n`)
+    lines.push(`- **Key:** \`${p.key}\``)
+    lines.push(`- **Class:** \`${p.className}\``)
+    if (p.tokenField) lines.push(`- **Token field:** \`${p.tokenField}\``)
+    if (p.verifyUrl) lines.push(`- **Verification endpoint:** \`${p.verifyUrl}\``)
+    lines.push(`- **Source:** \`${displaySourcePath(p.file)}\``)
+    lines.push('')
+    if (p.settings.length) {
+      lines.push('| Setting | Default |')
+      lines.push('| --- | --- |')
+      for (const setting of p.settings) {
+        lines.push(`| \`${setting.name}\` | \`${setting.default}\` |`)
+      }
+      lines.push('')
+    }
+  }
+
+  if (captcha.contract.length) {
+    lines.push('## Writing your own provider\n')
+    lines.push(`Extend \`AbstractCaptchaProvider\` and implement every abstract method, then register the instance on \`${captcha.filter}\`:\n`)
+    lines.push('| Method | Returns |')
+    lines.push('| --- | --- |')
+    for (const method of captcha.contract) {
+      lines.push(`| \`${method.name}(${method.args})\` | ${CAPTCHA_METHOD_NOTES[method.name] || '—'} |`)
+    }
+    lines.push('')
+  }
+
+  if (captcha.filter) {
+    lines.push('```php')
+    lines.push(`add_filter('${captcha.filter}', function ($providers) {`)
+    lines.push('    $providers[\'my_captcha\'] = new MyCaptchaProvider();')
+    lines.push('')
+    lines.push('    return $providers;')
+    lines.push('});')
+    lines.push('```\n')
+    lines.push(`The manager keys every provider by its own \`getKey()\`, so the array key above is only a convenience. A value that does not extend \`AbstractCaptchaProvider\` is dropped.\n`)
+    lines.push(`Parsed from \`${displaySourcePath(captcha.managerFile)}\`.\n`)
+  }
+  return lines.join('\n')
+}
+
+const CAPTCHA_METHOD_NOTES = {
+  getKey: 'The provider slug, used as the settings key.',
+  getTitle: 'The translated name the settings page shows.',
+  getDefaults: 'The settings array with its default values.',
+  sanitize: 'The settings to store, sanitized from the submitted input.',
+  secretFields: 'The setting names to encrypt at rest.',
+  isConfigured: '`true` when the stored settings are complete enough to verify a token.',
+  publicVars: 'The data the public booking app needs to render the widget.',
+  verify: '`[\'status\' => valid/invalid/unreachable, \'code\' => string]`.',
+  validateCredentials: '`[\'valid\' => bool, \'message\' => string]`, used by the settings page test.',
+}
+
+function emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, policies, tasks, eventConfig, captcha }) {
   const smartcodeCount = smartcodes.groups.reduce((total, g) => total + g.codes.length, 0)
   const lines = []
   lines.push(frontmatter({
@@ -2402,6 +2585,9 @@ function emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, 
       eventConfig.locationGroups.reduce((total, g) => total + g.types.length, 0)
     } location types, ${eventConfig.systemFields.length} system fields, ${eventConfig.customFieldTypes.length} field types | The keys an event's locations and booking form are configured with. |`,
   )
+  if (captcha) {
+    lines.push(`| [Spam Protection](/platform/spam-protection) | ${captcha.providers.length} captcha providers | The providers that guard the public form, and the contract a custom one implements. |`)
+  }
   lines.push('')
   return lines.join('\n')
 }
@@ -3353,14 +3539,16 @@ FluentBooking emits hundreds of action and filter hooks across the booking lifec
   const policies = parsePolicies(routes)
   const tasks = parseScheduledTasks()
   const eventConfig = parseEventConfiguration()
+  const captcha = parseCaptcha()
 
-  writeFile(join(docsRoot, 'platform', 'index.md'), emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, policies, tasks, eventConfig }))
+  writeFile(join(docsRoot, 'platform', 'index.md'), emitPlatformIndex({ shortcodes, ajax, blocks, smartcodes, permissions, policies, tasks, eventConfig, captcha }))
   writeFile(join(docsRoot, 'platform', 'shortcodes.md'), emitShortcodesPage(shortcodes, ajax))
   writeFile(join(docsRoot, 'platform', 'blocks.md'), emitBlocksPage(blocks))
   writeFile(join(docsRoot, 'platform', 'smartcodes.md'), emitSmartcodesPage(smartcodes))
   writeFile(join(docsRoot, 'platform', 'permissions.md'), emitPermissionsPage(permissions, policies, abilityGates, abilities))
   writeFile(join(docsRoot, 'platform', 'scheduled-tasks.md'), emitScheduledTasksPage(tasks))
   writeFile(join(docsRoot, 'platform', 'event-configuration.md'), emitEventConfigurationPage(eventConfig))
+  if (captcha) writeFile(join(docsRoot, 'platform', 'spam-protection.md'), emitSpamProtectionPage(captcha))
 
   writeFile(
     join(generatedRoot, 'mcp-abilities.json'),

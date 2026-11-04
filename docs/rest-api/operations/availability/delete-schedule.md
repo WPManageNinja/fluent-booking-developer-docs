@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/availability/{schedule_id}`
 - **Edition:** Core
 - **Controller:** `AvailabilityController@deleteSchedule`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:126`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:136`
 - **Policy:** `AvailabilityPolicy`
 
 <OAOperation operationId="deleteSchedule" specUrl="/openapi/public/availability/delete-schedule.json" />

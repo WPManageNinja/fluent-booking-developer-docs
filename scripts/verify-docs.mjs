@@ -333,6 +333,39 @@ const missingPolicies = sourcePolicies.filter((p) => !permissionDoc.includes(`| 
 check('policies', sourcePolicies.length, sourcePolicies.length - missingPolicies.length)
 if (missingPolicies.length) failures.push(`  FAIL policies missing from docs: ${missingPolicies.join(', ')}`)
 
+// Captcha providers (pro). Parsed from the provider classes, not the manager's
+// default list, so a provider that ships without being registered still shows up.
+const captchaDir = join(proRoot, 'app', 'Services', 'Captcha')
+if (existsSync(captchaDir)) {
+  const providerFiles = walk(captchaDir, (p) => p.endsWith('.php')).filter((f) => /extends\s+AbstractCaptchaProvider/.test(read(f)))
+  const captchaDoc = read(join(docsRoot, 'platform', 'spam-protection.md'))
+  const missingProviders = []
+  const missingSecrets = []
+  for (const file of providerFiles) {
+    const content = read(file)
+    const key = (content.match(/function\s+getKey\(\)\s*\{\s*return\s*'([^']+)'/) || [])[1]
+    if (!key || !captchaDoc.includes(`| \`${key}\` |`)) {
+      missingProviders.push(key || file.split('/').pop())
+      continue
+    }
+    const secrets = content.match(/function\s+secretFields\(\)\s*\{\s*return\s*\[([^\]]*)\]/)
+    for (const m of (secrets ? secrets[1] : '').matchAll(/'([a-z0-9_]+)'/g)) {
+      if (!captchaDoc.includes(`\`${m[1]}\``)) missingSecrets.push(`${key}.${m[1]}`)
+    }
+  }
+  check('captcha providers', providerFiles.length, providerFiles.length - missingProviders.length)
+  if (missingProviders.length) failures.push(`  FAIL captcha providers missing from docs: ${missingProviders.join(', ')}`)
+
+  const abstractFile = join(captchaDir, 'AbstractCaptchaProvider.php')
+  if (existsSync(abstractFile)) {
+    const contract = [...read(abstractFile).matchAll(/abstract\s+public\s+function\s+([A-Za-z0-9_]+)\s*\(/g)].map((m) => m[1])
+    const missingContract = contract.filter((m) => !captchaDoc.includes(`\`${m}(`))
+    check('captcha provider contract', contract.length, contract.length - missingContract.length)
+    if (missingContract.length) failures.push(`  FAIL captcha contract methods missing from docs: ${missingContract.join(', ')}`)
+  }
+  if (missingSecrets.length) failures.push(`  FAIL captcha secret fields missing from docs: ${missingSecrets.join(', ')}`)
+}
+
 // Scheduled tasks
 const sourceTasks = new Set()
 for (const src of sources) {

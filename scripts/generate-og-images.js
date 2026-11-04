@@ -116,6 +116,8 @@ const pages = [
   { path: 'hooks/filters/availability-and-slots', title: 'Availability & Slots', description: 'Time Slot & Availability Filters' },
   { path: 'hooks/filters/display-and-templates', title: 'Display & Templates', description: 'Frontend Display & Template Filters' },
   { path: 'hooks/filters/admin-and-configuration', title: 'Admin & Configuration', description: 'Admin Panel Configuration Filters' },
+  { path: 'hooks/filters/permissions-and-access', title: 'Permissions & Access', description: 'Permission Set & Capability Filters' },
+  { path: 'hooks/filters/spam-protection', title: 'Spam Protection & Captcha', description: 'Captcha Provider & Verification Filters' },
   { path: 'hooks/filters/payments-and-advanced', title: 'Payments & Advanced', description: 'Payment & Advanced Feature Filters' },
   { path: 'hooks/filters/integrations', title: 'Integration Filters', description: 'Third-Party Integration Data Filters' },
   { path: 'hooks/filters/miscellaneous', title: 'Miscellaneous Filters', description: 'Other Filter Hooks' },
@@ -133,6 +135,7 @@ const pages = [
   { path: 'platform/permissions', title: 'Permissions', description: 'Permission Sets, REST Policies & MCP Gates' },
   { path: 'platform/scheduled-tasks', title: 'Scheduled Tasks', description: 'Recurring Background Work & Its Hooks' },
   { path: 'platform/event-configuration', title: 'Event Configuration', description: 'Location Types, Booking Fields & Field Types' },
+  { path: 'platform/spam-protection', title: 'Spam Protection', description: 'Captcha Providers & The Provider Contract' },
   // Guides
   { path: 'guides/index', title: 'Guides', description: 'Practical Recipes for Extending FluentBooking' },
   { path: 'guides/code-snippets', title: 'Code Snippets', description: 'Drop-in Examples for Common Customizations' },

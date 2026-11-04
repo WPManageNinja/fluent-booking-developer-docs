@@ -16,25 +16,25 @@ Filters that shape booking data, fields, exports, and confirmation/rescheduling 
 | [`fluent_booking/after_booking_data`](#fluentbookingafterbookingdata) | Core | 1 | `fluent-booking/app/Services/BookingService.php:72` |
 | [`fluent_booking/booked_events`](#fluentbookingbookedevents) | Core | 1 | `fluent-booking/app/Services/TimeSlotService.php:309` |
 | [`fluent_booking/booking_confirmation_page_title`](#fluentbookingbookingconfirmationpagetitle) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:236` |
-| [`fluent_booking/booking_confirmation_page_vars`](#fluentbookingbookingconfirmationpagevars) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:344` |
-| [`fluent_booking/booking_confirmation_response`](#fluentbookingbookingconfirmationresponse) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:821` |
+| [`fluent_booking/booking_confirmation_page_vars`](#fluentbookingbookingconfirmationpagevars) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:345` |
+| [`fluent_booking/booking_confirmation_response`](#fluentbookingbookingconfirmationresponse) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:886` |
 | [`fluent_booking/booking_data`](#fluentbookingbookingdata) | Core | 1 | `fluent-booking/app/Services/BookingService.php:38` |
 | [`fluent_booking/booking_export_columns`](#fluentbookingbookingexportcolumns) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:90` |
 | [`fluent_booking/booking_export_row`](#fluentbookingbookingexportrow) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:87` |
-| [`fluent_booking/booking_fields`](#fluentbookingbookingfields) | Core | 1 | `fluent-booking/app/Services/BookingFieldService.php:261` |
-| [`fluent_booking/booking_meeting_title`](#fluentbookingbookingmeetingtitle) | Core | 1 | `fluent-booking/app/Models/Booking.php:828` |
-| [`fluent_booking/booking_meta_info_main_meta`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:515` |
-| [`fluent_booking/booking_meta_info_main_meta_`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:516` |
-| [`fluent_booking/booking_per_page_options`](#fluentbookingbookingperpageoptions) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:389` |
-| [`fluent_booking/booking_period_options`](#fluentbookingbookingperiodoptions) | Core | 1 | `fluent-booking/app/Services/Helper.php:1595` |
-| [`fluent_booking/booking_receipt_landing_base_url`](#fluentbookingbookingreceiptlandingbaseurl) | Core | 1 | `fluent-booking/app/Services/Helper.php:2306` |
-| [`fluent_booking/booking_rescheduled_response`](#fluentbookingbookingrescheduledresponse) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:481` |
-| [`fluent_booking/booking_status_changing_times_schema`](#fluentbookingbookingstatuschangingtimesschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1537` |
+| [`fluent_booking/booking_fields`](#fluentbookingbookingfields) | Core | 1 | `fluent-booking/app/Services/BookingFieldService.php:265` |
+| [`fluent_booking/booking_meeting_title`](#fluentbookingbookingmeetingtitle) | Core | 1 | `fluent-booking/app/Models/Booking.php:899` |
+| [`fluent_booking/booking_meta_info_main_meta`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:524` |
+| [`fluent_booking/booking_meta_info_main_meta_`](#fluentbookingbookingmetainfomainmeta) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:525` |
+| [`fluent_booking/booking_per_page_options`](#fluentbookingbookingperpageoptions) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:403` |
+| [`fluent_booking/booking_period_options`](#fluentbookingbookingperiodoptions) | Core | 1 | `fluent-booking/app/Services/Helper.php:1617` |
+| [`fluent_booking/booking_receipt_landing_base_url`](#fluentbookingbookingreceiptlandingbaseurl) | Core | 1 | `fluent-booking/app/Services/Helper.php:2332` |
+| [`fluent_booking/booking_rescheduled_response`](#fluentbookingbookingrescheduledresponse) | Core | 1 | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:496` |
+| [`fluent_booking/booking_status_changing_times_schema`](#fluentbookingbookingstatuschangingtimesschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1559` |
 | [`fluent_booking/booking_webhook_request`](#fluentbookingbookingwebhookrequest) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/Webhook/WebhookIntegration.php:144` |
-| [`fluent_booking/buffer_times_schema`](#fluentbookingbuffertimesschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1437` |
+| [`fluent_booking/buffer_times_schema`](#fluentbookingbuffertimesschema) | Core | 1 | `fluent-booking/app/Services/Helper.php:1459` |
 | [`fluent_booking/exporting_booking_data_csv`](#fluentbookingexportingbookingdatacsv) | Core | 1 | `fluent-booking/app/Hooks/Handlers/DataExporter.php:116` |
-| [`fluent_booking/file_upload_validation_rules_data`](#fluentbookingfileuploadvalidationrulesdata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/UploadHandler.php:94` |
-| [`fluent_booking/payment_coupon_field`](#fluentbookingpaymentcouponfield) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/PaymentHelper.php:180` |
+| [`fluent_booking/file_upload_validation_rules_data`](#fluentbookingfileuploadvalidationrulesdata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/UploadHandler.php:99` |
+| [`fluent_booking/payment_coupon_field`](#fluentbookingpaymentcouponfield) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/PaymentHelper.php:209` |
 
 <a id="fluentbookingafterbookingdata"></a>
 
@@ -106,7 +106,7 @@ add_filter('fluent_booking/booking_confirmation_page_title', function ($value, .
 
 **Source locations**
 
-- `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:344`
+- `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:345`
 
 **Example**
 
@@ -126,7 +126,7 @@ add_filter('fluent_booking/booking_confirmation_page_vars', function ($value, ..
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:821`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:886`
 
 **Example**
 
@@ -206,7 +206,7 @@ add_filter('fluent_booking/booking_export_row', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/BookingFieldService.php:261`
+- `fluent-booking/app/Services/BookingFieldService.php:265`
 
 **Example**
 
@@ -226,7 +226,7 @@ add_filter('fluent_booking/booking_fields', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Models/Booking.php:828`
+- `fluent-booking/app/Models/Booking.php:899`
 
 **Example**
 
@@ -246,7 +246,7 @@ add_filter('fluent_booking/booking_meeting_title', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:515`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:524`
 
 **Example**
 
@@ -266,7 +266,7 @@ add_filter('fluent_booking/booking_meta_info_main_meta', function ($value, ...$r
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:516`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:525`
 
 **Example**
 
@@ -286,7 +286,7 @@ add_filter('fluent_booking/booking_meta_info_main_meta_', function ($value, ...$
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:389`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:403`
 
 **Example**
 
@@ -306,7 +306,7 @@ add_filter('fluent_booking/booking_per_page_options', function ($value, ...$rest
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1595`
+- `fluent-booking/app/Services/Helper.php:1617`
 
 **Example**
 
@@ -326,7 +326,7 @@ add_filter('fluent_booking/booking_period_options', function ($value, ...$rest) 
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:2306`
+- `fluent-booking/app/Services/Helper.php:2332`
 
 **Example**
 
@@ -346,7 +346,7 @@ add_filter('fluent_booking/booking_receipt_landing_base_url', function ($value, 
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:481`
+- `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:496`
 
 **Example**
 
@@ -366,7 +366,7 @@ add_filter('fluent_booking/booking_rescheduled_response', function ($value, ...$
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1537`
+- `fluent-booking/app/Services/Helper.php:1559`
 
 **Example**
 
@@ -406,7 +406,7 @@ add_filter('fluent_booking/booking_webhook_request', function ($value, ...$rest)
 
 **Source locations**
 
-- `fluent-booking/app/Services/Helper.php:1437`
+- `fluent-booking/app/Services/Helper.php:1459`
 
 **Example**
 
@@ -446,7 +446,7 @@ add_filter('fluent_booking/exporting_booking_data_csv', function ($value, ...$re
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/UploadHandler.php:94`
+- `fluent-booking-pro/app/Hooks/Handlers/UploadHandler.php:99`
 
 **Example**
 
@@ -466,7 +466,7 @@ add_filter('fluent_booking/file_upload_validation_rules_data', function ($value,
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/PaymentHelper.php:180`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/PaymentHelper.php:209`
 
 **Example**
 

@@ -9,7 +9,7 @@ Plugin-wide settings — general, branding, dashboard, email, and global configu
 
 ## Authentication
 
-These routes are registered with: `SettingsPolicy`, `SuperAdminPolicy`.
+These routes are registered with: `SettingsPolicy`, `PlatformPolicy`, `SuperAdminPolicy`.
 
 ## Endpoints
 
@@ -21,15 +21,18 @@ These routes are registered with: `SettingsPolicy`, `SuperAdminPolicy`.
 | `POST` | `/settings/theme` | Core | [Update Theme Settings](/rest-api/operations/settings/update-theme-settings) | `SettingsController@updateThemeSettings` |
 | `GET` | `/settings/menu` | Core | [Get Settings Menu](/rest-api/operations/settings/get-settings-menu) | `SettingsController@getSettingsMenu` |
 | `GET` | `/settings/global-modules` | Core | [Get Global Modules](/rest-api/operations/settings/get-global-modules) | `SettingsController@getGlobalModules` |
-| `POST` | `/settings/global-modules` | Core | [Update Global Modules](/rest-api/operations/settings/update-global-modules) | `SettingsController@updateGlobalModules` |
 | `GET` | `/settings/pages` | Core | [Get Pages](/rest-api/operations/settings/get-pages) | `SettingsController@getPages` |
+| `POST` | `/settings/global-modules` | Core | [Update Global Modules](/rest-api/operations/settings/update-global-modules) | `SettingsController@updateGlobalModules` |
 | `POST` | `/settings/addons-settings` | Core | [Save Addons Settings](/rest-api/operations/settings/save-addons-settings) | `SettingsController@saveAddonsSettings` |
 | `POST` | `/settings/install-plugin` | Core | [Install Plugin](/rest-api/operations/settings/install-plugin) | `SettingsController@installPlugin` |
 | `POST` | `/settings/optin` | Core | [Update Optin](/rest-api/operations/settings/update-optin) | `SettingsController@updateOptin` |
-| `GET` | `/settings/mcp` | Core | [Get Settings](/rest-api/operations/settings/get-settings) | `McpController@getSettings` |
+| `GET` | `/settings/mcp` | Core | [Mcp Get Settings](/rest-api/operations/settings/mcp-get-settings) | `McpController@getSettings` |
 | `POST` | `/settings/mcp` | Core | [Update Settings](/rest-api/operations/settings/update-settings) | `McpController@updateSettings` |
 | `POST` | `/settings/mcp/install-adapter` | Core | [Install Adapter](/rest-api/operations/settings/install-adapter) | `McpController@installAdapter` |
 | `GET` | `/settings/team` | <span class="pro-badge">PRO</span> | [Get Team Members](/rest-api/operations/settings/get-team-members) | `TeamController@getTeamMembers` |
+| `GET` | `/settings/spam-protection` | <span class="pro-badge">PRO</span> | [Spam Protection Get Settings](/rest-api/operations/settings/spam-protection-get-settings) | `SpamProtectionController@getSettings` |
+| `POST` | `/settings/spam-protection` | <span class="pro-badge">PRO</span> | [Save Settings](/rest-api/operations/settings/save-settings) | `SpamProtectionController@saveSettings` |
+| `POST` | `/settings/spam-protection/verify-keys` | <span class="pro-badge">PRO</span> | [Verify Keys](/rest-api/operations/settings/verify-keys) | `SpamProtectionController@verifyKeys` |
 | `POST` | `/settings/team` | <span class="pro-badge">PRO</span> | [Update Member Permission](/rest-api/operations/settings/update-member-permission) | `TeamController@updateMemberPermission` |
 | `DELETE` | `/settings/team/{id}` | <span class="pro-badge">PRO</span> | [Delete Member](/rest-api/operations/settings/delete-member) | `TeamController@deleteMember` |
 | `GET` | `/settings/license` | <span class="pro-badge">PRO</span> | [Get Status](/rest-api/operations/settings/get-status) | `LicenseController@getStatus` |

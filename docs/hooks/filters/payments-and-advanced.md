@@ -17,18 +17,18 @@ Filters for payment processing, currency handling, gateway settings, and stripe/
 | [`fluent_booking_global_checkout_mode`](#fluentbookingglobalcheckoutmode) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:135` |
 | [`fluent_booking_stripe_idempotency_key`](#fluentbookingstripeidempotencykey) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/API/ApiRequest.php:115` |
 | [`fluent_booking_stripe_request_body`](#fluentbookingstriperequestbody) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/API/ApiRequest.php:123` |
-| [`fluent_booking/accepted_currencies`](#fluentbookingacceptedcurrencies) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:73` |
+| [`fluent_booking/accepted_currencies`](#fluentbookingacceptedcurrencies) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:81` |
 | [`fluent_booking/create_coupon_data`](#fluentbookingcreatecoupondata) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Modules/Coupon/Http/Controllers/CouponController.php:75` |
 | [`fluent_booking/create_draft_order`](#fluentbookingcreatedraftorder) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/OrderHelper.php:46` |
 | [`fluent_booking/create_draft_transactions`](#fluentbookingcreatedrafttransactions) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/OrderHelper.php:103` |
-| [`fluent_booking/global_currency_settings`](#fluentbookingglobalcurrencysettings) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:37` |
-| [`fluent_booking/global_currency_symbols`](#fluentbookingglobalcurrencysymbols) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:246` |
-| [`fluent_booking/payment/get_all_methods`](#fluentbookingpaymentgetallmethods) | Core + <span class="pro-badge">PRO</span> | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:525` |
-| [`fluent_booking/payment/get_global_payment_methods`](#fluentbookingpaymentgetglobalpaymentmethods) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:116` |
-| [`fluent_booking/payment/get_global_payment_settings_`](#fluentbookingpaymentgetglobalpaymentsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:111` |
-| [`fluent_booking/payment/get_payment_settings`](#fluentbookingpaymentgetpaymentsettings) | Core + <span class="pro-badge">PRO</span> | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:1071` |
-| [`fluent_booking/payment/payment_settings_before_update_`](#fluentbookingpaymentpaymentsettingsbeforeupdate) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:359` |
-| [`fluent-booking/payment/stripe_checkout_session_args`](#fluentbookingpaymentstripecheckoutsessionargs) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:523` |
+| [`fluent_booking/global_currency_settings`](#fluentbookingglobalcurrencysettings) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:45` |
+| [`fluent_booking/global_currency_symbols`](#fluentbookingglobalcurrencysymbols) | Core | 1 | `fluent-booking/app/Services/CurrenciesHelper.php:254` |
+| [`fluent_booking/payment/get_all_methods`](#fluentbookingpaymentgetallmethods) | Core + <span class="pro-badge">PRO</span> | 2 | `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:544` |
+| [`fluent_booking/payment/get_global_payment_methods`](#fluentbookingpaymentgetglobalpaymentmethods) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:117` |
+| [`fluent_booking/payment/get_global_payment_settings_`](#fluentbookingpaymentgetglobalpaymentsettings) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:112` |
+| [`fluent_booking/payment/get_payment_settings`](#fluentbookingpaymentgetpaymentsettings) | Core + <span class="pro-badge">PRO</span> | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:1196` |
+| [`fluent_booking/payment/payment_settings_before_update_`](#fluentbookingpaymentpaymentsettingsbeforeupdate) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:367` |
+| [`fluent-booking/payment/stripe_checkout_session_args`](#fluentbookingpaymentstripecheckoutsessionargs) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:527` |
 
 <a id="fluentbookingformdisablestripeconnect"></a>
 
@@ -120,7 +120,7 @@ add_filter('fluent_booking_stripe_request_body', function ($value, ...$rest) {
 
 **Source locations**
 
-- `fluent-booking/app/Services/CurrenciesHelper.php:73`
+- `fluent-booking/app/Services/CurrenciesHelper.php:81`
 
 **Example**
 
@@ -200,7 +200,7 @@ add_filter('fluent_booking/create_draft_transactions', function ($value, ...$res
 
 **Source locations**
 
-- `fluent-booking/app/Services/CurrenciesHelper.php:37`
+- `fluent-booking/app/Services/CurrenciesHelper.php:45`
 
 **Example**
 
@@ -220,7 +220,7 @@ add_filter('fluent_booking/global_currency_settings', function ($value, ...$rest
 
 **Source locations**
 
-- `fluent-booking/app/Services/CurrenciesHelper.php:246`
+- `fluent-booking/app/Services/CurrenciesHelper.php:254`
 
 **Example**
 
@@ -240,8 +240,8 @@ add_filter('fluent_booking/global_currency_symbols', function ($value, ...$rest)
 
 **Source locations**
 
-- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:525`
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:128`
+- `fluent-booking/app/Hooks/Handlers/AdminMenuHandler.php:544`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:129`
 
 **Example**
 
@@ -261,7 +261,7 @@ add_filter('fluent_booking/payment/get_all_methods', function ($value, ...$rest)
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:116`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:117`
 
 **Example**
 
@@ -281,7 +281,7 @@ add_filter('fluent_booking/payment/get_global_payment_methods', function ($value
 
 **Source locations**
 
-- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:111`
+- `fluent-booking-pro/app/Hooks/Handlers/GlobalPaymentHandler.php:112`
 
 **Example**
 
@@ -301,8 +301,8 @@ add_filter('fluent_booking/payment/get_global_payment_settings_', function ($val
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:1071`
-- `fluent-booking-pro/app/Http/Controllers/PaymentMethodController.php:121`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:1196`
+- `fluent-booking-pro/app/Http/Controllers/PaymentMethodController.php:128`
 
 **Example**
 
@@ -322,7 +322,7 @@ add_filter('fluent_booking/payment/get_payment_settings', function ($value, ...$
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:359`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:367`
 
 **Example**
 
@@ -342,7 +342,7 @@ add_filter('fluent_booking/payment/payment_settings_before_update_', function ($
 
 **Source locations**
 
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:523`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:527`
 
 **Example**
 

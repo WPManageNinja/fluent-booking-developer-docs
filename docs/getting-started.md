@@ -13,7 +13,7 @@ FluentBooking is a WordPress appointment scheduling plugin built on the WPFluent
 - **Hooks:** Action and filter hooks emitted across the booking lifecycle, calendars, availability, payments, and third-party integrations.
 - **REST API:** Every route registered under the `fluent-booking/v2` namespace, grouped by module with per-operation reference pages.
 - **MCP server:** The typed abilities the `fluent-booking/mcp` namespace exposes to AI agents, with input schemas and the permission each one needs.
-- **Platform:** The WordPress-level surface — shortcodes, AJAX endpoints, Gutenberg blocks, email smartcodes, permission sets, scheduled tasks, and the event-configuration vocabularies.
+- **Platform:** The WordPress-level surface — shortcodes, AJAX endpoints, Gutenberg blocks, email smartcodes, permission sets, scheduled tasks, the event-configuration vocabularies, and the captcha providers that guard the public form.
 - **Guides:** Practical recipes for common customizations — code snippets, theme compatibility, custom booking fields, and webhooks.
 
 ## Quick Links

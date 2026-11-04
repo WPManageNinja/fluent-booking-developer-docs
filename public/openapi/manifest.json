@@ -112,13 +112,15 @@
     "/openapi/public/settings/get-global-modules.json",
     "/openapi/public/settings/get-pages.json",
     "/openapi/public/settings/get-settings-menu.json",
-    "/openapi/public/settings/get-settings.json",
     "/openapi/public/settings/get-status.json",
     "/openapi/public/settings/get-team-members.json",
     "/openapi/public/settings/install-adapter.json",
     "/openapi/public/settings/install-plugin.json",
+    "/openapi/public/settings/mcp-get-settings.json",
     "/openapi/public/settings/save-addons-settings.json",
     "/openapi/public/settings/save-license.json",
+    "/openapi/public/settings/save-settings.json",
+    "/openapi/public/settings/spam-protection-get-settings.json",
     "/openapi/public/settings/update-general-settings.json",
     "/openapi/public/settings/update-global-modules.json",
     "/openapi/public/settings/update-member-permission.json",
@@ -126,6 +128,7 @@
     "/openapi/public/settings/update-payment-settings.json",
     "/openapi/public/settings/update-settings.json",
     "/openapi/public/settings/update-theme-settings.json",
+    "/openapi/public/settings/verify-keys.json",
     "/openapi/public/sharing-settings/get-sharing-settings.json",
     "/openapi/public/sharing-settings/save-sharing-settings.json",
     "/openapi/public/webhooks/clone-feeds.json",
@@ -136,5 +139,5 @@
     "/openapi/public/webhooks/save-feed.json",
     "/openapi/public/webhooks/save-slot-sms-notifications.json"
   ],
-  "generated": "2026-09-28T06:25:39.557Z"
+  "generated": "2026-11-04T14:03:52.182Z"
 }

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/mcp/install-adapter`
 - **Edition:** Core
 - **Controller:** `McpController@installAdapter`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:113`
-- **Policy:** `SettingsPolicy`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:123`
+- **Policy:** `PlatformPolicy`
 
 <OAOperation operationId="installAdapter" specUrl="/openapi/public/settings/install-adapter.json" />

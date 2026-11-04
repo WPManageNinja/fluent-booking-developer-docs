@@ -13,17 +13,17 @@ Hooks that did not match a more specific action category.
 
 | Hook | Edition | Call Sites | First Source |
 | --- | --- | --- | --- |
-| [`fluent_booking/after_disconnect_remote_calendar`](#fluentbookingafterdisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:213` |
+| [`fluent_booking/after_disconnect_remote_calendar`](#fluentbookingafterdisconnectremotecalendar) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:232` |
 | [`fluent_booking/availability_schedules_query`](#fluentbookingavailabilityschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/AvailabilityController.php:38` |
-| [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:382` |
-| [`fluent_booking/calendar`](#fluentbookingcalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:88` |
-| [`fluent_booking/calendar_slot`](#fluentbookingcalendarslot) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:80` |
-| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:749` |
+| [`fluent_booking/bookings_query`](#fluentbookingbookingsquery) | Core | 1 | `fluent-booking/app/Http/Controllers/BookingController.php:386` |
+| [`fluent_booking/calendar`](#fluentbookingcalendar) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:134` |
+| [`fluent_booking/calendar_slot`](#fluentbookingcalendarslot) | Core | 2 | `fluent-booking/app/Http/Controllers/CalendarController.php:126` |
+| [`fluent_booking/format_booking_schedule`](#fluentbookingformatbookingschedule) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:758` |
 | [`fluent_booking/landing_page_event`](#fluentbookinglandingpageevent) | Core | 1 | `fluent-booking/app/Services/LandingPage/LandingPageHandler.php:155` |
 | [`fluent_booking/mcp_ability_registration_failed`](#fluentbookingmcpabilityregistrationfailed) | Core | 1 | `fluent-booking/app/Modules/MCP/AbilitiesRegistrar.php:194` |
 | [`fluent_booking/mcp_loaded`](#fluentbookingmcploaded) | Core | 1 | `fluent-booking/app/Modules/MCP/MCPInit.php:86` |
 | [`fluent_booking/mcp_write_exception`](#fluentbookingmcpwriteexception) | Core | 1 | `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:1141` |
-| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 7 | `fluent-booking/app/Http/Controllers/SchedulesController.php:336` |
+| [`fluent_booking/pre_after_booking_`](#fluentbookingpreafterbooking) | Core + <span class="pro-badge">PRO</span> | 7 | `fluent-booking/app/Http/Controllers/SchedulesController.php:338` |
 | [`fluent_booking/processed_event`](#fluentbookingprocessedevent) | Core | 1 | `fluent-booking/app/Services/CalendarEventService.php:22` |
 | [`fluent_booking/schedules_query`](#fluentbookingschedulesquery) | Core | 1 | `fluent-booking/app/Http/Controllers/SchedulesController.php:166` |
 | [`fluent_booking/update_verification_failed`](#fluentbookingupdateverificationfailed) | <span class="pro-badge">PRO</span> | 1 | `fluent-booking-pro/app/Services/PluginManager/UpdateVerifier.php:443` |
@@ -40,7 +40,7 @@ Hooks that did not match a more specific action category.
 
 **Source locations**
 
-- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:213`
+- `fluent-booking-pro/app/Http/Controllers/IntegrationSettingsController.php:232`
 
 **Example**
 
@@ -80,7 +80,7 @@ add_action('fluent_booking/availability_schedules_query', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/BookingController.php:382`
+- `fluent-booking/app/Http/Controllers/BookingController.php:386`
 
 **Example**
 
@@ -100,8 +100,8 @@ add_action('fluent_booking/bookings_query', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:88`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:482`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:134`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:586`
 
 **Example**
 
@@ -121,8 +121,8 @@ add_action('fluent_booking/calendar', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/CalendarController.php:80`
-- `fluent-booking/app/Http/Controllers/CalendarController.php:385`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:126`
+- `fluent-booking/app/Http/Controllers/CalendarController.php:489`
 
 **Example**
 
@@ -142,7 +142,7 @@ add_action('fluent_booking/calendar_slot', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:749`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:758`
 
 **Example**
 
@@ -242,13 +242,13 @@ add_action('fluent_booking/mcp_write_exception', function (...$args) {
 
 **Source locations**
 
-- `fluent-booking/app/Http/Controllers/SchedulesController.php:336`
+- `fluent-booking/app/Http/Controllers/SchedulesController.php:338`
 - `fluent-booking/app/Modules/MCP/Support/BookingWriter.php:689`
 - `fluent-booking/app/Services/BookingService.php:75`
-- `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:382`
-- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:665`
-- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:519`
-- `fluent-booking-pro/app/Services/Integrations/Woo/Bootstrap.php:255`
+- `fluent-booking/app/Services/Integrations/FluentCart/Bootstrap.php:386`
+- `fluent-booking/app/Services/Integrations/FluentForms/FluentFormInit.php:684`
+- `fluent-booking-pro/app/Services/Integrations/PaymentMethods/BasePaymentMethod.php:556`
+- `fluent-booking-pro/app/Services/Integrations/Woo/Bootstrap.php:259`
 
 **Example**
 

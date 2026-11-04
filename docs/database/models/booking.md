@@ -80,6 +80,7 @@ Represents an individual booking (appointment) created when an attendee schedule
 | Scope | Parameters |
 | --- | --- |
 | `WhereHostAccess` | `$query, $userId` |
+| `OwnedByAttendee` | `$query, $userId, $email` |
 | `Upcoming` | `$query` |
 | `Past` | `$query` |
 | `ApplyDateRangeFilter` | `$query, $range` |
@@ -126,6 +127,8 @@ Represents an individual booking (appointment) created when an attendee schedule
 | `getOngoingStatus()` | `—` |
 | `getBookingStatus()` | `—` |
 | `getPaymentStatus()` | `—` |
+| `isAwaitingOnlinePayment()` | `—` |
+| `shouldHideLocationUntilPaid()` | `—` |
 | `payment_order()` | `—` |
 | `getCancelReason()` | `$isText = false, $isHtml = false` |
 | `getRejectReason()` | `$isText = false, $isHtml = false` |

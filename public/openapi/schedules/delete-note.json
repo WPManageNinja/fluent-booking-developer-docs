@@ -19,7 +19,7 @@
         "tags": [
           "Schedules"
         ],
-        "description": "Handler: `BookingNoteController@deleteNote`. Source: `fluent-booking-pro/app/Http/Routes/api.php:41`.",
+        "description": "Handler: `BookingNoteController@deleteNote`. Source: `fluent-booking-pro/app/Http/Routes/api.php:50`.",
         "parameters": [
           {
             "name": "id",

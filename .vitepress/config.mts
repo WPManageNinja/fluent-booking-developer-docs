@@ -93,6 +93,8 @@ const filterHookPages = [
   { text: 'Availability & Slots', link: '/hooks/filters/availability-and-slots' },
   { text: 'Display & Templates', link: '/hooks/filters/display-and-templates' },
   { text: 'Admin & Configuration', link: '/hooks/filters/admin-and-configuration' },
+  { text: 'Permissions & Access', link: '/hooks/filters/permissions-and-access' },
+  { text: 'Spam Protection & Captcha', link: '/hooks/filters/spam-protection' },
   { text: 'Payments & Advanced', link: '/hooks/filters/payments-and-advanced' },
   { text: 'Integrations', link: '/hooks/filters/integrations' },
   { text: 'Miscellaneous', link: '/hooks/filters/miscellaneous' },
@@ -112,6 +114,7 @@ const platformPages = [
   { text: 'Permissions', link: '/platform/permissions' },
   { text: 'Scheduled Tasks', link: '/platform/scheduled-tasks' },
   { text: 'Event Configuration', link: '/platform/event-configuration' },
+  { text: 'Spam Protection', link: '/platform/spam-protection' },
 ]
 
 // The MCP ability pages are generated, so the sidebar reads them off disk the
@@ -459,6 +462,7 @@ export default defineConfig({
           { text: 'Permissions', link: '/platform/permissions' },
           { text: 'Scheduled Tasks', link: '/platform/scheduled-tasks' },
           { text: 'Event Configuration', link: '/platform/event-configuration' },
+          { text: 'Spam Protection', link: '/platform/spam-protection' },
         ],
       },
       {

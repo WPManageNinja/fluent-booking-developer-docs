@@ -19,7 +19,7 @@
         "tags": [
           "Integrations"
         ],
-        "description": "Handler: `ZoomController@disconnectByConnectId`. Source: `fluent-booking-pro/app/Http/Routes/api.php:93`.",
+        "description": "Handler: `ZoomController@disconnectByConnectId`. Source: `fluent-booking-pro/app/Http/Routes/api.php:102`.",
         "parameters": [],
         "security": [
           {

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/license`
 - **Edition:** Pro
 - **Controller:** `LicenseController@deactivateLicense`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:32`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:41`
 - **Policy:** `SuperAdminPolicy`
 
 <OAOperation operationId="deactivateLicense" specUrl="/openapi/public/settings/deactivate-license.json" />

@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/notes/{note_id}`
 - **Edition:** Pro
 - **Controller:** `BookingNoteController@updateNote`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:40`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:49`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="updateNote" specUrl="/openapi/public/schedules/update-note.json" />

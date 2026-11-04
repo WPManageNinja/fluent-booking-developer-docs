@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/optin`
 - **Edition:** Core
 - **Controller:** `SettingsController@updateOptin`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:108`
-- **Policy:** `SettingsPolicy`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:118`
+- **Policy:** `PlatformPolicy`
 
 <OAOperation operationId="updateOptin" specUrl="/openapi/public/settings/update-optin.json" />
