@@ -12,20 +12,32 @@
     }
   ],
   "paths": {
-    "/settings/mcp": {
-      "get": {
-        "operationId": "getSettings",
-        "summary": "Get Settings",
+    "/settings/spam-protection": {
+      "post": {
+        "operationId": "saveSettings",
+        "summary": "Save Settings",
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `McpController@getSettings`. Source: `fluent-booking/app/Http/Routes/api.php:111`.",
+        "description": "Handler: `SpamProtectionController@saveSettings`. Source: `fluent-booking-pro/app/Http/Routes/api.php:31`.",
         "parameters": [],
         "security": [
           {
             "ApplicationPasswords": []
           }
         ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {}
+              },
+              "example": {}
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "Successful response.",
@@ -34,14 +46,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "data": {
-                      "type": "object",
-                      "properties": {}
+                    "message": {
+                      "type": "string"
                     }
                   }
                 },
                 "example": {
-                  "data": {}
+                  "message": "Successfully updated."
                 }
               }
             }
@@ -107,6 +118,53 @@
                   "message": "Sorry, you are not allowed to do that.",
                   "data": {
                     "status": 403
+                  }
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation failed — inspect `data.errors` for field-level messages.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "code": {
+                      "type": "string"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "status": {
+                          "type": "integer"
+                        },
+                        "errors": {
+                          "type": "object",
+                          "additionalProperties": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "code": "validation_failed",
+                  "message": "The given data was invalid.",
+                  "data": {
+                    "status": 422,
+                    "errors": {
+                      "title": [
+                        "The title field is required."
+                      ]
+                    }
                   }
                 }
               }

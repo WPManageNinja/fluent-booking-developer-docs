@@ -19,7 +19,7 @@
         "tags": [
           "Settings"
         ],
-        "description": "Handler: `SettingsController@updateOptin`. Source: `fluent-booking/app/Http/Routes/api.php:108`.",
+        "description": "Handler: `SettingsController@updateOptin`. Source: `fluent-booking/app/Http/Routes/api.php:118`.",
         "parameters": [],
         "security": [
           {

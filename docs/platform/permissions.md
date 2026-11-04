@@ -18,6 +18,7 @@ FluentBooking does not use WordPress roles for its own authorization. It stores 
 | `manage_other_calendars` | Manage Other Users Calendars |
 | `read_and_use_other_availabilities` | Read & Use Access of All Availabilities |
 | `manage_other_availabilities` | Manage All Availabilities |
+| `invite_team_members` | Invite & Manage Team Members |
 | `manage_all_data` | Manage All Data and Settings |
 
 ```php
@@ -39,10 +40,12 @@ A policy with no routes is not attached to any route group — it exists for a s
 | `AdminPolicy` | Core | 3 | — | — | `canManageOtherHosts()` |
 | `AvailabilityPolicy` | Core | 9 | `manage_all_data`, `manage_other_availabilities`, `manage_own_calendar`, `read_and_use_other_availabilities` | — | — |
 | `CalendarEventPolicy` | Core | 7 | `manage_all_bookings`, `manage_all_data`, `manage_other_calendars`, `read_other_calendars` | — | — |
-| `CalendarPolicy` | Core | 49 | `invite_team_members`*, `manage_all_data`, `manage_own_calendar` | `manage_options` | `canReadCalendar()`, `canUpdateCalendarEvent()`, `canWriteCalendar()`, `currentUserHasAnyPermission()` |
+| `CalendarPolicy` | Core | 49 | `invite_team_members`, `manage_all_data`, `manage_own_calendar` | `manage_options` | `canReadCalendar()`, `canUpdateCalendarEvent()`, `canWriteCalendar()`, `currentUserHasAnyPermission()` |
 | `MeetingPolicy` | Core | 20 | `manage_all_bookings`, `manage_all_data`, `manage_own_calendar`, `read_all_bookings` | `manage_options` | `userCanSeeAllBookings()` |
+| `PlatformPolicy` | Core | 8 | `manage_all_data` | — | — |
+| `PlatformPolicy` | <span class="pro-badge">PRO</span> | 5 | `manage_all_data` | — | — |
 | `PublicPolicy` | Core | 0 | — | — | — |
-| `SettingsPolicy` | Core | 25 | `manage_all_data` | — | — |
+| `SettingsPolicy` | Core | 17 | `manage_all_data` | — | — |
 | `SuperAdminPolicy` | <span class="pro-badge">PRO</span> | 5 | — | `manage_options` | — |
 | `UserPolicy` | Core | 3 | — | — | `currentUserHasAnyPermission()` |
 

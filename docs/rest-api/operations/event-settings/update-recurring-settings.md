@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/events/{event_id}/recurring-settings`
 - **Edition:** Pro
 - **Controller:** `CalendarController@updateRecurringSettings`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:61`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:70`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="updateRecurringSettings" specUrl="/openapi/public/event-settings/update-recurring-settings.json" />

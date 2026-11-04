@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/schedules/{id}/notes/{note_id}`
 - **Edition:** Pro
 - **Controller:** `BookingNoteController@deleteNote`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:41`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:50`
 - **Policy:** `MeetingPolicy`
 
 <OAOperation operationId="deleteNote" specUrl="/openapi/public/schedules/delete-note.json" />

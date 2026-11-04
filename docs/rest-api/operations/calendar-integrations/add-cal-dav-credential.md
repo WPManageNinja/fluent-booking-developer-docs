@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/calendars/{id}/integrations/remote-calendars/cal-dav-auth`
 - **Edition:** Pro
 - **Controller:** `IntegrationSettingsController@addCalDavCredential`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:51`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:60`
 - **Policy:** `CalendarPolicy`
 
 <OAOperation operationId="addCalDavCredential" specUrl="/openapi/public/calendar-integrations/add-cal-dav-credential.json" />

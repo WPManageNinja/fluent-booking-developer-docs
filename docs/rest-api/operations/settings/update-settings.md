@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/mcp`
 - **Edition:** Core
 - **Controller:** `McpController@updateSettings`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:112`
-- **Policy:** `SettingsPolicy`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:122`
+- **Policy:** `PlatformPolicy`
 
 <OAOperation operationId="updateSettings" specUrl="/openapi/public/settings/update-settings.json" />

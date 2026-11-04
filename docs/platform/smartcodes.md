@@ -142,4 +142,4 @@ add_filter('fluent_booking/editor_shortcodes_groups', function ($groups, $calend
 ```
 :::
 
-Parsed from `fluent-booking/app/Services/Helper.php:1882`.
+Parsed from `fluent-booking/app/Services/Helper.php:1904`.

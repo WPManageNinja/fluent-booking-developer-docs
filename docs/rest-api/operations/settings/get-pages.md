@@ -11,7 +11,7 @@ aside: false
 - **Path:** `/settings/pages`
 - **Edition:** Core
 - **Controller:** `SettingsController@getPages`
-- **Route source:** `fluent-booking/app/Http/Routes/api.php:105`
+- **Route source:** `fluent-booking/app/Http/Routes/api.php:108`
 - **Policy:** `SettingsPolicy`
 
 <OAOperation operationId="getPages" specUrl="/openapi/public/settings/get-pages.json" />

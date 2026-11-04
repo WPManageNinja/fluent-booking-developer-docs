@@ -11,6 +11,7 @@ aside: false
 - **Path:** `/integrations/settings/payment-methods/disconnect`
 - **Edition:** Pro
 - **Controller:** `PaymentMethodController@disconnect`
-- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:102`
+- **Route source:** `fluent-booking-pro/app/Http/Routes/api.php:117`
+- **Policy:** `PlatformPolicy`
 
 <OAOperation operationId="disconnect" specUrl="/openapi/public/payments/disconnect.json" />

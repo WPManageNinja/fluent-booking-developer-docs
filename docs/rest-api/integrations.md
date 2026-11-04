@@ -9,7 +9,7 @@ Global integration configuration (Zoom, Google, Outlook, Apple, FluentCRM, webho
 
 ## Authentication
 
-These routes are registered with: `SettingsPolicy`.
+These routes are registered with: `SettingsPolicy`, `PlatformPolicy`.
 
 ## Endpoints
 

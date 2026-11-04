@@ -24,7 +24,7 @@ Shortcodes are registered in the front-end handlers with `add_shortcode()`; the 
 
 - **Edition:** Core
 - **Handler:** `FrontEndHandler@handleBookingShortcode`
-- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:28`
+- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:42`
 
 | Attribute | Default |
 | --- | --- |
@@ -43,7 +43,7 @@ Shortcodes are registered in the front-end handlers with `add_shortcode()`; the 
 
 - **Edition:** Core
 - **Handler:** `FrontEndHandler@handleCalendarShortcode`
-- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:32`
+- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:46`
 
 | Attribute | Default |
 | --- | --- |
@@ -64,7 +64,7 @@ Shortcodes are registered in the front-end handlers with `add_shortcode()`; the 
 
 - **Edition:** Core
 - **Handler:** `FrontEndHandler@handleBookingListsShortcode`
-- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:34`
+- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:48`
 
 | Attribute | Default |
 | --- | --- |
@@ -96,7 +96,7 @@ This shortcode takes no attributes.
 
 - **Edition:** Core
 - **Handler:** `FrontEndHandler@handleReceiptShortcode`
-- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:36`
+- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:50`
 
 This shortcode takes no attributes.
 
@@ -106,7 +106,7 @@ This shortcode takes no attributes.
 
 - **Edition:** Core
 - **Handler:** `FrontEndHandler@handleTeamShortcode`
-- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:30`
+- **Source:** `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:44`
 
 | Attribute | Default |
 | --- | --- |
@@ -125,7 +125,7 @@ The public booking form posts to `admin-ajax.php`. An action listed as reachable
 
 | Action | Guests | Edition | Handler | Source |
 | --- | --- | --- | --- | --- |
-| `fcal_cancel_meeting` | Yes | Core | `FrontEndHandler@ajaxHandleCancelMeeting` | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:41` |
+| `fcal_cancel_meeting` | Yes | Core | `FrontEndHandler@ajaxHandleCancelMeeting` | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:55` |
 | `fluent_booking_apply_bulk_coupons` | Yes | <span class="pro-badge">PRO</span> | `CouponModule@ajaxApplyBulkCoupons` | `fluent-booking-pro/app/Modules/Coupon/CouponModule.php:46` |
 | `fluent_booking_apply_coupon` | Yes | <span class="pro-badge">PRO</span> | `CouponModule@ajaxApplyCoupon` | `fluent-booking-pro/app/Modules/Coupon/CouponModule.php:43` |
 | `fluent_booking_file_delete` | Yes | <span class="pro-badge">PRO</span> | `UploadHandler@handleFileDelete` | `fluent-booking-pro/app/Hooks/Handlers/UploadHandler.php:27` |
@@ -133,7 +133,7 @@ The public booking form posts to `admin-ajax.php`. An action listed as reachable
 | `fluent_booking_g_auth` | No | <span class="pro-badge">PRO</span> | `Bootstrap@handleAuthCallback` | `fluent-booking-pro/app/Services/Integrations/Calendars/Google/Bootstrap.php:30` |
 | `fluent_booking_outlook_auth` | No | <span class="pro-badge">PRO</span> | `Bootstrap@handleAuthCallback` | `fluent-booking-pro/app/Services/Integrations/Calendars/Outlook/Bootstrap.php:32` |
 | `fluent_cal_confirm_stripe_payment` | Yes | <span class="pro-badge">PRO</span> | `Stripe@confirmStripePayment` | `fluent-booking-pro/app/Services/Integrations/PaymentMethods/Stripe/Stripe.php:36` |
-| `fluent_cal_get_available_dates` | Yes | Core | `FrontEndHandler@ajaxGetAvailableDates` | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:44` |
-| `fluent_cal_schedule_meeting` | Yes | Core | `FrontEndHandler@ajaxScheduleMeeting` | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:38` |
+| `fluent_cal_get_available_dates` | Yes | Core | `FrontEndHandler@ajaxGetAvailableDates` | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:58` |
+| `fluent_cal_schedule_meeting` | Yes | Core | `FrontEndHandler@ajaxScheduleMeeting` | `fluent-booking/app/Hooks/Handlers/FrontEndHandler.php:52` |
 | `get_calendar_events` | No | Core | `ElementorIntegration@ajaxGetCalendarEvents` | `fluent-booking/app/Services/Integrations/Elementor/ElementorIntegration.php:22` |
 | `get_event_hash` | No | Core | `ElementorIntegration@ajaxGetEventHash` | `fluent-booking/app/Services/Integrations/Elementor/ElementorIntegration.php:24` |

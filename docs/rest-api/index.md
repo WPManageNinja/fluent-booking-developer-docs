@@ -5,7 +5,7 @@ description: Source-verified REST API reference for FluentBooking.
 
 # FluentBooking REST API
 
-This reference covers 135 routes registered in the FluentBooking core and Pro route files.
+This reference covers 138 routes registered in the FluentBooking core and Pro route files.
 
 ## Base URL
 
@@ -36,7 +36,7 @@ Agent traffic has its own stack at `fluent-booking/mcp`, outside this policy cha
 | [Bookings](/rest-api/bookings) | Core | 6 | Booking CRUD, listing, search, and patch endpoints. |
 | [Schedules](/rest-api/schedules) | Core + <span class="pro-badge">PRO</span> | 19 | Schedule management endpoints used by the admin app. |
 | [Availability Schedules](/rest-api/availability) | Core | 9 | Standalone (reusable) availability schedules used across events. |
-| [Settings](/rest-api/settings) | Core + <span class="pro-badge">PRO</span> | 20 | Plugin-wide settings — general, branding, dashboard, email, and global configuration. |
+| [Settings](/rest-api/settings) | Core + <span class="pro-badge">PRO</span> | 23 | Plugin-wide settings — general, branding, dashboard, email, and global configuration. |
 | [Admin & Hosts](/rest-api/admin) | Core | 3 | Admin operations including host management, dashboard, and impersonation. |
 | [Reports](/rest-api/reports) | Core | 3 | Analytics, exports, and reporting endpoints (Pro features included). |
 | [Integrations](/rest-api/integrations) | Core + <span class="pro-badge">PRO</span> | 9 | Global integration configuration (Zoom, Google, Outlook, Apple, FluentCRM, webhooks). |
